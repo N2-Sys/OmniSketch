@@ -1,0 +1,29 @@
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Executables
+*.exe
+*.out
+*.app
+
+# Temporary files
+tmp.*
+tmp[0-9].*
+
+# Build dir
+build/
+
+# CMake cache (In case in-place building is performed)
+CMakeCache.txt
+
+# Files for testing
+/test.*
+
+# IDE-related files
+.vscode/
+
+# Doxyfile files
+/Doxyfile

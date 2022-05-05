@@ -1,0 +1,4 @@
+# Pcap files and the parsed files
+*.pcap
+*.txt
+*.bin

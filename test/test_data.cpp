@@ -1,0 +1,648 @@
+/**
+ * @file test_data.cpp
+ * @author dromniscience (you@domain.com)
+ * @brief Test data-processing tools
+ *
+ * @copyright Copyright (c) 2022
+ *
+ */
+#include "test_factory.h"
+#include <common/data.h>
+#include <unordered_map>
+
+/**
+ * @cond TEST
+ *
+ */
+void TestDataFormat() {
+  using std::string_view_literals::operator""sv;
+  using namespace OmniSketch::Data;
+
+  // normal
+  try {
+    static constexpr std::string_view input = R"(
+        name = [["flowkey", "length", "padding", "timestamp", "padding"], [8, 4, 1, 2, 1]]
+    )"sv;
+    toml::table array = toml::parse(input);
+    DataFormat format(*array["name"].as_array());
+    VERIFY(format.getRecordLength() == 16);
+
+    Record<8> record;
+    const int8_t a[16] = {0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08,
+                          0x09, 0x0a, 0x0b, 0x0c, 0x00, 0x0e, 0x0f, 0x00};
+    int8_t b[16];
+
+    format.readAsFormat(record, a);
+    format.writeAsFormat(record, b);
+    VERIFY(memcmp(a, b, 16) == 0);
+
+  } catch (const std::runtime_error &exp) {
+    VERIFY_NO_EXCEPTION(exp);
+  }
+  try {
+    static constexpr std::string_view input = R"(
+        name = [["length", "padding", "flowkey"], [1, 2, 4]]
+    )"sv;
+    toml::table array = toml::parse(input);
+    DataFormat format(*array["name"].as_array());
+    VERIFY(format.getRecordLength() == 7);
+
+    Record<4> record;
+    const int8_t a[7] = {0x01, 0x00, 0x00, 0x04, 0x05, 0x06, 0x07};
+    int8_t b[7];
+
+    format.readAsFormat(record, a);
+    format.writeAsFormat(record, b);
+    VERIFY(memcmp(a, b, 7) == 0);
+
+  } catch (const std::runtime_error &exp) {
+    VERIFY_NO_EXCEPTION(exp);
+  }
+  // exception
+  try {
+    static constexpr std::string_view input = R"(
+        name = [["length", "padding"], [2, 2]]
+    )"sv;
+    toml::table array = toml::parse(input);
+    DataFormat format(*array["name"].as_array());
+    SET_FAILURE_FLAG;
+  } catch (const std::runtime_error &exp) {
+    VERIFY_EXCEPTION(exp);
+  }
+  try {
+    static constexpr std::string_view input = R"(
+        name = [["length", "flowkey"], [2, 2]]
+    )"sv;
+    toml::table array = toml::parse(input);
+    DataFormat format(*array["name"].as_array());
+    SET_FAILURE_FLAG;
+  } catch (const std::runtime_error &exp) {
+    VERIFY_EXCEPTION(exp);
+  }
+  try {
+    static constexpr std::string_view input = R"(
+        name = [["length", "flowkey", "padding"], [1, 4, 0]]
+    )"sv;
+    toml::table array = toml::parse(input);
+    DataFormat format(*array["name"].as_array());
+    SET_FAILURE_FLAG;
+  } catch (const std::runtime_error &exp) {
+    VERIFY_EXCEPTION(exp);
+  }
+  try {
+    static constexpr std::string_view input = R"(
+        name = [["length", "flowkey", "flowkey"], [2, 4, 4]]
+    )"sv;
+    toml::table array = toml::parse(input);
+    DataFormat format(*array["name"].as_array());
+    SET_FAILURE_FLAG;
+  } catch (const std::runtime_error &exp) {
+    VERIFY_EXCEPTION(exp);
+  }
+  try {
+    static constexpr std::string_view input = R"(
+        name = [["length", "flowkey"], [2, 4]]
+    )"sv;
+    toml::table array = toml::parse(input);
+    DataFormat format(*array["name"].as_array());
+
+    Record<8> record;
+    const int8_t a[6] = {};
+    format.readAsFormat(record, a);
+    SET_FAILURE_FLAG;
+  } catch (const std::runtime_error &exp) {
+    VERIFY_EXCEPTION(exp);
+  }
+}
+
+void TestGndTruth() {
+  using std::string_view_literals::operator""sv;
+  using namespace OmniSketch::Data;
+
+  try {
+
+    static constexpr std::string_view input = R"(
+        name = [["flowkey", "length", "padding", "timestamp"], [4, 4, 2, 2]]
+    )"sv;
+    toml::table array = toml::parse(input);
+    DataFormat format(*array["name"].as_array());
+
+    char name[L_tmpnam];
+    std::tmpnam(name);
+
+    const int32_t flowkey[10] = {0x1F1F1, 0x2F2F2, 0x1F1F1, 0x3F3F3, 0x4F4F4,
+                                 0x1F1F1, 0x2F2F2, 0x3F3F3, 0x5F5F5, 0x1F1F1};
+    const int32_t length[10] = {0x1,  0x2,  0x4,  0x8,   0x10,
+                                0x20, 0x40, 0x80, 0x100, 0x200};
+    const int16_t timestamp[10] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+    std::unordered_map<int32_t, std::pair<int64_t, int64_t>> map;
+
+    char content[120];
+    for (int i = 0; i < 10; ++i) {
+      *reinterpret_cast<int32_t *>(content + 12 * i) = flowkey[i];
+      *reinterpret_cast<int32_t *>(content + 12 * i + 4) = length[i];
+      *reinterpret_cast<int16_t *>(content + 12 * i + 10) = timestamp[i];
+      auto tmp = map[flowkey[i]];
+      map[flowkey[i]] = {tmp.first + length[i], tmp.second + 1};
+    }
+    std::ofstream fout(name, std::ios::binary);
+    fout.write(content, sizeof(content));
+    fout.close();
+
+    StreamData<4> data(name, format);
+    std::remove(name);
+
+    VERIFY(data.succeed() == true);
+    VERIFY(data.empty() == false);
+    VERIFY(data.size() == 10);
+
+    for (int i = 0; i < 10; ++i) {
+      VERIFY(data.diff(i)->length == length[i]);
+      VERIFY(*reinterpret_cast<const int32_t *>(data.diff(i)->flowkey.cKey()) ==
+             flowkey[i]);
+      VERIFY(data.diff(i)->timestamp == timestamp[i]);
+    }
+    VERIFY(data.begin() == data.diff(0));
+    VERIFY(data.end() == data.diff(data.size()));
+
+    GndTruth<4, int64_t> gnd_truth_1, gnd_truth_2;
+    gnd_truth_1.getGroundTruth(data.begin(), data.end(), InLength);
+    gnd_truth_2.getGroundTruth(data.begin(), data.end(), InPacket);
+
+    int32_t max = std::numeric_limits<int32_t>::max();
+    for (const auto &kv : gnd_truth_1) {
+      VERIFY(
+          kv.get_right() ==
+          map[*reinterpret_cast<const int32_t *>(kv.get_left().cKey())].first);
+      VERIFY(max >= kv.get_right());
+      max = kv.get_right();
+    }
+    max = std::numeric_limits<int32_t>::max();
+    for (const auto &kv : gnd_truth_2) {
+      VERIFY(
+          kv.get_right() ==
+          map[*reinterpret_cast<const int32_t *>(kv.get_left().cKey())].second);
+      VERIFY(max >= kv.get_right());
+      max = kv.get_right();
+    }
+    gnd_truth_1.swap(gnd_truth_1);
+    max = std::numeric_limits<int32_t>::max();
+    for (const auto &kv : gnd_truth_1) {
+      VERIFY(
+          kv.get_right() ==
+          map[*reinterpret_cast<const int32_t *>(kv.get_left().cKey())].first);
+      VERIFY(max >= kv.get_right());
+      max = kv.get_right();
+    }
+    gnd_truth_1.swap(gnd_truth_2);
+    max = std::numeric_limits<int32_t>::max();
+    for (const auto &kv : gnd_truth_1) {
+      VERIFY(
+          kv.get_right() ==
+          map[*reinterpret_cast<const int32_t *>(kv.get_left().cKey())].second);
+      VERIFY(max >= kv.get_right());
+      max = kv.get_right();
+    }
+    max = std::numeric_limits<int32_t>::max();
+    for (const auto &kv : gnd_truth_2) {
+      VERIFY(
+          kv.get_right() ==
+          map[*reinterpret_cast<const int32_t *>(kv.get_left().cKey())].first);
+      VERIFY(max >= kv.get_right());
+      max = kv.get_right();
+    }
+  } catch (const std::exception &exp) {
+    VERIFY_NO_EXCEPTION(exp);
+  }
+}
+
+void TestEqualRange() {
+  using std::string_view_literals::operator""sv;
+  using namespace OmniSketch::Data;
+
+  try {
+
+    static constexpr std::string_view input = R"(
+        name = [["flowkey", "length", "padding"], [8, 2, 6]]
+    )"sv;
+    toml::table array = toml::parse(input);
+    DataFormat format(*array["name"].as_array());
+
+    char name[L_tmpnam];
+    std::tmpnam(name);
+
+    const int64_t flowkey[12] = {0x1F1F1, 0x2F2F2, 0x1F1F1, 0x3F3F3,
+                                 0x4F4F4, 0x1F1F1, 0x2F2F2, 0x3F3F3,
+                                 0x5F5F5, 0x1F1F1, 0x5F5F5, 0x6F6F6};
+    const int16_t length[12] = {0x1, 0x2, 0x1, 0x1, 0x5, 0x1,
+                                0x3, 0x3, 0x2, 0x1, 0x2, 0x5};
+    std::unordered_map<int64_t, std::pair<int64_t, int64_t>> map;
+
+    char content[192];
+    for (int i = 0; i < 12; ++i) {
+      *reinterpret_cast<int64_t *>(content + 16 * i) = flowkey[i];
+      *reinterpret_cast<int16_t *>(content + 16 * i + 8) = length[i];
+      auto tmp = map[flowkey[i]];
+      map[flowkey[i]] = {tmp.first + length[i], tmp.second + 1};
+    }
+    std::ofstream fout(name, std::ios::binary);
+    fout.write(content, sizeof(content));
+    fout.close();
+
+    StreamData<8> data(name, format);
+    VERIFY(data.succeed() == true);
+    std::remove(name);
+
+    GndTruth<8, int64_t> gnd_truth_1, gnd_truth_2;
+    gnd_truth_1.getGroundTruth(data.begin(), data.end(), InLength);
+    gnd_truth_2.getGroundTruth(data.begin(), data.end(), InPacket);
+    auto pair = gnd_truth_1.equalRange(4);
+
+    std::set<int64_t> tmp1, tmp2 = {0x1F1F1, 0x3F3F3, 0x5F5F5};
+    VERIFY(pair.second - pair.first == tmp2.size());
+    for (auto ptr = pair.first; ptr != pair.second; ++ptr) {
+      tmp1.insert(*reinterpret_cast<const int64_t *>(ptr->get_left().cKey()));
+    }
+    VERIFY(tmp1 == tmp2);
+
+    pair = gnd_truth_1.equalRange(5);
+    tmp1.clear();
+    tmp2 = {0x2F2F2, 0x4F4F4, 0x6F6F6};
+    VERIFY(pair.second - pair.first == tmp2.size());
+    for (auto ptr = pair.first; ptr != pair.second; ++ptr) {
+      tmp1.insert(*reinterpret_cast<const int64_t *>(ptr->get_left().cKey()));
+    }
+    VERIFY(tmp1 == tmp2);
+
+    pair = gnd_truth_2.equalRange(4);
+    VERIFY(pair.second - pair.first == 1 &&
+           *reinterpret_cast<const int64_t *>(pair.first->get_left().cKey()) ==
+               0x1F1F1);
+    pair = gnd_truth_2.equalRange(1);
+    tmp1.clear();
+    tmp2 = {0x4F4F4, 0x6F6F6};
+    VERIFY(pair.second - pair.first == tmp2.size());
+    for (auto ptr = pair.first; ptr != pair.second; ++ptr) {
+      tmp1.insert(*reinterpret_cast<const int64_t *>(ptr->get_left().cKey()));
+    }
+    VERIFY(tmp1 == tmp2);
+    pair = gnd_truth_2.equalRange(3);
+    VERIFY(pair.first == pair.second);
+    pair = gnd_truth_2.equalRange(0);
+    VERIFY(pair.first == pair.second);
+    pair = gnd_truth_2.equalRange(5);
+    VERIFY(pair.first == pair.second);
+  } catch (const std::exception &exp) {
+    VERIFY_NO_EXCEPTION(exp);
+  }
+}
+
+void TestHeavyHitter() {
+  using std::string_view_literals::operator""sv;
+  using namespace OmniSketch::Data;
+
+  // Threshold
+  try {
+    static constexpr std::string_view input = R"(
+        name = [["flowkey", "length"], [4, 4]]
+    )"sv;
+    toml::table array = toml::parse(input);
+    DataFormat format(*array["name"].as_array());
+
+    char name[L_tmpnam];
+    std::tmpnam(name);
+
+    const int32_t flowkey[22] = {0xa, 0x3, 0x8, 0x8, 0x8, 0x8, 0x1, 0x5,
+                                 0x5, 0x2, 0x5, 0x9, 0x1, 0x4, 0x4, 0x5,
+                                 0x8, 0x1, 0x2, 0x5, 0x6, 0x7};
+    const int32_t length[22] = {0x1, 0x8, 0x4, 0x1, 0x3, 0x2, 0x9, 0x6,
+                                0x6, 0x1, 0x6, 0x2, 0x2, 0x3, 0x2, 0x6,
+                                0xa, 0x9, 0x9, 0x6, 0x2, 0x2};
+    std::unordered_map<int32_t, std::pair<int32_t, int32_t>> map, ans, gave;
+
+    char content[176];
+    for (int i = 0; i < 22; ++i) {
+      *reinterpret_cast<int32_t *>(content + 8 * i) = flowkey[i];
+      *reinterpret_cast<int32_t *>(content + 8 * i + 4) = length[i];
+      auto tmp = map[flowkey[i]];
+      map[flowkey[i]] = {tmp.first + length[i], tmp.second + 1};
+    }
+
+    std::ofstream fout(name, std::ios::binary);
+    fout.write(content, sizeof(content));
+    fout.close();
+
+    StreamData<4> data(name, format);
+    VERIFY(data.succeed() == true);
+    std::remove(name);
+
+    for (int thres = 0; thres <= 100; ++thres) {
+      ans.clear();
+      gave.clear();
+      GndTruth<4, int32_t> gnd_truth;
+      gnd_truth.getHeavyHitter(data.begin(), data.end(), InLength,
+                               thres / 100.0, Percentile);
+      for (const auto &kv : map) {
+        if (kv.second.first > thres) {
+          ans.insert(kv);
+          ans[kv.first].second = 0;
+        }
+      }
+      VERIFY(gnd_truth.size() == ans.size());
+      for (auto &kv : gnd_truth) {
+        gave[*reinterpret_cast<const int32_t *>(kv.get_left().cKey())] =
+            std::pair<int32_t, int32_t>(kv.get_right(), 0);
+      }
+      VERIFY(ans == gave);
+    }
+    for (int thres = 0; thres <= 22; ++thres) {
+      ans.clear();
+      gave.clear();
+      GndTruth<4, int32_t> gnd_truth;
+      gnd_truth.getHeavyHitter(data.begin(), data.end(), InPacket, thres / 22.0,
+                               Percentile);
+
+      for (const auto &kv : map) {
+        if (kv.second.second > thres) {
+          ans.insert(kv);
+          ans[kv.first].first = 0;
+        }
+      }
+      VERIFY(gnd_truth.size() == ans.size());
+      for (auto &kv : gnd_truth) {
+        gave[*reinterpret_cast<const int32_t *>(kv.get_left().cKey())] =
+            std::pair<int32_t, int32_t>(0, kv.get_right());
+      }
+      VERIFY(ans == gave);
+    }
+  } catch (const std::exception &exp) {
+    VERIFY_NO_EXCEPTION(exp);
+  }
+  try {
+    static constexpr std::string_view input = R"(
+        name = [["flowkey", "padding", "length"], [8, 4, 4]]
+    )"sv;
+    toml::table array = toml::parse(input);
+    DataFormat format(*array["name"].as_array());
+
+    char name[L_tmpnam];
+    std::tmpnam(name);
+
+    const int64_t flowkey[32] = {0x1, 0x3, 0x8, 0xa, 0x8, 0xa, 0x1, 0x5,
+                                 0x5, 0x2, 0x5, 0x9, 0x1, 0x4, 0x4, 0x6,
+                                 0x8, 0x1, 0x2, 0xa, 0x6, 0x7, 0x1, 0x3,
+                                 0x3, 0x3, 0x4, 0x4, 0x7, 0x7, 0x7, 0x7};
+    const int32_t length[32] = {0x1, 0x1,  0x1,  0x1,   0x1,  0x1, 0x1, 0x1,
+                                0x1, 0x10, 0x1,  0x100, 0x1,  0x1, 0x1, 0x10,
+                                0x1, 0x1,  0x10, 0x1,   0x10, 0x1, 0x1, 0x1,
+                                0x1, 0x1,  0x1,  0x1,   0x1,  0x1, 0x1, 0x1};
+    std::unordered_map<int64_t, int32_t> map, ans, gave;
+
+    char content[512];
+    for (int i = 0; i < 32; ++i) {
+      *reinterpret_cast<int64_t *>(content + 16 * i) = flowkey[i];
+      *reinterpret_cast<int32_t *>(content + 16 * i + 12) = length[i];
+      map[flowkey[i]] += 1;
+    }
+
+    std::ofstream fout(name, std::ios::binary);
+    fout.write(content, sizeof(content));
+    fout.close();
+
+    StreamData<8> data(name, format);
+    VERIFY(data.succeed() == true);
+    std::remove(name);
+
+    GndTruth<8, int32_t> gnd_truth;
+    gnd_truth.getGroundTruth(data.begin(), data.end(), InPacket);
+    for (int thres = 0; thres <= 32; ++thres) {
+      ans.clear();
+      gave.clear();
+      GndTruth<8, int32_t> hh;
+      hh.getHeavyHitter(gnd_truth, thres / 32.0, Percentile);
+
+      for (const auto &kv : map) {
+        if (kv.second > thres) {
+          ans.insert(kv);
+        }
+      }
+      VERIFY(ans.size() == hh.size());
+      for (const auto &kv : hh) {
+        gave[*reinterpret_cast<const int64_t *>(kv.get_left().cKey())] =
+            kv.get_right();
+      }
+      VERIFY(ans == gave);
+    }
+  } catch (const std::exception &exp) {
+    VERIFY_NO_EXCEPTION(exp);
+  }
+
+  // TopK
+  try {
+    static constexpr std::string_view input = R"(
+        name = [["flowkey", "padding", "length"], [8, 4, 4]]
+    )"sv;
+    toml::table array = toml::parse(input);
+    DataFormat format(*array["name"].as_array());
+
+    char name[L_tmpnam];
+    std::tmpnam(name);
+
+    const int64_t flowkey[32] = {0x1, 0x3, 0x8, 0xa, 0x8, 0xa, 0x1, 0x5,
+                                 0x5, 0x2, 0x5, 0x9, 0x1, 0x4, 0x4, 0x6,
+                                 0x8, 0x1, 0x2, 0xa, 0x6, 0x7, 0x1, 0x3,
+                                 0x3, 0x3, 0x4, 0x4, 0x7, 0x7, 0x7, 0x7};
+    const int32_t length[32] = {0x1, 0x1,  0x1,  0x1,   0x1,  0x1, 0x1, 0x1,
+                                0x1, 0x10, 0x1,  0x100, 0x1,  0x1, 0x1, 0x10,
+                                0x1, 0x1,  0x10, 0x1,   0x10, 0x1, 0x1, 0x1,
+                                0x1, 0x1,  0x1,  0x1,   0x1,  0x1, 0x1, 0x1};
+    std::unordered_map<int64_t, int32_t> map, ans, gave;
+
+    char content[512];
+    for (int i = 0; i < 32; ++i) {
+      *reinterpret_cast<int64_t *>(content + 16 * i) = flowkey[i];
+      *reinterpret_cast<int32_t *>(content + 16 * i + 12) = length[i];
+      map[flowkey[i]] += 1;
+    }
+
+    std::ofstream fout(name, std::ios::binary);
+    fout.write(content, sizeof(content));
+    fout.close();
+
+    StreamData<8> data(name, format);
+    VERIFY(data.succeed() == true);
+    std::remove(name);
+
+    GndTruth<8, int32_t> gnd_truth;
+    gnd_truth.getGroundTruth(data.begin(), data.end(), InPacket);
+    GndTruth<8, int32_t> hh_1, hh_2, hh_3;
+    hh_1.getHeavyHitter(gnd_truth, 2, TopK);
+    VERIFY(hh_1.size() == 2);
+    ans[0x1] = 5;
+    ans[0x7] = 5;
+    for (const auto &kv : hh_1) {
+      gave[*reinterpret_cast<const int64_t *>(kv.get_left().cKey())] =
+          kv.get_right();
+    }
+    VERIFY(ans == gave);
+
+    hh_2.getHeavyHitter(gnd_truth, 4, TopK);
+    VERIFY(hh_2.size() == 4);
+    ans[0x3] = 4;
+    ans[0x4] = 4;
+    gave.clear();
+    for (const auto &kv : hh_2) {
+      gave[*reinterpret_cast<const int64_t *>(kv.get_left().cKey())] =
+          kv.get_right();
+    }
+    VERIFY(ans == gave);
+
+    hh_3.getHeavyHitter(gnd_truth, 7, TopK);
+    VERIFY(hh_3.size() == 7);
+    ans[0x5] = 3;
+    ans[0x8] = 3;
+    ans[0xa] = 3;
+    gave.clear();
+    for (const auto &kv : hh_3) {
+      gave[*reinterpret_cast<const int64_t *>(kv.get_left().cKey())] =
+          kv.get_right();
+    }
+    VERIFY(ans == gave);
+  } catch (const std::exception &exp) {
+    VERIFY_NO_EXCEPTION(exp);
+  }
+}
+
+void TestHeavyChanger() {
+  using std::string_view_literals::operator""sv;
+  using namespace OmniSketch::Data;
+
+  try {
+    static constexpr std::string_view input = R"(
+        name = [["flowkey"], [4]]
+    )"sv;
+    toml::table array = toml::parse(input);
+    DataFormat format(*array["name"].as_array());
+
+    char name[L_tmpnam];
+    std::tmpnam(name);
+
+    const int32_t flowkey[32] = {0x1, 0x3, 0x8, 0xa, 0x8, 0xa, 0x1, 0x5,
+                                 0x5, 0x2, 0x5, 0x9, 0x1, 0x4, 0x4, 0x6,
+                                 0x8, 0x1, 0x2, 0xa, 0x6, 0x7, 0x1, 0x3,
+                                 0x3, 0x3, 0x4, 0x4, 0x7, 0x7, 0x7, 0x7};
+    std::unordered_map<int32_t, int32_t> map = {{0x1, 1}, {0x2, 0}, {0x3, 2},
+                                                {0x4, 0}, {0x5, 3}, {0x6, 0},
+                                                {0x7, 5}, {0x8, 1}, {0x9, 1},
+                                                {0xa, 1}},
+                                         ans, gave;
+
+    char content[128];
+    for (int i = 0; i < 32; ++i) {
+      *reinterpret_cast<int32_t *>(content + 4 * i) = flowkey[i];
+    }
+
+    std::ofstream fout(name, std::ios::binary);
+    fout.write(content, sizeof(content));
+    fout.close();
+
+    StreamData<4> data(name, format);
+    VERIFY(data.succeed() == true);
+    std::remove(name);
+
+    for (int thres = 0; thres <= 14; ++thres) {
+      GndTruth<4, int32_t> gnd_truth_1;
+      gnd_truth_1.getHeavyChanger(data.begin(), data.diff(16), data.diff(16),
+                                  data.end(), InPacket, thres / 14.0,
+                                  Percentile);
+      ans.clear();
+      gave.clear();
+      for (const auto &kv : map) {
+        if (kv.second > thres)
+          ans.insert(kv);
+      }
+      VERIFY(ans.size() == gnd_truth_1.size());
+      for (const auto &kv : gnd_truth_1) {
+        gave[*reinterpret_cast<const int32_t *>(kv.get_left().cKey())] =
+            kv.get_right();
+      }
+    }
+    VERIFY(ans == gave);
+
+    GndTruth<4, int32_t> gnd_truth_1, gnd_truth_2, gnd_truth_3;
+    gnd_truth_1.getGroundTruth(data.begin(), data.diff(16), InPacket);
+    gnd_truth_2.getGroundTruth(data.diff(16), data.end(), InPacket);
+
+    VERIFY(gnd_truth_1.size() == 9);
+    gnd_truth_3.getHeavyChanger(std::move(gnd_truth_1), std::move(gnd_truth_2),
+                                3, TopK);
+    ans = std::unordered_map<int32_t, int32_t>({{0x3, 2}, {0x5, 3}, {0x7, 5}});
+    VERIFY(gnd_truth_3.size() == ans.size());
+    VERIFY(gnd_truth_1.size() == 0);
+    gave.clear();
+
+    for (const auto &kv : gnd_truth_3) {
+      gave[*reinterpret_cast<const int32_t *>(kv.get_left().cKey())] =
+          kv.get_right();
+    }
+    VERIFY(gave == ans);
+
+    GndTruth<4, int32_t> gnd_truth_4, gnd_truth_5, gnd_truth_6;
+    gnd_truth_4.getGroundTruth(data.begin(), data.diff(16), InPacket);
+    gnd_truth_5.getGroundTruth(data.diff(16), data.end(), InPacket);
+    VERIFY(gnd_truth_4.size() == 9);
+    gnd_truth_6.getHeavyChanger(gnd_truth_4, gnd_truth_5, 7, TopK);
+    ans = std::unordered_map<int32_t, int32_t>(
+        {{0x3, 2}, {0x5, 3}, {0x7, 5}, {0x1, 1}, {0x8, 1}, {0x9, 1}, {0xa, 1}});
+    VERIFY(gnd_truth_6.size() == ans.size());
+    VERIFY(gnd_truth_4.size() == 9);
+    gave.clear();
+    for (const auto &kv : gnd_truth_6) {
+      gave[*reinterpret_cast<const int32_t *>(kv.get_left().cKey())] =
+          kv.get_right();
+    }
+    VERIFY(gave == ans);
+
+  } catch (const std::exception &exp) {
+    VERIFY_NO_EXCEPTION(exp);
+  }
+}
+
+void TestEstimation() {
+  using OmniSketch::FlowKey;
+  using OmniSketch::Data::Estimation;
+
+  Estimation<4, int32_t> estimate;
+  FlowKey<4> key_1(1), key_2(2), key_3(3), key_4(4);
+  estimate[key_1] += 100;
+  VERIFY(estimate[key_1] == 100);
+  VERIFY(estimate.at(key_1) == 100);
+  VERIFY(estimate[key_1] == 100);
+  VERIFY(estimate.size() == 1);
+  VERIFY(estimate.count(key_4) == 0);
+  estimate.insert(key_2);
+  VERIFY(estimate.at(key_2) == 0);
+  VERIFY(estimate.update(key_2, 3) == false);
+  VERIFY(estimate[key_2] == 3);
+  estimate.update(key_3, 2022);
+  VERIFY(estimate.size() == 3);
+  VERIFY(estimate.insert(key_3) == false);
+  VERIFY(estimate[key_3] == 2022);
+  VERIFY(estimate.count(key_4) == 0);
+  estimate[key_4];
+  VERIFY(estimate.size() == 4);
+  VERIFY(estimate.count(key_4) == 1);
+}
+
+OMNISKETCH_DECLARE_TEST(data) {
+  for (int i = 0; i < g_repeat; i++) {
+    TestDataFormat();
+    TestGndTruth();
+    TestEqualRange();
+    TestHeavyHitter();
+    TestHeavyChanger();
+    TestEstimation();
+  }
+}
+
+/** @endcond */
