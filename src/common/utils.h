@@ -54,6 +54,25 @@ bool IsPrime(int32_t n);
  * @warning `n` must be positive. Otherwise an exception would be thrown.
  */
 int32_t NextPrime(int32_t n);
+/**
+ * @brief Convert a 2-byte word from network endian to the host endian
+ *
+ */
+uint16_t Net2Host16(uint16_t val);
+/**
+ * @brief Convert a 4-byte word from network endian to host endian
+ *
+ */
+uint32_t Net2Host32(uint32_t val);
+/**
+ * @brief Endianness of the platform
+ * @return `true` on big endian; `false` on small endian.
+ *
+ */
+inline bool Endianness() {
+  const int32_t i = 1;
+  return *reinterpret_cast<const int8_t *>(&i) == 0;
+}
 
 /**
  * @brief Parse config file and return its configurations in a versatile
@@ -84,50 +103,57 @@ class ConfigParser {
    *
    * @return `true` on success; `false` otherwise.
    */
-  bool parse(int32_t &arg, const std::string_view arg_name) const;
+  bool parse(int32_t &arg, const std::string_view arg_name,
+             const bool error_logging) const;
   /**
    * @brief Workhouse of parseConfig
    *
    * @return `true` on success; `false` otherwise.
    */
-  bool parse(double &arg, const std::string_view arg_name) const;
+  bool parse(double &arg, const std::string_view arg_name,
+             const bool error_logging) const;
   /**
    * @brief Workhouse of parseConfig
    *
    * @return `true` on success; `false` otherwise.
    */
-  bool parse(bool &arg, const std::string_view arg_name) const;
+  bool parse(bool &arg, const std::string_view arg_name,
+             const bool error_logging) const;
   /**
    * @brief Workhouse of parseConfig
    *
    * @return `true` on success; `false` otherwise.
    */
-  bool parse(std::vector<int32_t> &arg, const std::string_view arg_name) const;
+  bool parse(std::vector<int32_t> &arg, const std::string_view arg_name,
+             const bool error_logging) const;
   /**
    * @brief Workhouse of parseConfig
    *
    * @return `true` on success; `false` otherwise.
    */
-  bool parse(std::vector<double> &arg, const std::string_view arg_name) const;
+  bool parse(std::vector<double> &arg, const std::string_view arg_name,
+             const bool error_logging) const;
   /**
    * @brief Workhouse of parseConfig
    *
    * @return `true` on success; `false` otherwise.
    */
-  bool parse(std::vector<std::string> &arg,
-             const std::string_view arg_name) const;
+  bool parse(std::vector<std::string> &arg, const std::string_view arg_name,
+             const bool error_logging) const;
   /**
    * @brief Workhouse of parseConfig
    *
    * @return `true` on success; `false` otherwise.
    */
-  bool parse(std::string &arg, const std::string_view arg_name) const;
+  bool parse(std::string &arg, const std::string_view arg_name,
+             const bool error_logging) const;
   /**
    * @brief Workhouse of parseConfig
    *
    * @return `true` on success; `false` otherwise.
    */
-  bool parse(toml::array &arg, const std::string_view arg_name) const;
+  bool parse(toml::array &arg, const std::string_view arg_name,
+             const bool error_logging) const;
 
 public:
   /**
@@ -200,6 +226,8 @@ public:
    * - toml::array
    * @param arg       the object to be written to
    * @param arg_name  the name in config file
+   * @param error_logging  Enable / disable error logging when parsing fails (by
+   * default enabled)
    * @return `true` on success; `false` otherwise. Possible reasons for a
    * `false` return:
    * - Misspell the key name in config file.
@@ -207,14 +235,16 @@ public:
    *
    * @attention On failure, the object may be in an inconsistent state,
    * particularly when `arg` is a vector or an toml::array, and an error be
-   * prompted.
+   * logged. To disable error logging, which might be particularly useful when
+   * the config is meant to be optional, set `logging_error` to `false`.
    */
   template <typename T>
-  bool parseConfig(T &arg, const std::string_view arg_name) const {
+  bool parseConfig(T &arg, const std::string_view arg_name,
+                   const bool error_logging = true) const {
     // need NOT to preclude the situation that parsing config precedes reading
     // if (tbl.empty() || node == toml::node_view<toml::node>())
     //  return false;
-    return parse(arg, arg_name);
+    return parse(arg, arg_name, error_logging);
   }
 };
 

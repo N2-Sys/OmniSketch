@@ -40,6 +40,22 @@ int32_t NextPrime(int32_t n) {
   return n;
 }
 
+uint16_t Net2Host16(uint16_t val) {
+  if (Endianness())
+    return val;
+  else
+    return (val >> 8) | (val << 8);
+}
+
+uint32_t Net2Host32(uint32_t val) {
+  if (Endianness())
+    return val;
+  else
+    return (static_cast<uint32_t>(Net2Host16(static_cast<uint16_t>(val)))
+            << 16) |
+           static_cast<uint32_t>(Net2Host16(static_cast<uint16_t>(val >> 16)));
+}
+
 ConfigParser::ConfigParser(const std::string_view config_file) {
   static bool emitted = false; // avoid burst of logging
   if (!emitted) {
@@ -91,21 +107,28 @@ void ConfigParser::setWorkingNode(const std::string_view &path) {
   }
 }
 
-bool ConfigParser::parse(int32_t &arg, const std::string_view arg_name) const {
+bool ConfigParser::parse(int32_t &arg, const std::string_view arg_name,
+                         const bool error_logging) const {
   toml::node_view term = node[arg_name];
   if (!term.is_integer()) {
-    LOG(ERROR,
-        fmt::format("Fail to parse \"{}\" as type `int32_t`.", arg_name));
+    if (error_logging) {
+      LOG(ERROR,
+          fmt::format("Fail to parse \"{}\" as type `int32_t`.", arg_name));
+    }
     return false;
   }
   arg = static_cast<int32_t>(term.as_integer()->get());
   return true;
 }
 
-bool ConfigParser::parse(double &arg, const std::string_view arg_name) const {
+bool ConfigParser::parse(double &arg, const std::string_view arg_name,
+                         const bool error_logging) const {
   toml::node_view term = node[arg_name];
   if (!term.is_number()) {
-    LOG(ERROR, fmt::format("Fail to parse \"{}\" as type `double`.", arg_name));
+    if (error_logging) {
+      LOG(ERROR,
+          fmt::format("Fail to parse \"{}\" as type `double`.", arg_name));
+    }
     return false;
   }
   if (term.is_integer()) {
@@ -116,10 +139,13 @@ bool ConfigParser::parse(double &arg, const std::string_view arg_name) const {
   return true;
 }
 
-bool ConfigParser::parse(bool &arg, const std::string_view arg_name) const {
+bool ConfigParser::parse(bool &arg, const std::string_view arg_name,
+                         const bool error_logging) const {
   toml::node_view term = node[arg_name];
   if (!term.is_boolean()) {
-    LOG(ERROR, fmt::format("Fail to parse \"{}\" as type `bool`.", arg_name));
+    if (error_logging) {
+      LOG(ERROR, fmt::format("Fail to parse \"{}\" as type `bool`.", arg_name));
+    }
     return false;
   }
   arg = term.as_boolean()->get();
@@ -127,20 +153,26 @@ bool ConfigParser::parse(bool &arg, const std::string_view arg_name) const {
 }
 
 bool ConfigParser::parse(std::vector<int32_t> &arg,
-                         const std::string_view arg_name) const {
+                         const std::string_view arg_name,
+                         const bool error_logging) const {
   arg.clear();
 
   toml::node_view term = node[arg_name];
   if (!term.is_array()) {
-    LOG(ERROR, fmt::format("Fail to parse \"{}\" as a vector.", arg_name));
+    if (error_logging) {
+      LOG(ERROR, fmt::format("Fail to parse \"{}\" as a vector.", arg_name));
+    }
     return false;
   }
   toml::array *arr = term.as_array();
   for (toml::node &elem : *arr) {
     if (!elem.is_integer()) {
-      LOG(ERROR, fmt::format(
-                     "Fail to parse some elements in \"{}\" as type `int32_t`.",
-                     arg_name));
+      if (error_logging) {
+        LOG(ERROR,
+            fmt::format(
+                "Fail to parse some elements in \"{}\" as type `int32_t`.",
+                arg_name));
+      }
       return false;
     }
     arg.push_back(static_cast<int32_t>(elem.as_integer()->get()));
@@ -149,20 +181,26 @@ bool ConfigParser::parse(std::vector<int32_t> &arg,
 }
 
 bool ConfigParser::parse(std::vector<double> &arg,
-                         const std::string_view arg_name) const {
+                         const std::string_view arg_name,
+                         const bool error_logging) const {
   arg.clear();
 
   toml::node_view term = node[arg_name];
   if (!term.is_array()) {
-    LOG(ERROR, fmt::format("Fail to parse \"{}\" as a vector.", arg_name));
+    if (error_logging) {
+      LOG(ERROR, fmt::format("Fail to parse \"{}\" as a vector.", arg_name));
+    }
     return false;
   }
   toml::array *arr = term.as_array();
   for (toml::node &elem : *arr) {
     if (!elem.is_number()) {
-      LOG(ERROR,
-          fmt::format("Fail to parse some elements in \"{}\" as type `double`.",
-                      arg_name));
+      if (error_logging) {
+        LOG(ERROR,
+            fmt::format(
+                "Fail to parse some elements in \"{}\" as type `double`.",
+                arg_name));
+      }
       return false;
     }
     if (elem.is_integer()) {
@@ -175,21 +213,26 @@ bool ConfigParser::parse(std::vector<double> &arg,
 }
 
 bool ConfigParser::parse(std::vector<std::string> &arg,
-                         const std::string_view arg_name) const {
+                         const std::string_view arg_name,
+                         const bool error_logging) const {
   arg.clear();
 
   toml::node_view term = node[arg_name];
   if (!term.is_array()) {
-    LOG(ERROR, fmt::format("Fail to parse \"{}\" as a vector.", arg_name));
+    if (error_logging) {
+      LOG(ERROR, fmt::format("Fail to parse \"{}\" as a vector.", arg_name));
+    }
     return false;
   }
   toml::array *arr = term.as_array();
   for (toml::node &elem : *arr) {
     if (!elem.is_string()) {
-      LOG(ERROR,
-          fmt::format(
-              "Fail to parse some elements in \"{}\" as type `std::string`.",
-              arg_name));
+      if (error_logging) {
+        LOG(ERROR,
+            fmt::format(
+                "Fail to parse some elements in \"{}\" as type `std::string`.",
+                arg_name));
+      }
       return false;
     }
     arg.push_back(elem.as_string()->get());
@@ -197,24 +240,28 @@ bool ConfigParser::parse(std::vector<std::string> &arg,
   return true;
 }
 
-bool ConfigParser::parse(std::string &arg,
-                         const std::string_view arg_name) const {
+bool ConfigParser::parse(std::string &arg, const std::string_view arg_name,
+                         const bool error_logging) const {
   toml::node_view term = node[arg_name];
   if (!term.is_string()) {
-    LOG(ERROR,
-        fmt::format("Fail to parse \"{}\" as type `std::string`.", arg_name));
+    if (error_logging) {
+      LOG(ERROR,
+          fmt::format("Fail to parse \"{}\" as type `std::string`.", arg_name));
+    }
     return false;
   }
   arg = term.as_string()->get();
   return true;
 }
 
-bool ConfigParser::parse(toml::array &arg,
-                         const std::string_view arg_name) const {
+bool ConfigParser::parse(toml::array &arg, const std::string_view arg_name,
+                         const bool error_logging) const {
   toml::node_view term = node[arg_name];
   if (!term.is_array()) {
-    LOG(ERROR,
-        fmt::format("Fail to parse \"{}\" as type `toml::array`.", arg_name));
+    if (error_logging) {
+      LOG(ERROR,
+          fmt::format("Fail to parse \"{}\" as type `toml::array`.", arg_name));
+    }
     return false;
   }
   arg = *term.as_array();

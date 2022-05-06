@@ -12,6 +12,7 @@ function(add_unit_test)
   endif()
 endfunction(add_unit_test)
 
+add_unit_test(endian)
 add_unit_test(prime)
 add_unit_test(config)
 add_unit_test(flowkey)
