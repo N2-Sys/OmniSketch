@@ -20,6 +20,7 @@ find_package(Python COMPONENTS Interpreter)
 include(CTest)
 
 # ---- Include path of header files ----
+
 include_directories(src)
 
 # ---- Submodules ----
@@ -45,10 +46,46 @@ target_link_libraries(OmniTools fmt)
 
 add_subdirectory(test)
 
+# ---- Pcap Library ----
+
+function(check_library)
+  find_library(${ARGV0} ${ARGV1})
+  if(NOT ${ARGV0})
+    message(FATAL_ERROR "lib ${ARGV1} not found")
+  else()
+    message(STATUS "lib ${ARGV1} found at ${${ARGV0}}")
+  endif()
+endfunction(check_library)
+
+if(BUILD_PCAP_PARSER)
+  check_library(PCPP Pcap++)
+  check_library(PACPP Packet++)
+  check_library(COMPP Common++)
+  check_library(PCAP pcap)
+endif()
+
+# ---- Pcap Parser ----
+
+if(NOT PCPP_INCLUDE_PATH)
+  set(PCPP_INCLUDE_PATH /usr/local/include/pcapplusplus)
+  message(STATUS "pcapplusplus is included at ${PCPP_INCLUDE_PATH} by default")
+else()
+  message(STATUS "pcapplusplus is included at ${PCPP_INCLUDE_PATH}")
+endif()
+
+if(BUILD_PCAP_PARSER)
+  add_executable(parser ${CMAKE_CURRENT_SOURCE_DIR}/src/pcap_parser/parser.cpp)
+  target_include_directories(parser PRIVATE ${PCPP_INCLUDE_PATH})
+  target_link_libraries(parser ${PCPP} ${PACPP} ${COMPP} ${PCAP} fmt OmniTools)
+endif()
+
 # ---- User-defined sketches ----
 
 function(add_user_sketch)
-  add_custom_target(${ARGV1})
+  add_custom_target(${ARGV1}
+  DEPENDS
+  ${CMAKE_CURRENT_SOURCE_DIR}/src/driver/${ARGV1}Driver.cpp
+  )
   add_custom_command(
     OUTPUT
     ${CMAKE_CURRENT_SOURCE_DIR}/src/driver/${ARGV1}Driver.cpp

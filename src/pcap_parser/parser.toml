@@ -1,0 +1,26 @@
+[parser]
+
+# (Optional) Set an upper bound on packets processed, -1 means no bound at all
+packet_count = -1
+
+# (Optional) Set an upper bound on flows processed, -1 means no bound at all
+flow_count = 100000
+
+# (Optional) Berkeley Packet Filters are supported
+filter = "ip && (tcp || udp)"
+
+# Input pcap file
+input = "../../OmniSketch_Ori/data/data-900K.pcap"
+
+# (Conditionally Optional) Output pcap file
+#   If mode != "null", this is a must.
+output = "../data/records.bin"
+
+# Output mode
+#   Either be "null", "binary", "txt" or "pcap"
+mode = "binary"
+
+# (Conditionally Optional) Output format
+#   If mode equals "binary" or "txt", this is a must.
+format = [["flowkey", "padding", "timestamp", "length", "padding"],
+          [13,         3,         8,           2,        6        ]]

@@ -27,3 +27,6 @@ CMakeCache.txt
 
 # Doxyfile files
 /Doxyfile
+
+# Apple Mac
+/.DS_Store
