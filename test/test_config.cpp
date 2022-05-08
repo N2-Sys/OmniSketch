@@ -55,6 +55,10 @@ void TestParseWellFormattedConfig() {
       VERIFY(parser.parseConfig(a, "integer") == true);
       VERIFY((i & 1) ? (a == 2022) : (a == 2020));
       VERIFY(parser.parseConfig(a, "double") == false);
+      size_t aa = 0;
+      VERIFY(parser.parseConfig(aa, "size") == true);
+      VERIFY((i & 1) ? (aa == 10) : (aa == 0x100000000ULL));
+      VERIFY(parser.parseConfig(aa, "double") == false);
 
       double b = 0.0;
       VERIFY(parser.parseConfig(b, "integer") == true);

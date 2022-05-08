@@ -1,14 +1,16 @@
-## OmniSketch
+# OmniSketch
 
-OmniSketch is a C++ application for designing, simulating and testing of the sketch, a specific methodology in online network telemetry. It is designed to be efficient, consistent and easy to use. Currently it is supported on Windows, Linux and MacOS.
+[OmniSketch](https://github.com/N2-Sys/OmniSketch) is a C++ framework for designing, simulating and testing sketch, a specific methodology in online network telemetry that targets at sketching statistical features of streaming data. It is designed to be efficient, consistent and easy to use. Currently it is supported on Windows, Linux and MacOS.
 
 ## Feature Overview
 
-- **A wide variety of sketches** are implemented with minimal code. Some complicated sketches, such as ElasticSketch, are supported. For a full list of the sketches available, check [this table](#table).
-- **A auto-testing framework** that tests and collects sketch performance on a given streaming data.
-- **Counter Hierarchy framework** enables much more efficient space using through hierarchical counter braiding.
-- **Pcap Parser** parses `.pcap` and `.pcapng` files to generate streaming data that is usable with OmniSketch. Data format of a streaming data record is also configurable.
-- **Multiple definitions of a flowkey** are available. 1-tuple, 2-tuple and 5-tuple are supported.
+- **A wide variety of sketches** are implemented with minimal code. Some complicated sketches, such as ElasticSketch, are also supported. For a full list of the sketches available, check [this table](#table).
+- **An auto-testing framework** that tests sketch performance and collects interested metrics with minimal configurations.
+- **A generally applicable Counter Hierarchy framework** that enables a tremendous amount of space saving via hierarchical counter braiding, applicable to all value-based counters.
+- **Pcap Parser** parses `.pcap` and `.pcapng` files to generate streaming data that interoperates with OmniSketch. Data format of a streaming data record is customizable.
+- **Flexible definitions of a flowkey** are available. Currently, 1-tuple, 2-tuple and 5-tuple are supported.
+- **No redundant code has to be rewritten.** Designer can focus mainly on the sketch algorithm, and let the framework do the rest, e.g. data parsing and testing details.
+- Since sketching algorithms vary a lot, the framework includes only the most common methods. Do not panic! You can always write inject your own code and tell the framework to run it.
 
 ## Download & Build
 
@@ -19,79 +21,39 @@ cd OmniSketch
 mkdir build; cd build
 ```
 
-The project is built with CMake. If you would love to build up an additional module of PcapParser, which is capable of parsing `.pcap/.pcapng` files in quite a versatile manner and interoperable with OmniSketch, please
+The project is built with CMake. If an additional module of PcapParser, which is capable of parsing `.pcap/.pcapng` files in quite a versatile manner and is interoperable with OmniSketch, is requested, please define the `BUILD_PCAP_PARSER` macro by
 ```shell
 cmake .. -DBUILD_PCAP_PARSER=True
 ```
-Upon defining the `BUILD_PCAP_PARSER` macro like this, CMake automatically checks for [PcapPlusPlus](https://github.com/seladb/PcapPlusPlus) and [pcap](https://www.tcpdump.org) libraries, so MAKE SURE you have installed it in advance. The default included directories of the PcapPlusPlus header files is `/usr/local/include/pcapplusplus`. To change this included path, provide to CMake a new argumnet:
+Upon defining this macro, CMake automatically checks for dependencies on [PcapPlusPlus](https://github.com/seladb/PcapPlusPlus) and [pcap](https://www.tcpdump.org) libraries, so MAKE SURE you have installed these libraries in advance. The default included directory of the PcapPlusPlus header files is `/usr/local/include/pcapplusplus` (which is certainly not true on Windows). To change this default searching path, provide to CMake a new argument:
 ```shell
 cmake .. -DBUILD_PCAP_PARSER=True -DPCPP_INCLUDE_PATH=[path on your system]
 # e.g. cmake .. -DBUILD_PCAP_PARSER=True -DPCPP_INCLUDE_PATH=/usr/local/include/pcapplusplus
 ```
-In the simplest case, if PcapParser is not in need, you can just build with
+In the simplest case, if PcapParser is not requested, the `PcapPlusPlus` and `pcap` libraries are never needed, so you can just build with
 ```shell
 cmake ..
 ```
-Note that now the `PcapPlusPlus` and `pcap` libraries are not needed.
+Gee, it saves you a lot of work!
 
 ## Design New Sketches
 
-Overview:
+Here is an overview of how to design your own sketch in OmniSketch. For a detailed description, please check [the docs]().
 
-1. Sketch algorithm is in `src/sketch/`. 
-2. Sketch testing procedure is defined in `src/sketch_test/`.
-3. Add a new sketch target in `CMakeLists.txt`.
+1. Sketch algorithm should be in `src/sketch/`. Suppose you add a file `XXX.h` to this directory.
+2. Sketch testing procedure is defined in `src/sketch_test/`. You should name your testing file as `XXXTest.h` accordingly.
+3. Add a new sketch target in `CMakeLists.txt`. This is done in a single line `add_user_sketch(YYY XXX)`.
 4. Write down the sketch config in a toml file. The default config file is `src/sketch_config.toml`. All the sketch configs are user-defined, but typically should contain (though not required)
   - Streaming data file
   - Format of the streaming data record
   - Metrics measured during testing
   - Sketch parameters
   - Other user-defined configs
-5. Goto the building directory `build`, cmake and make it. (CMake is needed since a new target is just added) From the time on, if the code is modified, only `make` is needed.
-6. At this point, the sketch is compiled and linked. It is callable from terminal with `-c config` option and will display streaming data info and print the sketch statistics.
+> It is the user who controls what, where and how to parse in the config file. Omnisketch imposes no restrictions on how you organize the toml file and what you put in there. Fortunately, OmniSketch provides a rich set of tools to help you do it in just a couple of lines.
 
-Details: (Use Count Min Sketch as an example)
-
-> Suppose you decide to implement CM Sketch. For the final executable you decided to name it `CM` for brevity, so every time you can run `./CM [-c config]` to call it from the `build/` directory. You want when the sketch is created, it uses `data/records.bin` as the input and has 5 rows of counters with each row 80,001 counters. Furthermore, suppose the test code you write for CM first updates records sequentially into the sketch, and then for every flowkey queries the sketch for flow size. You want the update rate and the query rate, ARE (Average Relative Error) & AAE (Average Absolute Error) be measured. Finally, you want to config whether or not flow size is counted in packet or in byte. 
-
-1. You implement Count Min Sketch in a file `src/sketch/{name}.h`. Say, `src/sketch/CMSketch.h`
-2. You write your Count Min Sketch code. Since you have name the sketch file as `CMSketch.h`, the test file should be `src/sketch_test/CMSketchTest.h`. In general, `src/sketch_test/{name}Test.h`
-3. In `CMakeLists.txt`, you append a line `add_user_sketch(CM {name})`. In our example, it is `add_user_sketch(CM CMSketch)`.
-4. The config file you use, let's say, is `src/sketch_config.toml`. You may write these configs down as
-```toml
-[CM] # Count Min Sketch
-
-  [CM.para]
-  depth = 5
-  width = 80001
-
-  [CM.data]
-  # Whether count in 
-  cnt_method = "InPacket"
-  # Run from `build/`
-  data = "../data/records.bin"
-  format = [["flowkey", "padding", "timestamp", "length", "padding"], [13, 3, 8, 2, 6]]
-
-  [CM.test]
-  update = ["RATE"]
-  query = ["RATE", "ARE", "AAE"]
-```
-Or, if you prefer a flattened organization, the following is typically OK.
-```toml
-[CM] # Count Min Sketch
-
-depth = 5
-width = 80001
-cnt_method = "InPacket"
-data = "../data/records.bin"
-format = [["flowkey", "padding", "timestamp", "length", "padding"], [13, 3, 8, 2, 6]]
-update = ["RATE"]
-query = ["RATE", "ARE", "AAE"]
-```
-No matter how you write the config, in the test code you have to fetch these configuartions via `ConfigParser` accordingly.
-5. Goto `build/`. You want the pcap parser be built, so you run `cmake .. -DBUILD_PCAP_PARSER=True`. If no error prompts, it is the time for `make`.
-6. In `build/` you see a file `CM`. Now you run `./CM -c ../src/sketch_config.toml` and it outputs, say:
-```
+5. Goto the building directory `build/`, cmake and `make` it. (CMake is needed since a new target has just been added) From the time on, if the code is modified, only `make` is needed.
+6. At this point, the sketch is compiled and linked. It is callable from the terminal with `./YYY -c config`. If no `-c` option is provided, `src/sketch_config.toml` is assumed to be the default config file. A possible output of Count Min Sketch runs as follows:
+```shell
 terminal> ./CM -c ../src/sketch_config.toml
    INFO| Loading config from ../src/sketch_config.toml... @utils.cpp:62
 VERBOSE| Config loaded. @utils.cpp:76
@@ -107,6 +69,8 @@ DataSet: 1090120 records with 99999 keys (../data/records.bin)
       Query AAE: 0.252943
 ============================================
 ```
+7. From now on, every time your sketch is about to run on different data and formats, or to collect some new statistics, all you have to do is simply modifying the config file. If the template header should be changed, you have to `make` a new driver.
+
 
 ## API Docs
 Please follow [this link]().

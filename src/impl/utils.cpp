@@ -121,6 +121,20 @@ bool ConfigParser::parse(int32_t &arg, const std::string_view arg_name,
   return true;
 }
 
+bool ConfigParser::parse(size_t &arg, const std::string_view arg_name,
+                         const bool error_logging) const {
+  toml::node_view term = node[arg_name];
+  if (!term.is_integer()) {
+    if (error_logging) {
+      LOG(ERROR,
+          fmt::format("Fail to parse \"{}\" as type `size_t`.", arg_name));
+    }
+    return false;
+  }
+  arg = static_cast<size_t>(term.as_integer()->get());
+  return true;
+}
+
 bool ConfigParser::parse(double &arg, const std::string_view arg_name,
                          const bool error_logging) const {
   toml::node_view term = node[arg_name];
@@ -176,6 +190,34 @@ bool ConfigParser::parse(std::vector<int32_t> &arg,
       return false;
     }
     arg.push_back(static_cast<int32_t>(elem.as_integer()->get()));
+  }
+  return true;
+}
+
+bool ConfigParser::parse(std::vector<size_t> &arg,
+                         const std::string_view arg_name,
+                         const bool error_logging) const {
+  arg.clear();
+
+  toml::node_view term = node[arg_name];
+  if (!term.is_array()) {
+    if (error_logging) {
+      LOG(ERROR, fmt::format("Fail to parse \"{}\" as a vector.", arg_name));
+    }
+    return false;
+  }
+  toml::array *arr = term.as_array();
+  for (toml::node &elem : *arr) {
+    if (!elem.is_integer()) {
+      if (error_logging) {
+        LOG(ERROR,
+            fmt::format(
+                "Fail to parse some elements in \"{}\" as type `size_t`.",
+                arg_name));
+      }
+      return false;
+    }
+    arg.push_back(static_cast<size_t>(elem.as_integer()->get()));
   }
   return true;
 }

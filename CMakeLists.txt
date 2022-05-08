@@ -106,3 +106,6 @@ add_user_sketch(BF BloomFilter)
 
 # Count Min Sketch
 add_user_sketch(CM CMSketch)
+
+# CH-optimized Count Min Sketch
+add_user_sketch(CHCM CHCMSketch)

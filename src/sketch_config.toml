@@ -39,3 +39,8 @@
   [CM.test]
   update = ["RATE"]
   query = ["RATE", "ARE", "AAE"]
+
+  [CM.ch]
+  cnt_no_ratio = 0.3
+  width_cnt = [10, 7]
+  no_hash = [3]
