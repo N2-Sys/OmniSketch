@@ -427,7 +427,6 @@ int32_t PcapParser<key_len>::dumpPcapPacketInPcap() const {
   if (!reader) {
     throw std::runtime_error("Runtime Error: No pcap file is opened.");
   }
-  pcpp::PcapFileWriterDevice pcapWriter("output.pcap", );
 }
 
 } // namespace OmniSketch::Util

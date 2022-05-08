@@ -110,6 +110,13 @@ class ConfigParser {
    *
    * @return `true` on success; `false` otherwise.
    */
+  bool parse(size_t &arg, const std::string_view arg_name,
+             const bool error_logging) const;
+  /**
+   * @brief Workhouse of parseConfig
+   *
+   * @return `true` on success; `false` otherwise.
+   */
   bool parse(double &arg, const std::string_view arg_name,
              const bool error_logging) const;
   /**
@@ -125,6 +132,13 @@ class ConfigParser {
    * @return `true` on success; `false` otherwise.
    */
   bool parse(std::vector<int32_t> &arg, const std::string_view arg_name,
+             const bool error_logging) const;
+  /**
+   * @brief Workhouse of parseConfig
+   *
+   * @return `true` on success; `false` otherwise.
+   */
+  bool parse(std::vector<size_t> &arg, const std::string_view arg_name,
              const bool error_logging) const;
   /**
    * @brief Workhouse of parseConfig
@@ -217,10 +231,12 @@ public:
    *
    * @tparam T        supported types:
    * - int32_t
+   * - size_t
    * - double
    * - bool
    * - std::string
    * - std::vector<int32_t>
+   * - std::vector<size_t>
    * - std::vector<double>
    * - std::vector<std::string>
    * - toml::array
