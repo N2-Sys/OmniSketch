@@ -102,6 +102,11 @@ public:
    */
   [[nodiscard]] int32_t getRecordLength() const { return total; }
   /**
+   * @brief Get the key length
+   *
+   */
+  [[nodiscard]] int32_t getKeyLength() const { return length[KEYLEN]; }
+  /**
    * @brief Construct by specifications in config file
    *
    * @details It is suggested that `toml::array` is fetched via a call to
