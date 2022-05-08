@@ -10,9 +10,9 @@
 
 namespace OmniSketch::Test {
 
-MetricVec::MetricVec(const std::string_view &file_path,
-                     const std::string_view &test_path,
-                     const std::string_view &term_name) {
+MetricVec::MetricVec(const std::string_view file_path,
+                     const std::string_view test_path,
+                     const std::string_view term_name) {
 
   // open config
   Util::ConfigParser parser(file_path);

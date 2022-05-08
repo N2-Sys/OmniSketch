@@ -81,8 +81,8 @@ ConfigParser::ConfigParser(const std::string_view config_file) {
 
 bool ConfigParser::succeed() const { return is_parsed; }
 
-void ConfigParser::setWorkingNode(const std::string_view &path) {
-  auto split = [](const std::string_view &strv) {
+void ConfigParser::setWorkingNode(const std::string_view path) {
+  auto split = [](const std::string_view strv) {
     std::vector<std::string_view> output;
     size_t first = 0;
     while (first < strv.size()) {

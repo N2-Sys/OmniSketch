@@ -211,7 +211,7 @@ public:
    * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    *
    */
-  void setWorkingNode(const std::string_view &path = "");
+  void setWorkingNode(const std::string_view path = "");
   /**
    * @brief Get the configuration and store it directly into the object.
    *

@@ -102,9 +102,8 @@ public:
    * The proper way of creating an MetricVec is `("toml.toml", "MySketch.test",
    * "insert")`.
    */
-  MetricVec(const std::string_view &file_path,
-            const std::string_view &test_path,
-            const std::string_view &term_name);
+  MetricVec(const std::string_view file_path, const std::string_view test_path,
+            const std::string_view term_name);
   /**
    * @brief Whether a metric is specified
    *
@@ -316,11 +315,11 @@ template <int32_t key_len, typename T> void TestBase<key_len, T>::show() const {
       assert(vec.at(SIZE).type() == typeid(size_t));
       size_t size = boost::any_cast<size_t>(vec.at(SIZE));
       if (size < 1024) {
-        fmt::print("{:>15}: {:d} B\n", "Mem Foorprint", size);
+        fmt::print("{:>15}: {:d} B\n", "Mem Footprint", size);
       } else if (size < (1 << 20)) {
-        fmt::print("{:>15}: {:g} kB\n", "Mem Foorprint", size / 1024.0);
+        fmt::print("{:>15}: {:g} kB\n", "Mem Footprint", size / 1024.0);
       } else {
-        fmt::print("{:>15}: {:g} MB\n", "Mem Foorprint",
+        fmt::print("{:>15}: {:g} MB\n", "Mem Footprint",
                    size / 1024.0 / 1024.0);
       }
     }
