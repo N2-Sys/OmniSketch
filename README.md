@@ -36,6 +36,16 @@ cmake ..
 ```
 Gee, it saves you a lot of work!
 
+To verify that you indeed build a runnable copy of OmniSketch, in the same directory (`build/`) run
+```shell
+ctest
+```
+If you see the line 
+```
+100% tests passed, 0 tests failed out of 7
+```
+ you can proceed to poke around OmniSketch and design your new sketches.
+
 ## Design New Sketches
 
 Here is an overview of how to design your own sketch in OmniSketch. For a detailed description, please check [the docs]().
