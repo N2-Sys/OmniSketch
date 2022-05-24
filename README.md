@@ -1,6 +1,6 @@
 # OmniSketch
 
-[OmniSketch](https://github.com/N2-Sys/OmniSketch) is a C++ framework for designing, simulating and testing sketch, a specific methodology in online network telemetry that targets at sketching statistical features of streaming data. It is designed to be efficient, consistent and easy to use. Currently it is supported on Windows, Linux and MacOS.
+[OmniSketch](https://n2-sys.github.io/OmniSketch/md__r_e_a_d_m_e.html) is a C++ framework for designing, simulating and testing sketch, a telemetry technique that aims at collecting streaming statistics. It is designed to be efficient, consistent and easy to use. Currently it is supported on Windows, Linux and MacOS.
 
 ## Feature Overview
 
@@ -48,7 +48,7 @@ If you see the line
 
 ## Design New Sketches
 
-Here is an overview of how to design your own sketch in OmniSketch. For a detailed description, please check [the docs]().
+Here is an overview of how to design your own sketch in OmniSketch. For a detailed description, please check [the docs](https://n2-sys.github.io/OmniSketch/overview.html).
 
 1. Sketch algorithm should be in `src/sketch/`. Suppose you add a file `XXX.h` to this directory.
 2. Sketch testing procedure is defined in `src/sketch_test/`. You should name your testing file as `XXXTest.h` accordingly.
@@ -83,7 +83,7 @@ DataSet: 1090120 records with 99999 keys (../data/records.bin)
 
 
 ## API Docs
-Please follow [this link]().
+Please follow [this link](https://n2-sys.github.io/OmniSketch/annotated.html).
 
 
 ## Tables of Sketches
