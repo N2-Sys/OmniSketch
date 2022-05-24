@@ -21,6 +21,13 @@
   $(document).ready(function() { init_search(); });
 /* @license-end */
 </script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -193,7 +200,7 @@ Reminder</h2>
 <li><code>std::vector&lt;double&gt;</code></li>
 <li><code>std::vector&lt;std::string&gt;</code></li>
 <li><code>toml::array</code> <blockquote class="doxtable">
-<p>But it does <em>NOT</em> mean that any type other than these cannot be parsed. Take a <img class="formulaInl" alt="$M\times N$" src="form_5.png"/> matrix for example. In <a class="el" href="namespace_omni_sketch.html">OmniSketch</a>, you can parse it with a <code>toml::array</code>, which represents an object containing <img class="formulaInl" alt="$M$" src="form_6.png"/> inner <code>toml::array</code>, which in turn contains <img class="formulaInl" alt="$N$" src="form_7.png"/> elements each. From the returning <code>toml::array</code>, you may call underlying API documented in <a href="https://marzer.github.io/tomlplusplus/">tomlplusplus</a> to get the matrix elements one by one. </p>
+<p>But it does <em>NOT</em> mean that any type other than these cannot be parsed. Take a \(M\times N\) matrix for example. In <a class="el" href="namespace_omni_sketch.html">OmniSketch</a>, you can parse it with a <code>toml::array</code>, which represents an object containing \(M\) inner <code>toml::array</code>, which in turn contains \(N\) elements each. From the returning <code>toml::array</code>, you may call underlying API documented in <a href="https://marzer.github.io/tomlplusplus/">tomlplusplus</a> to get the matrix elements one by one. </p>
 </blockquote>
 </li>
 </ul>
@@ -205,7 +212,7 @@ Reminder</h2>
 Data Format</h1>
 <p>Data format controls the output format of pcapparser and the way <a class="el" href="namespace_omni_sketch.html">OmniSketch</a> interpreting the input binary file. It specifies which fields are in a packet record, the length of each field, and the order in which they are deserialized. A valid data format runs as follows. It is excerpted from <a href="https://github.com/N2-Sys/OmniSketch/blob/main/src/sketch_config.toml">sketch_config.toml</a>. </p><div class="fragment"><div class="line">format = [[&quot;flowkey&quot;, &quot;padding&quot;, &quot;timestamp&quot;, &quot;length&quot;, &quot;padding&quot;],</div>
 <div class="line">          [13,        3,         8,           2,        6]]</div>
-</div><!-- fragment --><p>It says that each packet record in <code>.bin</code> takes <img class="formulaInl" alt="$13+3+8+2+6=32$" src="form_8.png"/> bytes, with the first 13 bytes being the flowkey, then following a 3-byte padding and so on. Its semantics is quite straightforward, isn't it?</p>
+</div><!-- fragment --><p>It says that each packet record in <code>.bin</code> takes \(13+3+8+2+6=32\) bytes, with the first 13 bytes being the flowkey, then following a 3-byte padding and so on. Its semantics is quite straightforward, isn't it?</p>
 <h2><a class="anchor" id="syntaxdataformat"></a>
 Syntax</h2>
 <p>You may be wondering the determining rule of a valid data format expression in toml, and it is what we now touch upon. Though a context-free grammar (Yup, a context-sensitive grammar overpowers here. This is a mild exercise in automata theory.) suffices to express this rule, we find this description rather tricky and tedious, so we recede to a description in natural language here.</p>
@@ -247,7 +254,7 @@ Read Stream Data</h2>
 <h2><a class="anchor" id="iteratorstreamdata"></a>
 Iterators</h2>
 <p>Conceptually speaking, streaming data is nothing but a sequence of packets, so it is no wonder that <a class="el" href="class_omni_sketch_1_1_data_1_1_stream_data.html">StreamData</a> supports random-access iterator. Moreover, the interface of getting an iterator out of this class resembles that of STL. There you fetch the size via <a class="el" href="class_omni_sketch_1_1_data_1_1_stream_data.html#ac29c3bd32c709b3382662ae713dc4a2b">size()</a>, get a beginning or endding iterator via <a class="el" href="class_omni_sketch_1_1_data_1_1_stream_data.html#a98600c09ad55ac6603ab9b5958fac821">begin()</a> and <a class="el" href="class_omni_sketch_1_1_data_1_1_stream_data.html#a47fd80f14e8ca1fc992a56f04aeb7bee">end()</a>. In case that you would love to access a record in between, make a call to <a class="el" href="class_omni_sketch_1_1_data_1_1_stream_data.html#a94d28bdd79c4cd25b476a9a501e89645">diff()</a>.</p>
-<p>Two such iterators <img class="formulaInl" alt="$\langle p,q\rangle$" src="form_9.png"/>, with proper order, represents a range of data <img class="formulaInl" alt="$[p,q)$" src="form_10.png"/>. Note that the range is left-included and right-excluded. This chunk of data is always what your sketch are to dispose of.</p>
+<p>Two such iterators \(\langle p,q\rangle\), with proper order, represents a range of data \([p,q)\). Note that the range is left-included and right-excluded. This chunk of data is always what your sketch are to dispose of.</p>
 <h1><a class="anchor" id="gndtruth"></a>
 Ground Truth</h1>
 <p>Most <a class="el" href="overview.html#metrics">metrics</a> compare the result of a query to sketch with the ground truth. That is basically why you have to maintain the real-world answer from time to time. Luckily, in <a class="el" href="namespace_omni_sketch.html">OmniSketch</a> this is done by the class <a class="el" href="class_omni_sketch_1_1_data_1_1_gnd_truth.html">GndTruth</a>. It has two template parameters, first the length of flowkey and then a counter type. Throughout the project, we encourage the practice of explicitising length of every built-in numeric type, like <code>int32_t</code> in lieu of <code>int</code>, <code>uint64_t</code> in lieu of <code>unsigned long long</code>.</p>

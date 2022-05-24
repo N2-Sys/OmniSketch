@@ -21,6 +21,13 @@
   $(document).ready(function() { init_search(); });
 /* @license-end */
 </script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -97,7 +104,7 @@ $(document).ready(function(){initNavTree('md__r_e_a_d_m_e.html',''); initResizab
 <div class="title"><a class="el" href="namespace_omni_sketch.html">OmniSketch</a> </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a href="https://github.com/N2-Sys/OmniSketch">OmniSketch</a> is a C++ framework for designing, simulating and testing sketch, a specific methodology in online network telemetry that targets at sketching statistical features of streaming data. It is designed to be efficient, consistent and easy to use. Currently it is supported on Windows, Linux and MacOS.</p>
+<div class="textblock"><p><a href="https://n2-sys.github.io/OmniSketch/md__r_e_a_d_m_e.htmlhttps://github.com/N2-Sys/OmniSketch">OmniSketch</a> is a C++ framework for designing, simulating and testing sketch, a telemetry technique that aims at collecting streaming statistics. It is designed to be efficient, consistent and easy to use. Currently it is supported on Windows, Linux and MacOS.</p>
 <h1><a class="anchor" id="autotoc_md1"></a>
 Feature Overview</h1>
 <ul>
@@ -124,7 +131,7 @@ Download &amp; Build</h1>
 </div><!-- fragment --><p>you can proceed to poke around <a class="el" href="namespace_omni_sketch.html">OmniSketch</a> and design your new sketches.</p>
 <h1><a class="anchor" id="autotoc_md3"></a>
 Design New Sketches</h1>
-<p>Here is an overview of how to design your own sketch in <a class="el" href="namespace_omni_sketch.html">OmniSketch</a>. For a detailed description, please check [the docs]().</p>
+<p>Here is an overview of how to design your own sketch in <a class="el" href="namespace_omni_sketch.html">OmniSketch</a>. For a detailed description, please check <a href="https://n2-sys.github.io/OmniSketch/overview.html">the docs</a>.</p>
 <ol type="1">
 <li>Sketch algorithm should be in <code>src/sketch/</code>. Suppose you add a file <code>XXX.h</code> to this directory.</li>
 <li>Sketch testing procedure is defined in <code>src/sketch_test/</code>. You should name your testing file as <code>XXXTest.h</code> accordingly.</li>
@@ -160,7 +167,7 @@ Design New Sketches</h1>
 </ol>
 <h1><a class="anchor" id="autotoc_md4"></a>
 API Docs</h1>
-<p>Please follow [this link]().</p>
+<p>Please follow <a href="https://n2-sys.github.io/OmniSketch/annotated.html">this link</a>.</p>
 <h1><a class="anchor" id="autotoc_md5"></a>
 Tables of Sketches</h1>
 <p>These are the sketches already implemented and tested.</p>

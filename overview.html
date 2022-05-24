@@ -21,6 +21,13 @@
   $(document).ready(function() { init_search(); });
 /* @license-end */
 </script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -111,23 +118,23 @@ Key Concepts</h1>
 <h2><a class="anchor" id="flow"></a>
 Flow</h2>
 <p>Flow is the minimal unit that we measure in the streaming scenario. Each packet transmitted in the network, no matter what it layer-2 procotol is or how many bits it have, belongs to a unique flow. Each flow marks one specific connection between a client and a server, so it always lasts for some time and its liveness is manifested by nothing but a series of packets that shift between the source and destination. The reason why we are only interested in measuring a flow, instead of any packets alone, should now be clear: The long-term QoS (Quality of Service) is what we ultimately care about.</p>
-<p>The definition of a flow, as you may have expected, is quite flexible. Depending on the usage, one defines a flow by a set of fields in headers at various layers. For example, if you are to detect the status of a Internet host, you may just group all packets emanating from that host into a single flow. I.e., the flow is given by a 1-tuple <img class="formulaInl" alt="$\langle \textrm{src IP}\rangle$" src="form_0.png"/>. But to achieve a finer granularity on latency per host pair, one may choose a 2-tuple <img class="formulaInl" alt="$\langle \textrm{src IP}, \textrm{dst IP}\rangle$" src="form_1.png"/> as the identification of a flow. But this is not the end. Since the transport layer protocol can indeed impact the user exprience of a flow by introducing congestion control mechanism or being endowed with a level of priority when its packets are queued, sometimes one takes a 5-tuple definition <img class="formulaInl" alt="$\langle \textrm{src IP}, \textrm{dst IP}, \textrm{src port}, \textrm{dst port}, \textrm{layer-4 protocol}\rangle$" src="form_2.png"/>.</p>
+<p>The definition of a flow, as you may have expected, is quite flexible. Depending on the usage, one defines a flow by a set of fields in headers at various layers. For example, if you are to detect the status of a Internet host, you may just group all packets emanating from that host into a single flow. I.e., the flow is given by a 1-tuple \(\langle \textrm{src IP}\rangle\). But to achieve a finer granularity on latency per host pair, one may choose a 2-tuple \(\langle \textrm{src IP}, \textrm{dst IP}\rangle\) as the identification of a flow. But this is not the end. Since the transport layer protocol can indeed impact the user exprience of a flow by introducing congestion control mechanism or being endowed with a level of priority when its packets are queued, sometimes one takes a 5-tuple definition \(\langle \textrm{src IP}, \textrm{dst IP}, \textrm{src port}, \textrm{dst port}, \textrm{layer-4 protocol}\rangle\).</p>
 <p>All the three versions of definition aforementioned are supported in <a class="el" href="namespace_omni_sketch.html">OmniSketch</a>. The use of these definitions are so prevalent in practice that <a class="el" href="namespace_omni_sketch.html">OmniSketch</a> currently only considers to support these three. You are highly likely to be content with what we have offered so far, but in case that you face inconvenience, please do inform us via email or github. For clarity, we summarize the definition of a flow as follows:</p>
 <table class="markdownTable">
 <tr class="markdownTableHead">
 <th class="markdownTableHeadLeft">Definition </th><th class="markdownTableHeadLeft">Length of the Identification  </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyLeft"><img class="formulaInl" alt="$\langle \textrm{src IP}\rangle$" src="form_0.png"/> </td><td class="markdownTableBodyLeft">4  </td></tr>
+<td class="markdownTableBodyLeft">\(\langle \textrm{src IP}\rangle\) </td><td class="markdownTableBodyLeft">4  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyLeft"><img class="formulaInl" alt="$\langle \textrm{src IP}, \textrm{dst IP}\rangle$" src="form_1.png"/> </td><td class="markdownTableBodyLeft">8 (4+4)  </td></tr>
+<td class="markdownTableBodyLeft">\(\langle \textrm{src IP}, \textrm{dst IP}\rangle\) </td><td class="markdownTableBodyLeft">8 (4+4)  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyLeft"><img class="formulaInl" alt="$\langle \textrm{src IP}, \textrm{dst IP}, \textrm{src port}, \textrm{dst port}, \textrm{layer-4 protocol}\rangle$" src="form_2.png"/> </td><td class="markdownTableBodyLeft">13 (4+4+2+2+1)  </td></tr>
+<td class="markdownTableBodyLeft">\(\langle \textrm{src IP}, \textrm{dst IP}, \textrm{src port}, \textrm{dst port}, \textrm{layer-4 protocol}\rangle\) </td><td class="markdownTableBodyLeft">13 (4+4+2+2+1)  </td></tr>
 </table>
 <p>Flow, from a different angle, is also what separates the data and the algorithm. Be aware that the raw <code>.pcap</code> or <code>.pcapng</code> file is not usable with <a class="el" href="namespace_omni_sketch.html">OmniSketch</a>, since such file (usually generated by tools like <a href="https://www.wireshark.org/">Wireshark</a> or <a href="https://www.tcpdump.org/">tcpdump</a>) is typically large and contains so many uninterested content such as the application layer payload and pcap-specific <a href="https://tools.ietf.org/id/draft-gharris-opsawg-pcap-00.html">packet records</a>. So we add an additional model here, which is properly named as PcapParser, that can be customized to consume a capture file and output in a binary format a succinct file comprised of only packet length, timestamp and flow key information. Any point since <a class="el" href="namespace_omni_sketch.html">OmniSketch</a> is running, all it knows comes from that binary file.</p>
 <p>We will not digress to the usage of PcapParser right now. Desultory readers may just skip to read the part on PcapParser.</p>
 <h2><a class="anchor" id="metrics"></a>
 Metrics</h2>
-<p>From what we care about the flow comes the notion of metrics. Metrics are exactly what we want to get out of sketch algorithm eventually. Collecting information per packet is formidable given the line rate and link bandwidth, and is also less intuitive since otherwise, there were going to be too many data! The purpose of a sketch is to provide a summary of the flow-wise statistics, such as flow size (i.e., the number of bytes in the flow), heavy hitters and so on, using only a severely restricted amount of space. Accuracy must be compromised to a pre-agreed <img class="formulaInl" alt="$1-\epsilon$" src="form_3.png"/> rather than <img class="formulaInl" alt="$100\%$" src="form_4.png"/> in compliance with the fundamental theorem of the information theory.</p>
+<p>From what we care about the flow comes the notion of metrics. Metrics are exactly what we want to get out of sketch algorithm eventually. Collecting information per packet is formidable given the line rate and link bandwidth, and is also less intuitive since otherwise, there were going to be too many data! The purpose of a sketch is to provide a summary of the flow-wise statistics, such as flow size (i.e., the number of bytes in the flow), heavy hitters and so on, using only a severely restricted amount of space. Accuracy must be compromised to a pre-agreed \(1-\epsilon\) rather than \(100\%\) in compliance with the fundamental theorem of the information theory.</p>
 <p>Good news is that the metrics we are looking for can be categorized into only a handful of types, and the process of collecting these metrics on various sketches are all alike. This drives development of the auto-testing framework of <a class="el" href="namespace_omni_sketch.html">OmniSketch</a>: Users invoke testing routines in a way they want their sketch to be tested, and each test routine collects a subset of all available metrics inside. User can instruct which metrics to include and display by fiddling with the sketch configurations.</p>
 <p>Here is a complete list of all available metrics in <a class="el" href="namespace_omni_sketch.html">OmniSketch</a>. Again, if you find your interested metric is not included, please contact us via email or github. We would appreciate your feedback.</p>
 <table class="markdownTable">
