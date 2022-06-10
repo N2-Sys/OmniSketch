@@ -109,3 +109,6 @@ add_user_sketch(CM CMSketch)
 
 # CH-optimized Count Min Sketch
 add_user_sketch(CHCM CHCMSketch)
+
+# CU Sketch
+add_user_sketch(CU CUSketch)
