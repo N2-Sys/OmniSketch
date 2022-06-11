@@ -166,8 +166,23 @@ void TestGndTruth() {
     VERIFY(data.end() == data.diff(data.size()));
 
     GndTruth<4, int64_t> gnd_truth_1, gnd_truth_2;
+    VERIFY(gnd_truth_1.empty());
+    VERIFY(gnd_truth_2.empty());
     gnd_truth_1.getGroundTruth(data.begin(), data.end(), InLength);
     gnd_truth_2.getGroundTruth(data.begin(), data.end(), InPacket);
+    VERIFY(!gnd_truth_1.empty());
+    VERIFY(!gnd_truth_2.empty());
+
+    int64_t currrent = std::numeric_limits<int64_t>::max();
+    int64_t maximum = -1;
+    for (const auto &kv : gnd_truth_1) {
+      VERIFY(currrent >= kv.get_right());
+      currrent = kv.get_right();
+      if (maximum < 0)
+        maximum = kv.get_right();
+    }
+    VERIFY(gnd_truth_1.max() == maximum);
+    VERIFY(gnd_truth_1.min() == currrent);
 
     int32_t max = std::numeric_limits<int32_t>::max();
     for (const auto &kv : gnd_truth_1) {
@@ -257,6 +272,8 @@ void TestEqualRange() {
     gnd_truth_1.getGroundTruth(data.begin(), data.end(), InLength);
     gnd_truth_2.getGroundTruth(data.begin(), data.end(), InPacket);
     auto pair = gnd_truth_1.equalRange(4);
+    VERIFY(gnd_truth_1.totalValue() == 27);
+    VERIFY(gnd_truth_2.totalValue() == 12);
 
     std::set<int64_t> tmp1, tmp2 = {0x1F1F1, 0x3F3F3, 0x5F5F5};
     VERIFY(pair.second - pair.first == tmp2.size());
@@ -342,10 +359,12 @@ void TestHeavyHitter() {
       GndTruth<4, int32_t> gnd_truth;
       gnd_truth.getHeavyHitter(data.begin(), data.end(), InLength,
                                thres / 100.0, Percentile);
+      int64_t total = 0;
       for (const auto &kv : map) {
         if (kv.second.first > thres) {
           ans.insert(kv);
           ans[kv.first].second = 0;
+          total += kv.second.first;
         }
       }
       VERIFY(gnd_truth.size() == ans.size());
@@ -354,6 +373,7 @@ void TestHeavyHitter() {
             std::pair<int32_t, int32_t>(kv.get_right(), 0);
       }
       VERIFY(ans == gave);
+      VERIFY(gnd_truth.totalValue() == total);
     }
     for (int thres = 0; thres <= 22; ++thres) {
       ans.clear();
@@ -361,11 +381,12 @@ void TestHeavyHitter() {
       GndTruth<4, int32_t> gnd_truth;
       gnd_truth.getHeavyHitter(data.begin(), data.end(), InPacket, thres / 22.0,
                                Percentile);
-
+      int64_t total = 0;
       for (const auto &kv : map) {
         if (kv.second.second > thres) {
           ans.insert(kv);
           ans[kv.first].first = 0;
+          total += kv.second.second;
         }
       }
       VERIFY(gnd_truth.size() == ans.size());
@@ -374,6 +395,7 @@ void TestHeavyHitter() {
             std::pair<int32_t, int32_t>(0, kv.get_right());
       }
       VERIFY(ans == gave);
+      VERIFY(gnd_truth.totalValue() == total);
     }
   } catch (const std::exception &exp) {
     VERIFY_NO_EXCEPTION(exp);
@@ -415,18 +437,23 @@ void TestHeavyHitter() {
 
     GndTruth<8, int32_t> gnd_truth;
     gnd_truth.getGroundTruth(data.begin(), data.end(), InPacket);
+    VERIFY(gnd_truth.totalValue() == 32);
+
     for (int thres = 0; thres <= 32; ++thres) {
       ans.clear();
       gave.clear();
       GndTruth<8, int32_t> hh;
       hh.getHeavyHitter(gnd_truth, thres / 32.0, Percentile);
+      int64_t total = 0;
 
       for (const auto &kv : map) {
         if (kv.second > thres) {
           ans.insert(kv);
+          total += kv.second;
         }
       }
       VERIFY(ans.size() == hh.size());
+      VERIFY(hh.totalValue() == total);
       for (const auto &kv : hh) {
         gave[*reinterpret_cast<const int64_t *>(kv.get_left().cKey())] =
             kv.get_right();
@@ -475,6 +502,12 @@ void TestHeavyHitter() {
 
     GndTruth<8, int32_t> gnd_truth;
     gnd_truth.getGroundTruth(data.begin(), data.end(), InPacket);
+    int64_t currrent = std::numeric_limits<int64_t>::max();
+    for (const auto &kv : gnd_truth) {
+      VERIFY(currrent >= kv.get_right());
+      currrent = kv.get_right();
+    }
+
     GndTruth<8, int32_t> hh_1, hh_2, hh_3;
     hh_1.getHeavyHitter(gnd_truth, 2, TopK);
     VERIFY(hh_1.size() == 2);
@@ -485,6 +518,12 @@ void TestHeavyHitter() {
           kv.get_right();
     }
     VERIFY(ans == gave);
+    VERIFY(hh_1.totalValue() == 10);
+    currrent = std::numeric_limits<int64_t>::max();
+    for (const auto &kv : hh_1) {
+      VERIFY(currrent >= kv.get_right());
+      currrent = kv.get_right();
+    }
 
     hh_2.getHeavyHitter(gnd_truth, 4, TopK);
     VERIFY(hh_2.size() == 4);
@@ -496,6 +535,12 @@ void TestHeavyHitter() {
           kv.get_right();
     }
     VERIFY(ans == gave);
+    VERIFY(hh_2.totalValue() == 18);
+    currrent = std::numeric_limits<int64_t>::max();
+    for (const auto &kv : hh_2) {
+      VERIFY(currrent >= kv.get_right());
+      currrent = kv.get_right();
+    }
 
     hh_3.getHeavyHitter(gnd_truth, 7, TopK);
     VERIFY(hh_3.size() == 7);
@@ -508,6 +553,12 @@ void TestHeavyHitter() {
           kv.get_right();
     }
     VERIFY(ans == gave);
+    VERIFY(hh_3.totalValue() == 27);
+    currrent = std::numeric_limits<int64_t>::max();
+    for (const auto &kv : hh_3) {
+      VERIFY(currrent >= kv.get_right());
+      currrent = kv.get_right();
+    }
   } catch (const std::exception &exp) {
     VERIFY_NO_EXCEPTION(exp);
   }
@@ -574,6 +625,8 @@ void TestHeavyChanger() {
     gnd_truth_2.getGroundTruth(data.diff(16), data.end(), InPacket);
 
     VERIFY(gnd_truth_1.size() == 9);
+    VERIFY(gnd_truth_1.totalValue() == 16);
+    VERIFY(gnd_truth_2.totalValue() == 16);
     gnd_truth_3.getHeavyChanger(std::move(gnd_truth_1), std::move(gnd_truth_2),
                                 3, TopK);
     ans = std::unordered_map<int32_t, int32_t>({{0x3, 2}, {0x5, 3}, {0x7, 5}});
@@ -586,6 +639,9 @@ void TestHeavyChanger() {
           kv.get_right();
     }
     VERIFY(gave == ans);
+    VERIFY(gnd_truth_1.totalValue() == 0);
+    VERIFY(gnd_truth_2.totalValue() == 16);
+    VERIFY(gnd_truth_3.totalValue() == 10);
 
     GndTruth<4, int32_t> gnd_truth_4, gnd_truth_5, gnd_truth_6;
     gnd_truth_4.getGroundTruth(data.begin(), data.diff(16), InPacket);
@@ -602,6 +658,9 @@ void TestHeavyChanger() {
           kv.get_right();
     }
     VERIFY(gave == ans);
+    VERIFY(gnd_truth_4.totalValue() == 16);
+    VERIFY(gnd_truth_5.totalValue() == 16);
+    VERIFY(gnd_truth_6.totalValue() == 14);
 
   } catch (const std::exception &exp) {
     VERIFY_NO_EXCEPTION(exp);

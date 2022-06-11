@@ -349,6 +349,29 @@ private:
 
 public:
   /**
+   * @brief Return whether the instance is empty
+   *
+   */
+  bool empty() const { return my_map.empty(); }
+  /**
+   * @brief Return the minimum value
+   * @details Calling this function on an empty instance causes undefined
+   * behavior.
+   *
+   */
+  T min() const { return my_map.right.back().get_right(); }
+  /**
+   * @brief Return the maximum value
+   * @details Calling this function on an empty instance causes undefined
+   * behavior.
+   */
+  T max() const { return my_map.right.front().get_right(); }
+  /**
+   * @brief Return the sum of values of all flowkeys
+   *
+   */
+  int64_t totalValue() const { return tot_value; }
+  /**
    * @brief swap content, note that calling histories are swapped as well
    *
    * @param other the other GndTruth instance to be swapped with
