@@ -28,7 +28,8 @@ var hierarchy =
       [ "MySketch< key_len, T >", "class_my_sketch.html", null ],
       [ "OmniSketch::Sketch::CHCMSketch< key_len, no_layer, T, hash_t >", "class_omni_sketch_1_1_sketch_1_1_c_h_c_m_sketch.html", null ],
       [ "OmniSketch::Sketch::CMSketch< key_len, T, hash_t >", "class_omni_sketch_1_1_sketch_1_1_c_m_sketch.html", null ],
-      [ "OmniSketch::Sketch::CUSketch< key_len, T, hash_t >", "class_omni_sketch_1_1_sketch_1_1_c_u_sketch.html", null ]
+      [ "OmniSketch::Sketch::CUSketch< key_len, T, hash_t >", "class_omni_sketch_1_1_sketch_1_1_c_u_sketch.html", null ],
+      [ "OmniSketch::Sketch::HashPipe< key_len, T, hash_t >", "class_omni_sketch_1_1_sketch_1_1_hash_pipe.html", null ]
     ] ],
     [ "OmniSketch::Sketch::SketchBase< key_len >", "class_omni_sketch_1_1_sketch_1_1_sketch_base.html", [
       [ "OmniSketch::Sketch::BloomFilter< key_len, hash_t >", "class_omni_sketch_1_1_sketch_1_1_bloom_filter.html", null ]
@@ -37,7 +38,8 @@ var hierarchy =
     [ "OmniSketch::Test::TestBase< key_len, T >", "class_omni_sketch_1_1_test_1_1_test_base.html", [
       [ "OmniSketch::Test::CHCMSketchTest< key_len, no_layer, T, hash_t >", "class_omni_sketch_1_1_test_1_1_c_h_c_m_sketch_test.html", null ],
       [ "OmniSketch::Test::CMSketchTest< key_len, T, hash_t >", "class_omni_sketch_1_1_test_1_1_c_m_sketch_test.html", null ],
-      [ "OmniSketch::Test::CUSketchTest< key_len, T, hash_t >", "class_omni_sketch_1_1_test_1_1_c_u_sketch_test.html", null ]
+      [ "OmniSketch::Test::CUSketchTest< key_len, T, hash_t >", "class_omni_sketch_1_1_test_1_1_c_u_sketch_test.html", null ],
+      [ "OmniSketch::Test::HashPipeTest< key_len, T, hash_t >", "class_omni_sketch_1_1_test_1_1_hash_pipe_test.html", null ]
     ] ],
     [ "OmniSketch::Test::TestBase< key_len >", "class_omni_sketch_1_1_test_1_1_test_base.html", [
       [ "OmniSketch::Test::BloomFilterTest< key_len, hash_t >", "class_omni_sketch_1_1_test_1_1_bloom_filter_test.html", null ]

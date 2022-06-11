@@ -1,15 +1,10 @@
 var searchData=
 [
-  ['testbase_370',['TestBase',['../class_omni_sketch_1_1_test_1_1_test_base.html#a1c2677f12942453b549ff0d572896bf9',1,'OmniSketch::Test::TestBase']]],
-  ['testcompiletimeendian_371',['TestCompileTimeEndian',['../test__endian_8cpp.html#a2812aa76e5d56b4f0ea22a31fd9ca2cf',1,'test_endian.cpp']]],
-  ['testheavychanger_372',['testHeavyChanger',['../class_omni_sketch_1_1_test_1_1_test_base.html#a0d55de36f2a93b52069f8475bbe23804',1,'OmniSketch::Test::TestBase']]],
-  ['testheavyhitter_373',['testHeavyHitter',['../class_omni_sketch_1_1_test_1_1_test_base.html#a28810d78eddb56cc366bb440e5206585',1,'OmniSketch::Test::TestBase']]],
-  ['testinsert_374',['testInsert',['../class_omni_sketch_1_1_test_1_1_test_base.html#aacfc4bbae570f916c5c87c16b06a96da',1,'OmniSketch::Test::TestBase']]],
-  ['testlookup_375',['testLookup',['../class_omni_sketch_1_1_test_1_1_test_base.html#aec1628a80bf98f95c8463a58dab82415',1,'OmniSketch::Test::TestBase']]],
-  ['testquery_376',['testQuery',['../class_omni_sketch_1_1_test_1_1_test_base.html#a5e3c9d462ab3d771353f043e47634319',1,'OmniSketch::Test::TestBase']]],
-  ['testruntimeendian_377',['TestRunTimeEndian',['../test__endian_8cpp.html#adb1823b9de216f8efc5f0b4d9ff4595a',1,'test_endian.cpp']]],
-  ['testsize_378',['testSize',['../class_omni_sketch_1_1_test_1_1_test_base.html#a7c8d4ec8b257ee76670d6e5274f656c0',1,'OmniSketch::Test::TestBase']]],
-  ['testtest_379',['TestTest',['../test__sketch_8cpp.html#afa01d99718d02ae5771f88c13f8fb539',1,'test_sketch.cpp']]],
-  ['testupdate_380',['testUpdate',['../class_omni_sketch_1_1_test_1_1_test_base.html#a98d8e9d0a0f0aca9fe14c5ee6ac668c0',1,'OmniSketch::Test::TestBase']]],
-  ['totalvalue_381',['totalValue',['../class_omni_sketch_1_1_data_1_1_gnd_truth.html#ad1917d3e299dda9619a95ec4e53305d5',1,'OmniSketch::Data::GndTruth']]]
+  ['setbit_377',['setBit',['../class_omni_sketch_1_1_flow_key.html#a8be828ab86b9ae228000d1314811940a',1,'OmniSketch::FlowKey']]],
+  ['setworkingnode_378',['setWorkingNode',['../class_omni_sketch_1_1_util_1_1_config_parser.html#a7bc9a0341c81199ed989c6c2a0d2f3e4',1,'OmniSketch::Util::ConfigParser']]],
+  ['show_379',['show',['../class_omni_sketch_1_1_test_1_1_test_base.html#a287ebe64a56c28a64cd913b2ef30602d',1,'OmniSketch::Test::TestBase']]],
+  ['size_380',['size',['../class_omni_sketch_1_1_data_1_1_stream_data.html#ac29c3bd32c709b3382662ae713dc4a2b',1,'OmniSketch::Data::StreamData::size()'],['../class_omni_sketch_1_1_data_1_1_gnd_truth.html#adc75d46980c6a136dd59eef4b1e0065e',1,'OmniSketch::Data::GndTruth::size()'],['../class_omni_sketch_1_1_data_1_1_estimation.html#a65a9a09eeb3e3b32f2b274910c9d2968',1,'OmniSketch::Data::Estimation::size()'],['../class_omni_sketch_1_1_sketch_1_1_counter_hierarchy.html#a262a1b2ebf93a88a9c17e8560c064989',1,'OmniSketch::Sketch::CounterHierarchy::size()'],['../class_omni_sketch_1_1_sketch_1_1_sketch_base.html#acc68d26a5ba8a7619a1858dcb2e80235',1,'OmniSketch::Sketch::SketchBase::size()'],['../class_omni_sketch_1_1_sketch_1_1_bloom_filter.html#abfb60d1ab285f05fc7fbd209bc3c6ae4',1,'OmniSketch::Sketch::BloomFilter::size()'],['../class_omni_sketch_1_1_sketch_1_1_c_h_c_m_sketch.html#ae266fd5441f5166718e4239ec70f1dc6',1,'OmniSketch::Sketch::CHCMSketch::size()'],['../class_omni_sketch_1_1_sketch_1_1_c_m_sketch.html#a9522868b84540899a9f8fa07e0595001',1,'OmniSketch::Sketch::CMSketch::size()'],['../class_omni_sketch_1_1_sketch_1_1_c_u_sketch.html#abdc7c4f5f9b75ef13dd9c005d95db4c8',1,'OmniSketch::Sketch::CUSketch::size()'],['../class_omni_sketch_1_1_sketch_1_1_hash_pipe.html#a849afb155d857fd400443b016712d3ec',1,'OmniSketch::Sketch::HashPipe::size()'],['../class_my_sketch.html#aa94a90b5299b2fe85183bde22674fd44',1,'MySketch::size()']]],
+  ['streamdata_381',['StreamData',['../class_omni_sketch_1_1_data_1_1_stream_data.html#a06af8087f1d57fc1a4558c0f065f8ad7',1,'OmniSketch::Data::StreamData']]],
+  ['succeed_382',['succeed',['../class_omni_sketch_1_1_data_1_1_stream_data.html#a84e00b67fcac89ae5e90b3cef5623798',1,'OmniSketch::Data::StreamData::succeed()'],['../class_omni_sketch_1_1_util_1_1_config_parser.html#ad14096ad365379278e4d6a7711adb05d',1,'OmniSketch::Util::ConfigParser::succeed()'],['../class_omni_sketch_1_1_util_1_1_pcap_parser.html#ad913fb3b0b0ac344a4d92eed0942f420',1,'OmniSketch::Util::PcapParser::succeed()']]],
+  ['swap_383',['swap',['../class_omni_sketch_1_1_data_1_1_gnd_truth.html#aeb60cd6468bf84dccf458d0fecb74faa',1,'OmniSketch::Data::GndTruth::swap()'],['../class_omni_sketch_1_1_flow_key.html#a644f55bec45978a08234da55c92b8992',1,'OmniSketch::FlowKey::swap()']]]
 ];
