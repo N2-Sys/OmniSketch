@@ -16,6 +16,7 @@ var class_omni_sketch_1_1_data_1_1_gnd_truth =
     [ "min", "class_omni_sketch_1_1_data_1_1_gnd_truth.html#a318018de8e12ccec7e7a827eba0c4b62", null ],
     [ "size", "class_omni_sketch_1_1_data_1_1_gnd_truth.html#adc75d46980c6a136dd59eef4b1e0065e", null ],
     [ "swap", "class_omni_sketch_1_1_data_1_1_gnd_truth.html#aeb60cd6468bf84dccf458d0fecb74faa", null ],
+    [ "totalValue", "class_omni_sketch_1_1_data_1_1_gnd_truth.html#ad1917d3e299dda9619a95ec4e53305d5", null ],
     [ "called", "class_omni_sketch_1_1_data_1_1_gnd_truth.html#a00515f6fd6657d81e9e6abec44a6de4e", null ],
     [ "my_map", "class_omni_sketch_1_1_data_1_1_gnd_truth.html#a40c01d85027aba00a23582fba8cfd799", null ],
     [ "tot_value", "class_omni_sketch_1_1_data_1_1_gnd_truth.html#af231fd5a8efd92e868cc9baba2505a1c", null ]

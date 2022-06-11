@@ -31,5 +31,6 @@ var searchData=
   ['todo_20list_200',['Todo List',['../todo.html',1,'']]],
   ['topk_201',['TopK',['../namespace_omni_sketch_1_1_data.html#a31806ea44d4f1cddd59e81149b705cb0a010ead3aa566952e344173407fcf066e',1,'OmniSketch::Data']]],
   ['tot_5fvalue_202',['tot_value',['../class_omni_sketch_1_1_data_1_1_gnd_truth.html#af231fd5a8efd92e868cc9baba2505a1c',1,'OmniSketch::Data::GndTruth']]],
-  ['tp_203',['TP',['../namespace_omni_sketch_1_1_test.html#a160b52aa582997dee1396a606414c223a0778cbd6971bb8c249a14ac5e04e7506',1,'OmniSketch::Test']]]
+  ['totalvalue_203',['totalValue',['../class_omni_sketch_1_1_data_1_1_gnd_truth.html#ad1917d3e299dda9619a95ec4e53305d5',1,'OmniSketch::Data::GndTruth']]],
+  ['tp_204',['TP',['../namespace_omni_sketch_1_1_test.html#a160b52aa582997dee1396a606414c223a0778cbd6971bb8c249a14ac5e04e7506',1,'OmniSketch::Test']]]
 ];
