@@ -115,3 +115,6 @@ add_user_sketch(CU CUSketch)
 
 # HashPipe
 add_user_sketch(HP HashPipe)
+
+# Count Sketch
+add_user_sketch(CS CountSketch)
