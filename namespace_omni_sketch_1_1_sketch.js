@@ -4,6 +4,7 @@ var namespace_omni_sketch_1_1_sketch =
     [ "CHCMSketch", "class_omni_sketch_1_1_sketch_1_1_c_h_c_m_sketch.html", "class_omni_sketch_1_1_sketch_1_1_c_h_c_m_sketch" ],
     [ "CMSketch", "class_omni_sketch_1_1_sketch_1_1_c_m_sketch.html", "class_omni_sketch_1_1_sketch_1_1_c_m_sketch" ],
     [ "CounterHierarchy", "class_omni_sketch_1_1_sketch_1_1_counter_hierarchy.html", "class_omni_sketch_1_1_sketch_1_1_counter_hierarchy" ],
+    [ "CountSketch", "class_omni_sketch_1_1_sketch_1_1_count_sketch.html", "class_omni_sketch_1_1_sketch_1_1_count_sketch" ],
     [ "CUSketch", "class_omni_sketch_1_1_sketch_1_1_c_u_sketch.html", "class_omni_sketch_1_1_sketch_1_1_c_u_sketch" ],
     [ "HashPipe", "class_omni_sketch_1_1_sketch_1_1_hash_pipe.html", "class_omni_sketch_1_1_sketch_1_1_hash_pipe" ],
     [ "SketchBase", "class_omni_sketch_1_1_sketch_1_1_sketch_base.html", "class_omni_sketch_1_1_sketch_1_1_sketch_base" ]

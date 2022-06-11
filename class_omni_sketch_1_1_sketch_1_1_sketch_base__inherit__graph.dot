@@ -12,7 +12,9 @@ digraph "OmniSketch::Sketch::SketchBase&lt; key_len, T &gt;"
   Node1 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node4 [label="OmniSketch::Sketch\l::CMSketch\< key_len, T \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_omni_sketch_1_1_sketch_1_1_c_m_sketch.html",tooltip="Count Min Sketch."];
   Node1 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node5 [label="OmniSketch::Sketch\l::CUSketch\< key_len, T \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_omni_sketch_1_1_sketch_1_1_c_u_sketch.html",tooltip="CU Sketch."];
+  Node5 [label="OmniSketch::Sketch\l::CountSketch\< key_len, T \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_omni_sketch_1_1_sketch_1_1_count_sketch.html",tooltip="Count Sketch."];
   Node1 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node6 [label="OmniSketch::Sketch\l::HashPipe\< key_len, T \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_omni_sketch_1_1_sketch_1_1_hash_pipe.html",tooltip="Hash Pipe."];
+  Node6 [label="OmniSketch::Sketch\l::CUSketch\< key_len, T \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_omni_sketch_1_1_sketch_1_1_c_u_sketch.html",tooltip="CU Sketch."];
+  Node1 -> Node7 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="OmniSketch::Sketch\l::HashPipe\< key_len, T \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_omni_sketch_1_1_sketch_1_1_hash_pipe.html",tooltip="Hash Pipe."];
 }
