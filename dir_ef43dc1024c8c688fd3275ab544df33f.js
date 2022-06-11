@@ -6,5 +6,8 @@ var dir_ef43dc1024c8c688fd3275ab544df33f =
     ] ],
     [ "CMSketch.h", "_c_m_sketch_8h.html", [
       [ "CMSketch", "class_omni_sketch_1_1_sketch_1_1_c_m_sketch.html", "class_omni_sketch_1_1_sketch_1_1_c_m_sketch" ]
+    ] ],
+    [ "CUSketch.h", "_c_u_sketch_8h.html", [
+      [ "CUSketch", "class_omni_sketch_1_1_sketch_1_1_c_u_sketch.html", "class_omni_sketch_1_1_sketch_1_1_c_u_sketch" ]
     ] ]
 ];

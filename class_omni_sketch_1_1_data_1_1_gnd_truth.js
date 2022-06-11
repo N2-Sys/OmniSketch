@@ -2,6 +2,7 @@ var class_omni_sketch_1_1_data_1_1_gnd_truth =
 [
     [ "begin", "class_omni_sketch_1_1_data_1_1_gnd_truth.html#a31971c17d8f07836a34c177df18e04a7", null ],
     [ "count", "class_omni_sketch_1_1_data_1_1_gnd_truth.html#a35f6c9a6875fbf490fe71c7ed4d7899c", null ],
+    [ "empty", "class_omni_sketch_1_1_data_1_1_gnd_truth.html#a6eb368280aea3c0c7c76ea7a86e81757", null ],
     [ "end", "class_omni_sketch_1_1_data_1_1_gnd_truth.html#a4e7aa3aa91d6451d7584690c2fa92283", null ],
     [ "equalRange", "class_omni_sketch_1_1_data_1_1_gnd_truth.html#a3a5fdd1bb12a5a2affd8284081f76a1e", null ],
     [ "getGroundTruth", "class_omni_sketch_1_1_data_1_1_gnd_truth.html#ad463d280c079519b787dc19a64e2e93e", null ],
@@ -11,6 +12,8 @@ var class_omni_sketch_1_1_data_1_1_gnd_truth =
     [ "getHeavyHitter", "class_omni_sketch_1_1_data_1_1_gnd_truth.html#a48b037ef17a33f373f17911423b512e3", null ],
     [ "getHeavyHitter", "class_omni_sketch_1_1_data_1_1_gnd_truth.html#ab3960b069615f0337af15da4e0567408", null ],
     [ "getHeavyHitter", "class_omni_sketch_1_1_data_1_1_gnd_truth.html#adb38f795f2a825b0fd3ba56a72de6a1a", null ],
+    [ "max", "class_omni_sketch_1_1_data_1_1_gnd_truth.html#a96e8de92707c5c3111e05875644ff862", null ],
+    [ "min", "class_omni_sketch_1_1_data_1_1_gnd_truth.html#a318018de8e12ccec7e7a827eba0c4b62", null ],
     [ "size", "class_omni_sketch_1_1_data_1_1_gnd_truth.html#adc75d46980c6a136dd59eef4b1e0065e", null ],
     [ "swap", "class_omni_sketch_1_1_data_1_1_gnd_truth.html#aeb60cd6468bf84dccf458d0fecb74faa", null ],
     [ "called", "class_omni_sketch_1_1_data_1_1_gnd_truth.html#a00515f6fd6657d81e9e6abec44a6de4e", null ],

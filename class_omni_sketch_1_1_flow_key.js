@@ -1,6 +1,6 @@
 var class_omni_sketch_1_1_flow_key =
 [
-    [ "FlowKey", "class_omni_sketch_1_1_flow_key.html#a5d7af02c323bec46d6e182599376c529", null ],
+    [ "FlowKey", "class_omni_sketch_1_1_flow_key.html#a3ffc94e6681dd138769daeb0c160a3e5", null ],
     [ "FlowKey", "class_omni_sketch_1_1_flow_key.html#aae17a55c0f2630a30c3746389895d977", null ],
     [ "FlowKey", "class_omni_sketch_1_1_flow_key.html#a6dc97e08dcf6d81fc9820c1ec46c2cab", null ],
     [ "FlowKey", "class_omni_sketch_1_1_flow_key.html#a9df4377f711ca9511227fab1cffb45e9", null ],
@@ -18,5 +18,6 @@ var class_omni_sketch_1_1_flow_key =
     [ "operator<", "class_omni_sketch_1_1_flow_key.html#aea5683bc494db522c96b5bb41f291e4d", null ],
     [ "operator==", "class_omni_sketch_1_1_flow_key.html#ad489d1590b74bee36d7891d5dd6defa7", null ],
     [ "setBit", "class_omni_sketch_1_1_flow_key.html#a8be828ab86b9ae228000d1314811940a", null ],
+    [ "swap", "class_omni_sketch_1_1_flow_key.html#a644f55bec45978a08234da55c92b8992", null ],
     [ "FlowKey", "class_omni_sketch_1_1_flow_key.html#a8f822495e9bf0a346c10566517ce4baa", null ]
 ];

@@ -9,4 +9,6 @@ digraph "Graphical Class Hierarchy"
   Node1 [label="OmniSketch::Test::CHCMSketch\lTest\< key_len, no_layer,\l T, hash_t \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_omni_sketch_1_1_test_1_1_c_h_c_m_sketch_test.html",tooltip="Testing class for Count Min Sketch."];
   Node0 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node2 [label="OmniSketch::Test::CMSketch\lTest\< key_len, T, hash_t \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_omni_sketch_1_1_test_1_1_c_m_sketch_test.html",tooltip="Testing class for Count Min Sketch."];
+  Node0 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="OmniSketch::Test::CUSketch\lTest\< key_len, T, hash_t \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_omni_sketch_1_1_test_1_1_c_u_sketch_test.html",tooltip="Testing class for CU Sketch."];
 }

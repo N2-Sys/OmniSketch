@@ -116,6 +116,15 @@ $(document).ready(function(){initNavTree('class_omni_sketch_1_1_data_1_1_gnd_tru
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:a6eb368280aea3c0c7c76ea7a86e81757"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_omni_sketch_1_1_data_1_1_gnd_truth.html#a6eb368280aea3c0c7c76ea7a86e81757">empty</a> () const</td></tr>
+<tr class="memdesc:a6eb368280aea3c0c7c76ea7a86e81757"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return whether the instance is empty.  <a href="class_omni_sketch_1_1_data_1_1_gnd_truth.html#a6eb368280aea3c0c7c76ea7a86e81757">More...</a><br /></td></tr>
+<tr class="separator:a6eb368280aea3c0c7c76ea7a86e81757"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a318018de8e12ccec7e7a827eba0c4b62"><td class="memItemLeft" align="right" valign="top">T&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_omni_sketch_1_1_data_1_1_gnd_truth.html#a318018de8e12ccec7e7a827eba0c4b62">min</a> () const</td></tr>
+<tr class="memdesc:a318018de8e12ccec7e7a827eba0c4b62"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the minimum value.  <a href="class_omni_sketch_1_1_data_1_1_gnd_truth.html#a318018de8e12ccec7e7a827eba0c4b62">More...</a><br /></td></tr>
+<tr class="separator:a318018de8e12ccec7e7a827eba0c4b62"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a96e8de92707c5c3111e05875644ff862"><td class="memItemLeft" align="right" valign="top">T&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_omni_sketch_1_1_data_1_1_gnd_truth.html#a96e8de92707c5c3111e05875644ff862">max</a> () const</td></tr>
+<tr class="memdesc:a96e8de92707c5c3111e05875644ff862"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the maximum value.  <a href="class_omni_sketch_1_1_data_1_1_gnd_truth.html#a96e8de92707c5c3111e05875644ff862">More...</a><br /></td></tr>
+<tr class="separator:a96e8de92707c5c3111e05875644ff862"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aeb60cd6468bf84dccf458d0fecb74faa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_omni_sketch_1_1_data_1_1_gnd_truth.html#aeb60cd6468bf84dccf458d0fecb74faa">swap</a> (<a class="el" href="class_omni_sketch_1_1_data_1_1_gnd_truth.html">GndTruth</a> &amp;other)</td></tr>
 <tr class="memdesc:aeb60cd6468bf84dccf458d0fecb74faa"><td class="mdescLeft">&#160;</td><td class="mdescRight">swap content, note that calling histories are swapped as well  <a href="class_omni_sketch_1_1_data_1_1_gnd_truth.html#aeb60cd6468bf84dccf458d0fecb74faa">More...</a><br /></td></tr>
 <tr class="separator:aeb60cd6468bf84dccf458d0fecb74faa"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -311,6 +320,35 @@ template&lt;int32_t key_len, typename T  = int64_t&gt; </div>
 
 <p>return whether a flowkey is in the streaming data or not </p>
 <p>Always <code>0</code> or <code>1</code> in this case. </p>
+
+</div>
+</div>
+<a id="a6eb368280aea3c0c7c76ea7a86e81757"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6eb368280aea3c0c7c76ea7a86e81757">&#9670;&nbsp;</a></span>empty()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;int32_t key_len, typename T  = int64_t&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="class_omni_sketch_1_1_data_1_1_gnd_truth.html">OmniSketch::Data::GndTruth</a>&lt; key_len, T &gt;::empty </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Return whether the instance is empty. </p>
 
 </div>
 </div>
@@ -754,6 +792,66 @@ template&lt;int32_t key_len, typename T &gt; </div>
 
 </div>
 </div>
+<a id="a96e8de92707c5c3111e05875644ff862"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a96e8de92707c5c3111e05875644ff862">&#9670;&nbsp;</a></span>max()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;int32_t key_len, typename T  = int64_t&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">T <a class="el" href="class_omni_sketch_1_1_data_1_1_gnd_truth.html">OmniSketch::Data::GndTruth</a>&lt; key_len, T &gt;::max </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Return the maximum value. </p>
+<p>Calling this function on an empty instance causes undefined behavior. </p>
+
+</div>
+</div>
+<a id="a318018de8e12ccec7e7a827eba0c4b62"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a318018de8e12ccec7e7a827eba0c4b62">&#9670;&nbsp;</a></span>min()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;int32_t key_len, typename T  = int64_t&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">T <a class="el" href="class_omni_sketch_1_1_data_1_1_gnd_truth.html">OmniSketch::Data::GndTruth</a>&lt; key_len, T &gt;::min </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Return the minimum value. </p>
+<p>Calling this function on an empty instance causes undefined behavior. </p>
+
+</div>
+</div>
 <a id="adc75d46980c6a136dd59eef4b1e0065e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#adc75d46980c6a136dd59eef4b1e0065e">&#9670;&nbsp;</a></span>size()</h2>
 
@@ -896,7 +994,7 @@ template&lt;int32_t key_len, typename T  = int64_t&gt; </div>
 <div class="ttc" id="anamespace_omni_sketch_1_1_data_html"><div class="ttname"><a href="namespace_omni_sketch_1_1_data.html">OmniSketch::Data</a></div><div class="ttdoc">Miscellaneous tools for processing data.</div><div class="ttdef"><b>Definition:</b> data.h:24</div></div>
 <div class="ttc" id="aclass_omni_sketch_1_1_data_1_1_gnd_truth_html"><div class="ttname"><a href="class_omni_sketch_1_1_data_1_1_gnd_truth.html">OmniSketch::Data::GndTruth</a></div><div class="ttdoc">Ground truth of the streaming data.</div><div class="ttdef"><b>Definition:</b> data.h:315</div></div>
 <div class="ttc" id="anamespace_omni_sketch_1_1_data_html_ad0e84d4f1d65e2cf284f5ad3a41cbcc4a0a589db8258b77da9c35f35656041164"><div class="ttname"><a href="namespace_omni_sketch_1_1_data.html#ad0e84d4f1d65e2cf284f5ad3a41cbcc4a0a589db8258b77da9c35f35656041164">OmniSketch::Data::InLength</a></div><div class="ttdeci">@ InLength</div><div class="ttdoc">Count for (header + payload) in bytes.</div><div class="ttdef"><b>Definition:</b> data.h:30</div></div>
-<div class="ttc" id="aclass_omni_sketch_1_1_data_1_1_gnd_truth_html_a48b037ef17a33f373f17911423b512e3"><div class="ttname"><a href="class_omni_sketch_1_1_data_1_1_gnd_truth.html#a48b037ef17a33f373f17911423b512e3">OmniSketch::Data::GndTruth::getHeavyHitter</a></div><div class="ttdeci">void getHeavyHitter(const GndTruth &amp;flow_summary, double threshold, HXMethod hh_method)</div><div class="ttdoc">Get heavy hitters of the given stream (from flow summary)</div><div class="ttdef"><b>Definition:</b> data.h:887</div></div>
+<div class="ttc" id="aclass_omni_sketch_1_1_data_1_1_gnd_truth_html_a48b037ef17a33f373f17911423b512e3"><div class="ttname"><a href="class_omni_sketch_1_1_data_1_1_gnd_truth.html#a48b037ef17a33f373f17911423b512e3">OmniSketch::Data::GndTruth::getHeavyHitter</a></div><div class="ttdeci">void getHeavyHitter(const GndTruth &amp;flow_summary, double threshold, HXMethod hh_method)</div><div class="ttdoc">Get heavy hitters of the given stream (from flow summary)</div><div class="ttdef"><b>Definition:</b> data.h:905</div></div>
 <div class="ttc" id="aclass_omni_sketch_1_1_data_1_1_stream_data_html"><div class="ttname"><a href="class_omni_sketch_1_1_data_1_1_stream_data.html">OmniSketch::Data::StreamData</a></div><div class="ttdoc">Store the formatted streaming data.</div><div class="ttdef"><b>Definition:</b> data.h:152</div></div>
 <div class="ttc" id="anamespace_omni_sketch_1_1_data_html_a31806ea44d4f1cddd59e81149b705cb0a010ead3aa566952e344173407fcf066e"><div class="ttname"><a href="namespace_omni_sketch_1_1_data.html#a31806ea44d4f1cddd59e81149b705cb0a010ead3aa566952e344173407fcf066e">OmniSketch::Data::TopK</a></div><div class="ttdeci">@ TopK</div><div class="ttdoc">Top K flow(s)</div><div class="ttdef"><b>Definition:</b> data.h:38</div></div>
 <!-- start footer part -->

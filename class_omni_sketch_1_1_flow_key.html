@@ -116,9 +116,9 @@ $(document).ready(function(){initNavTree('class_omni_sketch_1_1_flow_key.html','
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a5d7af02c323bec46d6e182599376c529"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_omni_sketch_1_1_flow_key.html#a5d7af02c323bec46d6e182599376c529">FlowKey</a> ()=default</td></tr>
-<tr class="memdesc:a5d7af02c323bec46d6e182599376c529"><td class="mdescLeft">&#160;</td><td class="mdescRight">Void constructor.  <a href="class_omni_sketch_1_1_flow_key.html#a5d7af02c323bec46d6e182599376c529">More...</a><br /></td></tr>
-<tr class="separator:a5d7af02c323bec46d6e182599376c529"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3ffc94e6681dd138769daeb0c160a3e5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_omni_sketch_1_1_flow_key.html#a3ffc94e6681dd138769daeb0c160a3e5">FlowKey</a> ()</td></tr>
+<tr class="memdesc:a3ffc94e6681dd138769daeb0c160a3e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Void constructor.  <a href="class_omni_sketch_1_1_flow_key.html#a3ffc94e6681dd138769daeb0c160a3e5">More...</a><br /></td></tr>
+<tr class="separator:a3ffc94e6681dd138769daeb0c160a3e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aae17a55c0f2630a30c3746389895d977"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_omni_sketch_1_1_flow_key.html#aae17a55c0f2630a30c3746389895d977">FlowKey</a> (const int8_t *key)</td></tr>
 <tr class="memdesc:aae17a55c0f2630a30c3746389895d977"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct by copying from a pointer.  <a href="class_omni_sketch_1_1_flow_key.html#aae17a55c0f2630a30c3746389895d977">More...</a><br /></td></tr>
 <tr class="separator:aae17a55c0f2630a30c3746389895d977"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -144,6 +144,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ac64dd33acc84c8d7e5ef4d89b036c558"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_omni_sketch_1_1_flow_key.html">FlowKey</a>&lt; key_len &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_omni_sketch_1_1_flow_key.html#ac64dd33acc84c8d7e5ef4d89b036c558">copy</a> (int32_t pos, const int8_t *key, int32_t len)</td></tr>
 <tr class="memdesc:ac64dd33acc84c8d7e5ef4d89b036c558"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy from a given pointer.  <a href="class_omni_sketch_1_1_flow_key.html#ac64dd33acc84c8d7e5ef4d89b036c558">More...</a><br /></td></tr>
 <tr class="separator:ac64dd33acc84c8d7e5ef4d89b036c558"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a644f55bec45978a08234da55c92b8992"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_omni_sketch_1_1_flow_key.html">FlowKey</a>&lt; key_len &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_omni_sketch_1_1_flow_key.html#a644f55bec45978a08234da55c92b8992">swap</a> (<a class="el" href="class_omni_sketch_1_1_flow_key.html">FlowKey</a>&lt; key_len &gt; &amp;the_other_key)</td></tr>
+<tr class="memdesc:a644f55bec45978a08234da55c92b8992"><td class="mdescLeft">&#160;</td><td class="mdescRight">Swap the content of two flowkey.  <a href="class_omni_sketch_1_1_flow_key.html#a644f55bec45978a08234da55c92b8992">More...</a><br /></td></tr>
+<tr class="separator:a644f55bec45978a08234da55c92b8992"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a310ee64b67268a6dfd1fbfdd193d2807"><td class="memItemLeft" align="right" valign="top">int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_omni_sketch_1_1_flow_key.html#a310ee64b67268a6dfd1fbfdd193d2807">getBit</a> (int32_t pos) const</td></tr>
 <tr class="memdesc:a310ee64b67268a6dfd1fbfdd193d2807"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a single bit in flowkey.  <a href="class_omni_sketch_1_1_flow_key.html#a310ee64b67268a6dfd1fbfdd193d2807">More...</a><br /></td></tr>
 <tr class="separator:a310ee64b67268a6dfd1fbfdd193d2807"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -190,32 +193,22 @@ class OmniSketch::FlowKey&lt; key_len &gt;</h3>
   </dd>
 </dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a5d7af02c323bec46d6e182599376c529"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5d7af02c323bec46d6e182599376c529">&#9670;&nbsp;</a></span>FlowKey() <span class="overload">[1/5]</span></h2>
+<a id="a3ffc94e6681dd138769daeb0c160a3e5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3ffc94e6681dd138769daeb0c160a3e5">&#9670;&nbsp;</a></span>FlowKey() <span class="overload">[1/5]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;int32_t key_len&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_omni_sketch_1_1_flow_key.html">OmniSketch::FlowKey</a>&lt; key_len &gt;::<a class="el" href="class_omni_sketch_1_1_flow_key.html">FlowKey</a> </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
+          <td class="memname"><a class="el" href="class_omni_sketch_1_1_flow_key.html">OmniSketch::FlowKey</a>&lt; key_len &gt;::<a class="el" href="class_omni_sketch_1_1_flow_key.html">FlowKey</a></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">default</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
 <p>Void constructor. </p>
+<p>Initialized to an all-zero flowkey </p>
 
 </div>
 </div>
@@ -826,6 +819,29 @@ template&lt;int32_t key_len&gt; </div>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="a644f55bec45978a08234da55c92b8992"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a644f55bec45978a08234da55c92b8992">&#9670;&nbsp;</a></span>swap()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;int32_t key_len&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_omni_sketch_1_1_flow_key.html">FlowKey</a>&lt; key_len &gt; &amp; <a class="el" href="class_omni_sketch_1_1_flow_key.html">OmniSketch::FlowKey</a>&lt; key_len &gt;::swap </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_omni_sketch_1_1_flow_key.html">FlowKey</a>&lt; key_len &gt; &amp;&#160;</td>
+          <td class="paramname"><em>the_other_key</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Swap the content of two flowkey. </p>
+<p>No effect if one flowkey swaps with itself </p>
 
 </div>
 </div>

@@ -15,14 +15,19 @@ digraph "src/common/sketch.h"
   Node2 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node6 [label="src/sketch_test/CMSketch\lTest.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_c_m_sketch_test_8h.html",tooltip="Test Count Min Sketch."];
   Node2 -> Node7 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node7 [label="test/test_sketch.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$test__sketch_8cpp.html",tooltip="Test base sketch."];
-  Node1 -> Node8 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node8 [label="src/sketch/BloomFilter.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_bloom_filter_8h.html",tooltip="Bloom Filter."];
-  Node8 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="src/sketch_test/CUSketch\lTest.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_c_u_sketch_test_8h.html",tooltip=" "];
+  Node2 -> Node8 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 [label="test/test_sketch.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$test__sketch_8cpp.html",tooltip="Test base sketch."];
   Node1 -> Node9 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node9 [label="src/sketch/CHCMSketch.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_c_h_c_m_sketch_8h.html",tooltip="Implementation of Count Min Sketch with Counter Hierarchy."];
-  Node9 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9 [label="src/sketch/BloomFilter.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_bloom_filter_8h.html",tooltip="Bloom Filter."];
+  Node9 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node1 -> Node10 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node10 [label="src/sketch/CMSketch.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_c_m_sketch_8h.html",tooltip="Implementation of Count Min Sketch."];
-  Node10 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node10 [label="src/sketch/CHCMSketch.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_c_h_c_m_sketch_8h.html",tooltip="Implementation of Count Min Sketch with Counter Hierarchy."];
+  Node10 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1 -> Node11 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11 [label="src/sketch/CMSketch.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_c_m_sketch_8h.html",tooltip="Implementation of Count Min Sketch."];
+  Node11 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1 -> Node12 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node12 [label="src/sketch/CUSketch.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_c_u_sketch_8h.html",tooltip=" "];
+  Node12 -> Node7 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
 }
