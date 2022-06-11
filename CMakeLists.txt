@@ -112,3 +112,6 @@ add_user_sketch(CHCM CHCMSketch)
 
 # CU Sketch
 add_user_sketch(CU CUSketch)
+
+# HashPipe
+add_user_sketch(HP HashPipe)

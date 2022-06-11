@@ -44,3 +44,21 @@
   cnt_no_ratio = 0.3
   width_cnt = [10, 7]
   no_hash = [3]
+
+[HP] # Hash Pipe
+
+  [HP.para]
+  depth = 5
+  width = 1001
+
+  [HP.data]
+  hx_method = "TopK"
+  threshold_heavy_hitter = 300
+  cnt_method = "InPacket"
+  data = "../data/records.bin"
+  format = [["flowkey", "padding", "timestamp", "length", "padding"], [13, 3, 8, 2, 6]]
+
+  [HP.test]
+  update = ["RATE"]
+  heavyhitter = ["TIME", "ARE", "PRC", "RCL"]
+
