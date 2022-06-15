@@ -245,6 +245,14 @@ void TestCompareFlowKey() {
   FlowKey<8> e(a);
   VERIFY(!(e == d));
   VERIFY(e < d);
+
+  b ^= c;
+  VERIFY(b == FlowKey<8>());
+  b ^= c;
+  VERIFY(b == c);
+  b ^= d;
+  int8_t tmp[8] = {0x0, 0x0, 0x0, 0x1, 0x0, 0x0, 0x0, 0x0};
+  VERIFY(b == FlowKey<8>(tmp));
 }
 
 void TestCopyFlowKey() {

@@ -313,6 +313,7 @@ public:
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  */
 template <int32_t key_len, typename T = int64_t> class GndTruth {
+protected:
   using BidirMap =
       boost::bimaps::bimap<boost::bimaps::unordered_set_of<
                                FlowKey<key_len>, std::hash<FlowKey<key_len>>,
@@ -321,8 +322,6 @@ template <int32_t key_len, typename T = int64_t> class GndTruth {
   using RightVal = typename BidirMap::right_value_type;
   using LeftVal = typename BidirMap::left_value_type;
   using RightConstIterator = typename BidirMap::right_const_iterator;
-
-protected:
   /**
    * @brief The internal bidirectional map
    *
@@ -372,7 +371,7 @@ public:
    */
   int64_t totalValue() const { return tot_value; }
   /**
-   * @brief swap content, note that calling histories are swapped as well
+   * @brief Swap content, note that calling histories are swapped as well
    *
    * @param other the other GndTruth instance to be swapped with
    *
@@ -380,7 +379,7 @@ public:
    */
   void swap(GndTruth &other);
   /**
-   * @brief return a random access iterator
+   * @brief Return a random access iterator pointed to the first element
    *
    * @details The next two examples show how to traverse the ground truth and
    * fetch length for flowkey:
@@ -415,7 +414,7 @@ public:
     return my_map.right.begin();
   }
   /**
-   * @brief return a random access const iterator pointed to the very end
+   * @brief Return a random access const iterator pointed to the very end
    *
    * @see begin()
    */
@@ -598,6 +597,23 @@ class Estimation : private GndTruth<key_len, T> {
   using GndTruth<key_len, T>::my_map;
 
 public:
+  /**
+   * @brief Return a random access iterator pointed to the first element
+   * @see GndTruth::begin()
+   *
+   */
+  [[nodiscard]] typename GndTruth<key_len, T>::RightConstIterator
+  begin() const {
+    return GndTruth<key_len, T>::begin();
+  }
+  /**
+   * @brief Return a random access iterator pointed to the very end
+   * @see GndTruth::end()
+   */
+  [[nodiscard]] typename GndTruth<key_len, T>::RightConstIterator end() const {
+    return GndTruth<key_len, T>::end();
+  }
+
   /**
    * @brief Insert a flowkey
    * @details Calling this function implies that values are uninterested. If the

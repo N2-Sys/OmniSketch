@@ -123,6 +123,11 @@ public:
    */
   bool operator<(const FlowKey &otherkey) const;
   /**
+   * @brief XOR two flowkeys in place
+   *
+   */
+  FlowKey<key_len> &operator^=(const FlowKey &otherkey);
+  /**
    * @brief Copy from another flowkey (probably of different
    * length)
    *
@@ -322,6 +327,14 @@ bool FlowKey<key_len>::operator<(const FlowKey &otherkey) const {
     }
   }
   return false;
+}
+
+template <int32_t key_len>
+FlowKey<key_len> &FlowKey<key_len>::operator^=(const FlowKey &otherkey) {
+  for (int32_t i = 0; i < key_len; ++i) {
+    key_[i] ^= otherkey.key_[i];
+  }
+  return *this;
 }
 
 template <int32_t key_len>

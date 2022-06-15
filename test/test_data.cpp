@@ -691,6 +691,141 @@ void TestEstimation() {
   estimate[key_4];
   VERIFY(estimate.size() == 4);
   VERIFY(estimate.count(key_4) == 1);
+  VERIFY(estimate[key_4] == 0);
+}
+
+OmniSketch::Data::Estimation<4> ReturnAnEstimation(int32_t value) {
+  using OmniSketch::FlowKey;
+  using OmniSketch::Data::Estimation;
+
+  static int32_t call = 1;
+
+  Estimation<4> estimate;
+  FlowKey<4> key_1(1), key_2(2), key_3(3), key_4(4);
+  estimate[key_1] += value;
+  estimate.update(key_2, 2022);
+  estimate[key_3];
+  estimate[key_4] = call;
+
+  call++;
+
+  return estimate;
+}
+
+OmniSketch::Data::GndTruth<4> ReturnAGroundTruth(int32_t value) {
+  using std::string_view_literals::operator""sv;
+  using namespace OmniSketch::Data;
+
+  static int32_t call = 1;
+  static constexpr std::string_view input = R"(
+        name = [["flowkey", "length", "padding", "timestamp"], [4, 4, 2, 2]]
+    )"sv;
+  toml::table array = toml::parse(input);
+  DataFormat format(*array["name"].as_array());
+
+  char name[L_tmpnam];
+  std::tmpnam(name);
+
+  const int32_t flowkey[10] = {0x1F1F1, 0x2F2F2, 0x1F1F1, 0x3F3F3, 0x4F4F4,
+                               0x1F1F1, 0x2F2F2, 0x3F3F3, 0x5F5F5, 0x1F1F1};
+  const int32_t length[10] = {0x1,  0x2,  0x4,  call,  0x10,
+                              0x20, 0x40, 0x80, value, 0x200};
+  call++;
+  const int16_t timestamp[10] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+  std::unordered_map<int32_t, std::pair<int64_t, int64_t>> map;
+
+  char content[120];
+  for (int i = 0; i < 10; ++i) {
+    *reinterpret_cast<int32_t *>(content + 12 * i) = flowkey[i];
+    *reinterpret_cast<int32_t *>(content + 12 * i + 4) = length[i];
+    *reinterpret_cast<int16_t *>(content + 12 * i + 10) = timestamp[i];
+    auto tmp = map[flowkey[i]];
+    map[flowkey[i]] = {tmp.first + length[i], tmp.second + 1};
+  }
+  std::ofstream fout(name, std::ios::binary);
+  fout.write(content, sizeof(content));
+  fout.close();
+
+  StreamData<4> data(name, format);
+  std::remove(name);
+
+  VERIFY(data.succeed() == true);
+  VERIFY(data.empty() == false);
+  VERIFY(data.size() == 10);
+
+  for (int i = 0; i < 10; ++i) {
+    VERIFY(data.diff(i)->length == length[i]);
+    VERIFY(*reinterpret_cast<const int32_t *>(data.diff(i)->flowkey.cKey()) ==
+           flowkey[i]);
+    VERIFY(data.diff(i)->timestamp == timestamp[i]);
+  }
+  VERIFY(data.begin() == data.diff(0));
+  VERIFY(data.end() == data.diff(data.size()));
+
+  GndTruth<4, int64_t> gnd_truth;
+  VERIFY(gnd_truth.empty());
+  gnd_truth.getGroundTruth(data.begin(), data.end(), InLength);
+  VERIFY(!gnd_truth.empty());
+
+  return gnd_truth;
+}
+
+void TestMovable() {
+  using OmniSketch::FlowKey;
+  using OmniSketch::Data::Estimation;
+  using OmniSketch::Data::GndTruth;
+
+  int32_t value = 114514;
+  static int32_t counter = 1;
+
+  Estimation<4> est = ReturnAnEstimation(value);
+  VERIFY(est[FlowKey<4>(1)] == value);
+  VERIFY(est[FlowKey<4>(2)] == 2022);
+  VERIFY(est[FlowKey<4>(3)] == 0);
+  VERIFY(est[FlowKey<4>(4)] == counter);
+  VERIFY(est.size() == 4);
+  Estimation<4> est_2 = std::move(est);
+
+  int32_t iteration = 0;
+  for (const auto &kv : est_2) {
+    switch (kv.get_left().getIp()) {
+    case 1:
+      VERIFY(kv.get_right() == value);
+      break;
+    case 2:
+      VERIFY(kv.get_right() == 2022);
+      break;
+    case 3:
+      VERIFY(kv.get_right() == 0);
+      break;
+    case 4:
+      VERIFY(kv.get_right() == counter);
+      break;
+    default:
+      VERIFY(false);
+    }
+    iteration++;
+  }
+  VERIFY(iteration == 4);
+  VERIFY(est_2.size() == 4);
+
+  GndTruth<4> gnd = ReturnAGroundTruth(value);
+  VERIFY(gnd.size() == 5);
+  std::unordered_map<int32_t, int64_t> map = {{0x1F1F1, 0x225},
+                                              {0x2F2F2, 0x42},
+                                              {0x3F3F3, counter + 0x80},
+                                              {0x4F4F4, 0x10},
+                                              {0x5F5F5, value}};
+  for (const auto &kv : gnd) {
+    VERIFY(map.at(kv.get_left().getIp()) == kv.get_right());
+  }
+  VERIFY(gnd.size() == 5);
+  GndTruth<4> gnd_2 = std::move(gnd);
+  for (const auto &kv : gnd_2) {
+    VERIFY(map.at(kv.get_left().getIp()) == kv.get_right());
+  }
+  VERIFY(gnd_2.size() == 5);
+  counter++;
 }
 
 OMNISKETCH_DECLARE_TEST(data) {
@@ -701,6 +836,7 @@ OMNISKETCH_DECLARE_TEST(data) {
     TestHeavyHitter();
     TestHeavyChanger();
     TestEstimation();
+    TestMovable();
   }
 }
 
