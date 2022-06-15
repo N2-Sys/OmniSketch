@@ -137,6 +137,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aea5683bc494db522c96b5bb41f291e4d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_omni_sketch_1_1_flow_key.html#aea5683bc494db522c96b5bb41f291e4d">operator&lt;</a> (const <a class="el" href="class_omni_sketch_1_1_flow_key.html">FlowKey</a> &amp;otherkey) const</td></tr>
 <tr class="memdesc:aea5683bc494db522c96b5bb41f291e4d"><td class="mdescLeft">&#160;</td><td class="mdescRight">See if the first flowkey is less than the second key in lexicographic order.  <a href="class_omni_sketch_1_1_flow_key.html#aea5683bc494db522c96b5bb41f291e4d">More...</a><br /></td></tr>
 <tr class="separator:aea5683bc494db522c96b5bb41f291e4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a80fdd61e306528eadf7e4000c9539729"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_omni_sketch_1_1_flow_key.html">FlowKey</a>&lt; key_len &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_omni_sketch_1_1_flow_key.html#a80fdd61e306528eadf7e4000c9539729">operator^=</a> (const <a class="el" href="class_omni_sketch_1_1_flow_key.html">FlowKey</a> &amp;otherkey)</td></tr>
+<tr class="memdesc:a80fdd61e306528eadf7e4000c9539729"><td class="mdescLeft">&#160;</td><td class="mdescRight">XOR two flow keys in place.  <a href="class_omni_sketch_1_1_flow_key.html#a80fdd61e306528eadf7e4000c9539729">More...</a><br /></td></tr>
+<tr class="separator:a80fdd61e306528eadf7e4000c9539729"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3d20e005d66cba79b6296f522e723757"><td class="memTemplParams" colspan="2">template&lt;int32_t other_len&gt; </td></tr>
 <tr class="memitem:a3d20e005d66cba79b6296f522e723757"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="class_omni_sketch_1_1_flow_key.html">FlowKey</a>&lt; key_len &gt; &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="class_omni_sketch_1_1_flow_key.html#a3d20e005d66cba79b6296f522e723757">copy</a> (int32_t pos, const <a class="el" href="class_omni_sketch_1_1_flow_key.html">FlowKey</a>&lt; other_len &gt; &amp;other_key, int32_t o_pos, int32_t len)</td></tr>
 <tr class="memdesc:a3d20e005d66cba79b6296f522e723757"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy from another flowkey (probably of different length)  <a href="class_omni_sketch_1_1_flow_key.html#a3d20e005d66cba79b6296f522e723757">More...</a><br /></td></tr>
@@ -780,6 +783,28 @@ template&lt;int32_t key_len&gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><code>true</code> if equal; <code>false</code> otherwise. </dd></dl>
+
+</div>
+</div>
+<a id="a80fdd61e306528eadf7e4000c9539729"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a80fdd61e306528eadf7e4000c9539729">&#9670;&nbsp;</a></span>operator^=()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;int32_t key_len&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_omni_sketch_1_1_flow_key.html">FlowKey</a>&lt; key_len &gt; &amp; <a class="el" href="class_omni_sketch_1_1_flow_key.html">OmniSketch::FlowKey</a>&lt; key_len &gt;::operator^= </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_omni_sketch_1_1_flow_key.html">FlowKey</a>&lt; key_len &gt; &amp;&#160;</td>
+          <td class="paramname"><em>otherkey</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>XOR two flow keys in place. </p>
 
 </div>
 </div>

@@ -17,6 +17,7 @@ var class_omni_sketch_1_1_flow_key =
     [ "getSrcPort", "class_omni_sketch_1_1_flow_key.html#aeefaac96080c2d70777c9e634bce34ce", null ],
     [ "operator<", "class_omni_sketch_1_1_flow_key.html#aea5683bc494db522c96b5bb41f291e4d", null ],
     [ "operator==", "class_omni_sketch_1_1_flow_key.html#ad489d1590b74bee36d7891d5dd6defa7", null ],
+    [ "operator^=", "class_omni_sketch_1_1_flow_key.html#a80fdd61e306528eadf7e4000c9539729", null ],
     [ "setBit", "class_omni_sketch_1_1_flow_key.html#a8be828ab86b9ae228000d1314811940a", null ],
     [ "swap", "class_omni_sketch_1_1_flow_key.html#a644f55bec45978a08234da55c92b8992", null ],
     [ "FlowKey", "class_omni_sketch_1_1_flow_key.html#a8f822495e9bf0a346c10566517ce4baa", null ]

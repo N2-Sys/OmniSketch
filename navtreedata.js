@@ -99,7 +99,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "_bloom_filter_8h.html",
-"data_8h.html"
+"data_8cpp.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

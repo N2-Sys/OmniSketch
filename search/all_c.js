@@ -10,10 +10,11 @@ var searchData=
   ['operator_3c_147',['operator&lt;',['../class_omni_sketch_1_1_flow_key.html#aea5683bc494db522c96b5bb41f291e4d',1,'OmniSketch::FlowKey']]],
   ['operator_3d_3d_148',['operator==',['../class_omni_sketch_1_1_flow_key.html#ad489d1590b74bee36d7891d5dd6defa7',1,'OmniSketch::FlowKey']]],
   ['operator_5b_5d_149',['operator[]',['../class_omni_sketch_1_1_data_1_1_estimation.html#ae92ceaa1755371044f132705f1ac7466',1,'OmniSketch::Data::Estimation']]],
-  ['originalsize_150',['originalSize',['../class_omni_sketch_1_1_sketch_1_1_counter_hierarchy.html#abfc106ee1aeb53f67d3c5d71c1547d25',1,'OmniSketch::Sketch::CounterHierarchy']]],
-  ['overview_151',['Overview',['../overview.html',1,'']]],
-  ['overview_2emd_152',['overview.md',['../overview_8md.html',1,'']]],
-  ['sketch_153',['Sketch',['../namespace_omni_sketch_1_1_sketch.html',1,'OmniSketch']]],
-  ['test_154',['Test',['../namespace_omni_sketch_1_1_test.html',1,'OmniSketch']]],
-  ['util_155',['Util',['../namespace_omni_sketch_1_1_util.html',1,'OmniSketch']]]
+  ['operator_5e_3d_150',['operator^=',['../class_omni_sketch_1_1_flow_key.html#a80fdd61e306528eadf7e4000c9539729',1,'OmniSketch::FlowKey']]],
+  ['originalsize_151',['originalSize',['../class_omni_sketch_1_1_sketch_1_1_counter_hierarchy.html#abfc106ee1aeb53f67d3c5d71c1547d25',1,'OmniSketch::Sketch::CounterHierarchy']]],
+  ['overview_152',['Overview',['../overview.html',1,'']]],
+  ['overview_2emd_153',['overview.md',['../overview_8md.html',1,'']]],
+  ['sketch_154',['Sketch',['../namespace_omni_sketch_1_1_sketch.html',1,'OmniSketch']]],
+  ['test_155',['Test',['../namespace_omni_sketch_1_1_test.html',1,'OmniSketch']]],
+  ['util_156',['Util',['../namespace_omni_sketch_1_1_util.html',1,'OmniSketch']]]
 ];
