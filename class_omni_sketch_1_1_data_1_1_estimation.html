@@ -120,6 +120,12 @@ Inheritance diagram for OmniSketch::Data::Estimation&lt; key_len, T &gt;:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:a55d76c0cf0087c1009b2f39fb5face79"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_omni_sketch_1_1_data_1_1_gnd_truth.html">GndTruth</a>&lt; key_len, T &gt;::<a class="el" href="class_omni_sketch_1_1_data_1_1_gnd_truth.html#a27f60e3353ce3766bd44bad26195b412">RightConstIterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_omni_sketch_1_1_data_1_1_estimation.html#a55d76c0cf0087c1009b2f39fb5face79">begin</a> () const</td></tr>
+<tr class="memdesc:a55d76c0cf0087c1009b2f39fb5face79"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a random access iterator pointed to the first element.  <a href="class_omni_sketch_1_1_data_1_1_estimation.html#a55d76c0cf0087c1009b2f39fb5face79">More...</a><br /></td></tr>
+<tr class="separator:a55d76c0cf0087c1009b2f39fb5face79"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc415f08f83138da65ba7cb4da5148dc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_omni_sketch_1_1_data_1_1_gnd_truth.html">GndTruth</a>&lt; key_len, T &gt;::<a class="el" href="class_omni_sketch_1_1_data_1_1_gnd_truth.html#a27f60e3353ce3766bd44bad26195b412">RightConstIterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_omni_sketch_1_1_data_1_1_estimation.html#acc415f08f83138da65ba7cb4da5148dc">end</a> () const</td></tr>
+<tr class="memdesc:acc415f08f83138da65ba7cb4da5148dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a random access iterator pointed to the very end.  <a href="class_omni_sketch_1_1_data_1_1_estimation.html#acc415f08f83138da65ba7cb4da5148dc">More...</a><br /></td></tr>
+<tr class="separator:acc415f08f83138da65ba7cb4da5148dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1343109bfc60b70cd811fa44cd5125ff"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_omni_sketch_1_1_data_1_1_estimation.html#a1343109bfc60b70cd811fa44cd5125ff">insert</a> (const <a class="el" href="class_omni_sketch_1_1_flow_key.html">FlowKey</a>&lt; key_len &gt; &amp;flowkey)</td></tr>
 <tr class="memdesc:a1343109bfc60b70cd811fa44cd5125ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insert a flowkey.  <a href="class_omni_sketch_1_1_data_1_1_estimation.html#a1343109bfc60b70cd811fa44cd5125ff">More...</a><br /></td></tr>
 <tr class="separator:a1343109bfc60b70cd811fa44cd5125ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -176,6 +182,36 @@ template&lt;int32_t key_len, typename T &gt; </div>
 
 </div>
 </div>
+<a id="a55d76c0cf0087c1009b2f39fb5face79"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a55d76c0cf0087c1009b2f39fb5face79">&#9670;&nbsp;</a></span>begin()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;int32_t key_len, typename T  = int64_t&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_omni_sketch_1_1_data_1_1_gnd_truth.html">GndTruth</a>&lt;key_len, T&gt;::<a class="el" href="class_omni_sketch_1_1_data_1_1_gnd_truth.html#a27f60e3353ce3766bd44bad26195b412">RightConstIterator</a> <a class="el" href="class_omni_sketch_1_1_data_1_1_estimation.html">OmniSketch::Data::Estimation</a>&lt; key_len, T &gt;::begin </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Return a random access iterator pointed to the first element. </p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="class_omni_sketch_1_1_data_1_1_gnd_truth.html#a31971c17d8f07836a34c177df18e04a7" title="Return a random access iterator pointed to the first element.">GndTruth::begin()</a> </dd></dl>
+
+</div>
+</div>
 <a id="adf1c65cc835e23390922a303e0bee58f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#adf1c65cc835e23390922a303e0bee58f">&#9670;&nbsp;</a></span>count()</h2>
 
@@ -196,6 +232,36 @@ template&lt;int32_t key_len, typename T &gt; </div>
 
 <p>Return whether the flowkey exists in this estimate. </p>
 <p>Always <code>0</code> or <code>1</code> in this case </p>
+
+</div>
+</div>
+<a id="acc415f08f83138da65ba7cb4da5148dc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acc415f08f83138da65ba7cb4da5148dc">&#9670;&nbsp;</a></span>end()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;int32_t key_len, typename T  = int64_t&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_omni_sketch_1_1_data_1_1_gnd_truth.html">GndTruth</a>&lt;key_len, T&gt;::<a class="el" href="class_omni_sketch_1_1_data_1_1_gnd_truth.html#a27f60e3353ce3766bd44bad26195b412">RightConstIterator</a> <a class="el" href="class_omni_sketch_1_1_data_1_1_estimation.html">OmniSketch::Data::Estimation</a>&lt; key_len, T &gt;::end </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Return a random access iterator pointed to the very end. </p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="class_omni_sketch_1_1_data_1_1_gnd_truth.html#a4e7aa3aa91d6451d7584690c2fa92283" title="Return a random access const iterator pointed to the very end.">GndTruth::end()</a> </dd></dl>
 
 </div>
 </div>

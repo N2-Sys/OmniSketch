@@ -80,6 +80,7 @@ var NAVTREE =
         [ "All", "functions.html", null ],
         [ "Functions", "functions_func.html", null ],
         [ "Variables", "functions_vars.html", null ],
+        [ "Typedefs", "functions_type.html", null ],
         [ "Related Functions", "functions_rela.html", null ]
       ] ]
     ] ],
@@ -99,7 +100,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "_bloom_filter_8h.html",
-"data_8cpp.html"
+"component.html#reminderpcapparser"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
