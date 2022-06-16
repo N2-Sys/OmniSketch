@@ -226,6 +226,16 @@ void TestGndTruth() {
       VERIFY(max >= kv.get_right());
       max = kv.get_right();
     }
+
+    VERIFY(gnd_truth_1.size() == 5);
+    VERIFY(gnd_truth_2.size() == 5);
+    for (const auto &kv : gnd_truth_1) {
+      VERIFY(gnd_truth_1.at(kv.get_left()) == kv.get_right());
+    }
+    for (const auto &kv : gnd_truth_2) {
+      VERIFY(gnd_truth_2.at(kv.get_left()) == kv.get_right());
+    }
+
   } catch (const std::exception &exp) {
     VERIFY_NO_EXCEPTION(exp);
   }

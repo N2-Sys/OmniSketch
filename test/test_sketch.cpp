@@ -48,6 +48,15 @@ public:
 
     return est;
   }
+  OmniSketch::Data::Estimation<key_len, T> decode() override {
+    OmniSketch::Data::Estimation<key_len, T> est;
+    OmniSketch::FlowKey<4> key_1(0x1), key_2(0x7), key_3(0x3);
+    est.update(key_1, 5); // gnd truth: 5
+    est.update(key_2, 3); // gnd truth: 5
+    est.update(key_3, 5); // gnd truth: 4
+
+    return est;
+  }
 };
 
 void TestTest() {
@@ -111,6 +120,7 @@ void TestTest() {
   test.testUpdate(ptr, data.begin(), data.end(), InPacket);
   test.testQuery(ptr, gnd_truth);
   test.testLookup(ptr, gnd_truth_2, gnd_truth);
+  test.testDecode(ptr, gnd_truth);
 
   GndTruth<4, int32_t> gnd_truth_3;
   gnd_truth_3.getHeavyHitter(gnd_truth, 4.9 / 32, Percentile);

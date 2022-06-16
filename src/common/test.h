@@ -44,6 +44,9 @@ enum Metric {
   F1 /** F1Score :=  harmonic mean of precision & recall (in numeric)*/,
   DIST /** distribution of error (vector) */,
   PODF /** portion of desired flow (in percentile) */,
+  RATIO /** decoded ratio (in percentile), i.e., the ratio of #(decoded flows)
+           in ground truth to #flows */
+  ,
 };
 
 /**
@@ -74,11 +77,11 @@ public:
    * @brief Read and parse the metric vector
    *
    * @param file_path   Path to the config file
-   * @param test_path   Path to the node containing testing term in the file
+   * @param test_path   Path to the node containing testing routines in the file
    * (concatenated with '.', see example below)
-   * @param term_name   Name of the testing term
+   * @param term_name   Name of the testing routine in TOML file
    *
-   * @note Once Metric::PODF is declared in the current testing term, say
+   * @note Once Metric::PODF is declared in the current testing routine, say
    * ```
    * XXX = [..., "PODF", ...]
    * ```
@@ -86,14 +89,15 @@ public:
    * ```
    * XXX_podf = [a threshold]
    * ```
-   * for MetricVec to read. Likewise, with Metric::DIST you have to add to the
-   * node a line
+   * to specify the error threshold in order for MetricVec to
+   * read. Likewise, with Metric::DIST you have to add a line
    * ```
    * XXX_dist = [a vector of double]
    * ```
+   * to specify the ticks.
    *
    * ### Example
-   * If the toml file is like this,
+   * Suppose we have the following toml file:
    * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.toml
    * # toml.toml
    * [MySketch.test]
@@ -119,15 +123,66 @@ public:
  * @tparam key_len  length of flowkey
  * @tparam T        type of the counter
  *
- *|Test method |Required overriden function|Available Metrics (Test::Metric)|
- *|:-----------|:--------------------------|:-------------------------------|
- *|testSize()  |Sketch::SketchBase::size() | SIZE                           |
- *|testInsert()|Sketch::SketchBase::insert()|RATE                           |
- *|testUpdate()|Sketch::SketchBase::update()|RATE                           |
- *|testQuery() |Sketch::SketchBase::query()|RATE, ARE, AAE, ACC, PODF, DIST |
- *|testLookup()|Sketch::SketchBase::lookup()|RATE, TP, FP, PRC              |
- *|testHeavyHitter()|Sketch::SketchBase::getHeavyHitter()|TIME,ARE,PRC,RCL,F1|
- *|testHeavyChanger()|Sketch::SketchBase::getHeavyChanger()|TIME,ARE,PRC,RCL,F1|
+ * <table>
+ *   <tr>
+ *        <td><b>Test Routine</b></td>
+ *        <td><b>Required Overriden Function</b></td>
+ *        <td><b>Available Metrics (In Test::Metric)</b></td>
+ *        <td><b>Name of the Testing Routine in TOML</b></td>
+ *   </tr>
+ *   <tr>
+ *        <td>testSize()</td>
+ *        <td>[size()](@ref Sketch::SketchBase::size())</td>
+ *        <td>SIZE</td>
+ *        <td>
+ * <i>None</i> (Once calling testSize(), the metric is collected)
+ *        </td>
+ *   </tr>
+ *   <tr>
+ *        <td>testInsert()</td>
+ *        <td>[insert()](@ref Sketch::SketchBase::insert())</td>
+ *        <td>RATE</td>
+ *        <td>`insert`</td>
+ *   </tr>
+ *   <tr>
+ *        <td>testUpdate()</td>
+ *        <td>[update()](@ref Sketch::SketchBase::update())</td>
+ *        <td>RATE</td>
+ *        <td>`update`</td>
+ *   </tr>
+ *   <tr>
+ *        <td>testQuery()</td>
+ *        <td>[query()](@ref Sketch::SketchBase::query())</td>
+ *        <td>RATE, ARE, AAE, ACC, PODF, DIST</td>
+ *        <td>`query`</td>
+ *   </tr>
+ *   <tr>
+ *        <td>testLookup()</td>
+ *        <td>[lookup()](@ref Sketch::SketchBase::lookup())</td>
+ *        <td>RATE, TP, FP, PRC</td>
+ *        <td>`lookup`</td>
+ *   </tr>
+ *   <tr>
+ *        <td>testHeavyHitter()</td>
+ *        <td>[getHeavyHitter()](@ref Sketch::SketchBase::getHeavyHitter())</td>
+ *        <td>TIME, ARE, PRC, RCL, F1</td>
+ *        <td>`heavyhitter`</td>
+ *   </tr>
+ *   <tr>
+ *        <td>testHeavyChanger()</td>
+ *        <td>
+ * [getHeavyChanger()](@ref Sketch::SketchBase::getHeavyChanger())
+ *        </td>
+ *        <td>TIME, ARE, PRC, RCL, F1</td>
+ *        <td>`heavychanger`</td>
+ *   </tr>
+ *   <tr>
+ *        <td>testDecode()</td>
+ *        <td>[decode()](@ref Sketch::SketchBase::decode())</td>
+ *        <td>TIME, RATIO, ARE, AAE, ACC, PODF, DIST</td>
+ *        <td>`decode`</td>
+ *   </tr>
+ * </table>
  *
  */
 template <int32_t key_len, typename T = int64_t> class TestBase {
@@ -141,6 +196,7 @@ private:
   Vec query;
   Vec heavy_hitter;
   Vec heavy_changer;
+  Vec decode;
 
 protected:
   const std::string_view show_name;
@@ -282,6 +338,16 @@ public:
       std::unique_ptr<Sketch::SketchBase<key_len, T>> &ptr_sketch_2,
       double threshold,
       Data::GndTruth<key_len, T> gnd_truth_heavy_changers) final;
+  /**
+   * @brief Test decode
+   * @details You should override the Sketch::SketchBase::decode() method.
+   *
+   * @param ptr_sketch  pointer to the sketch
+   * @param gnd_truth   ground truth
+   */
+  virtual void
+  testDecode(std::unique_ptr<Sketch::SketchBase<key_len, T>> &ptr_sketch,
+             Data::GndTruth<key_len, T> gnd_truth) final;
 };
 
 } // namespace OmniSketch::Test
@@ -411,6 +477,11 @@ template <int32_t key_len, typename T> void TestBase<key_len, T>::show() const {
                  fmt::format("{} <={:g}%", prefix, tmp.first * 1e2),
                  tmp.second * 1e2);
     }
+    if (vec.count(RATIO)) {
+      assert(vec.at(RATIO).type() == typeid(double));
+      fmt::print("{:>15}: {:g}%\n", fmt::format("{} Ratio", prefix),
+                 boost::any_cast<double>(vec.at(RATIO)) * 1e2);
+    }
   };
   // prologue
   fmt::print("============ {:^18} ============\n", show_name);
@@ -429,6 +500,8 @@ template <int32_t key_len, typename T> void TestBase<key_len, T>::show() const {
   foo(heavy_hitter, "HH");
   // heavy_changer
   foo(heavy_changer, "HC");
+  // decode
+  foo(decode, "Decode");
   // epilogue
   fmt::print("============================================\n");
 }
@@ -661,6 +734,72 @@ void TestBase<key_len, T>::testHeavyChanger(
   }
   if (metric_vec.in(Metric::F1)) {
     heavy_changer[Metric::F1] = 2 * precision * recall / (precision + recall);
+  }
+}
+
+template <int32_t key_len, typename T>
+void TestBase<key_len, T>::testDecode(
+    std::unique_ptr<Sketch::SketchBase<key_len, T>> &ptr_sketch,
+    Data::GndTruth<key_len, T> gnd_truth) {
+  // config
+  MetricVec metric_vec(config_file, test_path, "decode");
+
+  DEFINE_TIMERS;
+  double ARE = 0.0, AAE = 0.0, corr = 0, podf_cnt = 0;
+  double decoded_flows = 0;
+  const bool measure_dist = metric_vec.in(Metric::DIST);
+  std::vector<double> dist(metric_vec.quantiles.size()); // zero initialized
+
+  START_TIMER;
+  Data::Estimation<key_len, T> decoded = ptr_sketch->decode();
+  STOP_TIMER;
+
+  for (const auto &kv : decoded) {
+    if (gnd_truth.count(kv.get_left())) {
+      decoded_flows += 1.0;
+      T true_size = gnd_truth.at(kv.get_left());
+      double RE =
+          static_cast<double>(std::abs(true_size - kv.get_right())) / true_size;
+      if (RE <= metric_vec.podf)
+        podf_cnt += 1.0;
+      ARE += RE;
+      AAE += std::abs(true_size - kv.get_right());
+      corr += (kv.get_right() == true_size);
+      // update Distribution
+      if (measure_dist) {
+        auto ptr = std::lower_bound(metric_vec.quantiles.begin(),
+                                    metric_vec.quantiles.end(), RE);
+        dist[ptr - metric_vec.quantiles.begin()] += 1.0;
+      }
+    }
+  }
+
+  if (metric_vec.in(Metric::TIME)) {
+    decode[Metric::TIME] = TIMER_RESULT;
+  }
+  if (metric_vec.in(Metric::RATIO)) {
+    decode[Metric::RATIO] = decoded_flows / gnd_truth.size();
+  }
+  // Only collect the metric if there is decoded flows
+  if (decoded_flows) {
+    if (metric_vec.in(Metric::ARE)) {
+      decode[Metric::ARE] = ARE / decoded_flows;
+    }
+    if (metric_vec.in(Metric::AAE)) {
+      decode[Metric::AAE] = AAE / decoded_flows;
+    }
+    if (metric_vec.in(Metric::ACC)) {
+      decode[Metric::ACC] = corr / decoded_flows;
+    }
+    if (metric_vec.in(PODF)) {
+      decode[Metric::PODF] =
+          std::make_pair(metric_vec.podf, podf_cnt / decoded_flows);
+    }
+    if (measure_dist) {
+      for (auto &v : dist)
+        v /= decoded_flows;
+      query[Metric::DIST] = std::make_pair(metric_vec.quantiles, dist);
+    }
   }
 }
 

@@ -432,6 +432,13 @@ public:
     return my_map.left.count(flowkey);
   }
   /**
+   * @brief Get the value of a certain key
+   *
+   * @details If the key does not exist, an out-of-range exception would be
+   * thrown.
+   */
+  T at(const FlowKey<key_len> &flowkey) const;
+  /**
    * @brief Return all flowkeys that share a single value
    *
    * @details Time complexity is logarithm in the number of flowkeys
@@ -875,6 +882,18 @@ GndTruth<key_len, T> &GndTruth<key_len, T>::operator-=(const GndTruth &other) {
 }
 
 template <int32_t key_len, typename T>
+T GndTruth<key_len, T>::at(const FlowKey<key_len> &flowkey) const {
+  if (my_map.left.count(flowkey)) {
+    return my_map.left.at(flowkey);
+  } else {
+    throw std::out_of_range(fmt::format("Flowkey Out Of Range: Not found in "
+                                        "OmniSketch::Data::GndTruth<{:d}, {}>!",
+                                        key_len, typeid(T).name()));
+  }
+  // return my_map.right.begin()->get_right(); // always return a value
+}
+
+template <int32_t key_len, typename T>
 void GndTruth<key_len, T>::getGroundTruth(
     typename std::vector<Record<key_len>>::const_iterator begin,
     typename std::vector<Record<key_len>>::const_iterator end,
@@ -1152,7 +1171,7 @@ const T &Estimation<key_len, T>::at(const FlowKey<key_len> &flowkey) const {
                     "OmniSketch::Data::Estimation<{:d}, {}>!",
                     key_len, typeid(T).name()));
   }
-  return my_map.right.begin()->get_right();
+  // return my_map.right.begin()->get_right(); // always return a value
 }
 
 template <int32_t key_len, typename T>

@@ -31,14 +31,42 @@ namespace OmniSketch::Sketch {
  *
  * @attention Write your method in subclass with the same signature if it
  * is functionally equivalent to one of the following:
- * | Functional Description  | Partial Signature (Click links to see more)    |
- * |:-------------------------------|:----------------------------------------|
- * | query sketch size              | size() const                            |
- * | insert flowkey without value   | insert(const FlowKey<key_len> &)        |
- * | insert flowkey with value      | update(const FlowKey<key_len> &, T)     |
- * |look up a flowkey (*if exists*) | lookup(const FlowKey<key_len> &) const  |
- * |heavy hitter                    | getHeavyHitter(double) const            |
- * |heavy changer                   | getHeavyChanger(double) const           |
+ * <table>
+ *    <tr>
+ *        <td><b>Functional Description</b></td>
+ *        <td><b>Partial Signature (Click the links to see more)</b></td>
+ *   </tr>
+ *   <tr>
+ *        <td>query sketch size</td>
+ *        <td>size() const</td>
+ *   </tr>
+ *   <tr>
+ *        <td>insert flowkey without value</td>
+ *        <td>insert(const FlowKey<key_len> &)</td>
+ *   </tr>
+ *   <tr>
+ *        <td>insert flowkey with value</td>
+ *        <td>update(const FlowKey<key_len> &, T)</td>
+ *   </tr>
+ *   <tr>
+ *        <td>look up a flowkey (*if exists*)</td>
+ *        <td>lookup(const FlowKey<key_len> &) const</td>
+ *   </tr>
+ *   <tr>
+ *        <td>heavy hitter</td>
+ *        <td>getHeavyHitter(double) const</td>
+ *   </tr>
+ *   <tr>
+ *     <td>heavy changer</td>
+ *     <td>
+ * getHeavyChanger(std::unique_ptr<SketchBase<key_len,T>> &, double) const
+ *     </td>
+ *   </tr>
+ *   <tr>
+ *        <td>decode flowkeys with values</td>
+ *        <td>decode()</td>
+ *   </tr>
+ * </table>
  *
  */
 template <int32_t key_len, typename T = int64_t> class SketchBase {
@@ -125,6 +153,20 @@ public:
     static bool emit = false; // avoid burst of LOG
     if (!emit) {
       LOG(ERROR, "Erroneously called SketchBase::getHeavyChanger(double).");
+      emit = true;
+    }
+    return {};
+  }
+  /**
+   * @brief Decode all flowkeys along with their values
+   * @return An Estimation that contains all decoded flowkeys with estimated
+   * value. Particularly useful for reversible sketches.
+   *
+   */
+  virtual Data::Estimation<key_len, T> decode() {
+    static bool emit = false;
+    if (!emit) {
+      LOG(ERROR, "Erroneously called SketchBase::decode().");
       emit = true;
     }
     return {};

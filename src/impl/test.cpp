@@ -61,6 +61,8 @@ MetricVec::MetricVec(const std::string_view file_path,
     } else if (!index.compare("PODF")) {
       is_podf = true;
       metric_set.insert(Metric::PODF);
+    } else if (!index.compare("RATIO")) {
+      metric_set.insert(Metric::RATIO);
     }
   }
   // If distribution is specified
@@ -73,7 +75,8 @@ MetricVec::MetricVec(const std::string_view file_path,
     } else {
       // sort and unique
       std::sort(quantiles.begin(), quantiles.end());
-      std::unique(quantiles.begin(), quantiles.end());
+      auto iter = std::unique(quantiles.begin(), quantiles.end());
+      quantiles.erase(iter, quantiles.end());
       // ended with +inf
       if (quantiles.back() != std::numeric_limits<double>::infinity()) {
         quantiles.push_back(std::numeric_limits<double>::infinity());
