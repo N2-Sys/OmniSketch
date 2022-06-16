@@ -106,7 +106,7 @@ Status: **h**ave, **c**hecked, checked but with **d**oubt, **t**ested.
 | Linear Counting         |      |                      |
 | Kmin(KMV)               |      |                      |
 | Deltoid                 | t    |                      |
-| flow radar              | t    |                      |
+| Flow Radar              | t    | FR                   |
 | sketch learn            |      |                      |
 | elastic sketch          | t    |                      |
 | univmon                 |      |                      |

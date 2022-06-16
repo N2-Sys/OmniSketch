@@ -62,3 +62,20 @@
   update = ["RATE"]
   heavyhitter = ["TIME", "ARE", "PRC", "RCL"]
 
+[FlowRadar] # Flow Radar
+
+  [FlowRadar.para]
+    flow_filter_bit = 1000000
+    flow_filter_hash = 50
+    count_table_num = 500000
+    count_table_hash = 5
+  
+  [FlowRadar.data]
+    data = "../data/records.bin"
+    format = [["flowkey", "padding", "timestamp", "length", "padding"], [13, 3, 8, 2, 6]]
+  
+  [FlowRadar.test]
+    update = ["RATE"]
+    decode = ["TIME", "ARE", "AAE", "RATIO", "ACC", "PODF"]
+    decode_podf = 0.01
+

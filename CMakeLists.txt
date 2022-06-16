@@ -118,3 +118,6 @@ add_user_sketch(HP HashPipe)
 
 # Count Sketch
 add_user_sketch(CS CountSketch)
+
+# Flow Radar
+add_user_sketch(FR FlowRadar)
