@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['timer_5fresult_512',['TIMER_RESULT',['../test_8h.html#a733c6d5bc88e6c158c40988faeb081c1',1,'test.h']]]
+  ['start_5ftimer_530',['START_TIMER',['../test_8h.html#a5b397597422a5a54c07ad100c09c97e7',1,'test.h']]],
+  ['stop_5ftimer_531',['STOP_TIMER',['../test_8h.html#a66c59b488e6f6a1f1f4204742de4a8c1',1,'test.h']]]
 ];

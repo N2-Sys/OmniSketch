@@ -14,5 +14,7 @@ digraph "OmniSketch::Test::TestBase&lt; key_len, T &gt;"
   Node1 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node5 [label="OmniSketch::Test::CUSketch\lTest\< key_len, T \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_omni_sketch_1_1_test_1_1_c_u_sketch_test.html",tooltip="Testing class for CU Sketch."];
   Node1 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node6 [label="OmniSketch::Test::HashPipe\lTest\< key_len, T \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_omni_sketch_1_1_test_1_1_hash_pipe_test.html",tooltip="Testing class for Bloom Filter."];
+  Node6 [label="OmniSketch::Test::FlowRadar\lTest\< key_len, T \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_omni_sketch_1_1_test_1_1_flow_radar_test.html",tooltip="Testing class for Flow Radar."];
+  Node1 -> Node7 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="OmniSketch::Test::HashPipe\lTest\< key_len, T \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_omni_sketch_1_1_test_1_1_hash_pipe_test.html",tooltip="Testing class for Bloom Filter."];
 }

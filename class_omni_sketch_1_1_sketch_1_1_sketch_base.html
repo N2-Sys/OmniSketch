@@ -206,7 +206,7 @@ template&lt;int32_t key_len, typename T  = int64_t&gt; </div>
 <p>Decode all flowkeys along with their values. </p>
 <dl class="section return"><dt>Returns</dt><dd>An Estimation that contains all decoded flowkeys with estimated value. Particularly useful for reversible sketches. </dd></dl>
 
-<p>Reimplemented in <a class="el" href="class_my_sketch.html#a41f1f76e869be374d99700a517ecbb44">MySketch&lt; key_len, T &gt;</a>.</p>
+<p>Reimplemented in <a class="el" href="class_omni_sketch_1_1_sketch_1_1_flow_radar.html#af29d32d2da27b4be9c1cd0602e7d4ad3">OmniSketch::Sketch::FlowRadar&lt; key_len, T, hash_t &gt;</a>, and <a class="el" href="class_my_sketch.html#a41f1f76e869be374d99700a517ecbb44">MySketch&lt; key_len, T &gt;</a>.</p>
 
 </div>
 </div>
@@ -314,7 +314,7 @@ template&lt;int32_t key_len, typename T  = int64_t&gt; </div>
 
 <p>Insert a flowkey without value. </p>
 
-<p>Reimplemented in <a class="el" href="class_my_sketch.html#a93ade9b2226ec323a91f20b595053acd">MySketch&lt; key_len, T &gt;</a>, and <a class="el" href="class_omni_sketch_1_1_sketch_1_1_bloom_filter.html#a0cf46284c7ef35b54a51300612bf3ce7">OmniSketch::Sketch::BloomFilter&lt; key_len, hash_t &gt;</a>.</p>
+<p>Reimplemented in <a class="el" href="class_my_sketch.html#a93ade9b2226ec323a91f20b595053acd">MySketch&lt; key_len, T &gt;</a>, <a class="el" href="class_omni_sketch_1_1_sketch_1_1_bloom_filter.html#a0cf46284c7ef35b54a51300612bf3ce7">OmniSketch::Sketch::BloomFilter&lt; key_len, hash_t &gt;</a>, and <a class="el" href="class_omni_sketch_1_1_sketch_1_1_bloom_filter.html#a0cf46284c7ef35b54a51300612bf3ce7">OmniSketch::Sketch::BloomFilter&lt; key_len, Hash::AwareHash &gt;</a>.</p>
 
 </div>
 </div>
@@ -347,7 +347,7 @@ template&lt;int32_t key_len, typename T  = int64_t&gt; </div>
 <p>Look up a flowkey in the sketch. </p>
 <dl class="section return"><dt>Returns</dt><dd><code>true</code> means there exists; <code>false</code> otherwise. </dd></dl>
 
-<p>Reimplemented in <a class="el" href="class_my_sketch.html#a71b4721ed9c5cf2a7cdc72b8da29b975">MySketch&lt; key_len, T &gt;</a>, and <a class="el" href="class_omni_sketch_1_1_sketch_1_1_bloom_filter.html#a10c1fd6b847419a0c656299f50f05f61">OmniSketch::Sketch::BloomFilter&lt; key_len, hash_t &gt;</a>.</p>
+<p>Reimplemented in <a class="el" href="class_my_sketch.html#a71b4721ed9c5cf2a7cdc72b8da29b975">MySketch&lt; key_len, T &gt;</a>, <a class="el" href="class_omni_sketch_1_1_sketch_1_1_bloom_filter.html#a10c1fd6b847419a0c656299f50f05f61">OmniSketch::Sketch::BloomFilter&lt; key_len, hash_t &gt;</a>, and <a class="el" href="class_omni_sketch_1_1_sketch_1_1_bloom_filter.html#a10c1fd6b847419a0c656299f50f05f61">OmniSketch::Sketch::BloomFilter&lt; key_len, Hash::AwareHash &gt;</a>.</p>
 
 </div>
 </div>
@@ -410,7 +410,7 @@ template&lt;int32_t key_len, typename T  = int64_t&gt; </div>
 
 <p>Return the size of the sketch. </p>
 
-<p>Reimplemented in <a class="el" href="class_omni_sketch_1_1_sketch_1_1_c_h_c_m_sketch.html#ae266fd5441f5166718e4239ec70f1dc6">OmniSketch::Sketch::CHCMSketch&lt; key_len, no_layer, T, hash_t &gt;</a>, <a class="el" href="class_omni_sketch_1_1_sketch_1_1_hash_pipe.html#a849afb155d857fd400443b016712d3ec">OmniSketch::Sketch::HashPipe&lt; key_len, T, hash_t &gt;</a>, <a class="el" href="class_omni_sketch_1_1_sketch_1_1_c_u_sketch.html#abdc7c4f5f9b75ef13dd9c005d95db4c8">OmniSketch::Sketch::CUSketch&lt; key_len, T, hash_t &gt;</a>, <a class="el" href="class_omni_sketch_1_1_sketch_1_1_c_m_sketch.html#a9522868b84540899a9f8fa07e0595001">OmniSketch::Sketch::CMSketch&lt; key_len, T, hash_t &gt;</a>, <a class="el" href="class_omni_sketch_1_1_sketch_1_1_count_sketch.html#a148c744a34e64b77f96874f0868cdc62">OmniSketch::Sketch::CountSketch&lt; key_len, T, hash_t &gt;</a>, and <a class="el" href="class_my_sketch.html#aa94a90b5299b2fe85183bde22674fd44">MySketch&lt; key_len, T &gt;</a>.</p>
+<p>Reimplemented in <a class="el" href="class_omni_sketch_1_1_sketch_1_1_flow_radar.html#ae23f022bd2bbc7bf8184f3ab85b23fa5">OmniSketch::Sketch::FlowRadar&lt; key_len, T, hash_t &gt;</a>, <a class="el" href="class_omni_sketch_1_1_sketch_1_1_bloom_filter.html#abfb60d1ab285f05fc7fbd209bc3c6ae4">OmniSketch::Sketch::BloomFilter&lt; key_len, Hash::AwareHash &gt;</a>, <a class="el" href="class_omni_sketch_1_1_sketch_1_1_c_h_c_m_sketch.html#ae266fd5441f5166718e4239ec70f1dc6">OmniSketch::Sketch::CHCMSketch&lt; key_len, no_layer, T, hash_t &gt;</a>, <a class="el" href="class_omni_sketch_1_1_sketch_1_1_hash_pipe.html#a849afb155d857fd400443b016712d3ec">OmniSketch::Sketch::HashPipe&lt; key_len, T, hash_t &gt;</a>, <a class="el" href="class_omni_sketch_1_1_sketch_1_1_c_u_sketch.html#abdc7c4f5f9b75ef13dd9c005d95db4c8">OmniSketch::Sketch::CUSketch&lt; key_len, T, hash_t &gt;</a>, <a class="el" href="class_omni_sketch_1_1_sketch_1_1_c_m_sketch.html#a9522868b84540899a9f8fa07e0595001">OmniSketch::Sketch::CMSketch&lt; key_len, T, hash_t &gt;</a>, <a class="el" href="class_omni_sketch_1_1_sketch_1_1_count_sketch.html#a148c744a34e64b77f96874f0868cdc62">OmniSketch::Sketch::CountSketch&lt; key_len, T, hash_t &gt;</a>, and <a class="el" href="class_my_sketch.html#aa94a90b5299b2fe85183bde22674fd44">MySketch&lt; key_len, T &gt;</a>.</p>
 
 </div>
 </div>
@@ -452,7 +452,7 @@ template&lt;int32_t key_len, typename T  = int64_t&gt; </div>
 
 <p>Update a flowkey with certain value. </p>
 
-<p>Reimplemented in <a class="el" href="class_my_sketch.html#ac4dc7bd6a0411e83f91d7d8148b195fd">MySketch&lt; key_len, T &gt;</a>, <a class="el" href="class_omni_sketch_1_1_sketch_1_1_c_h_c_m_sketch.html#abf7e123ffe20f6ff84c457d4e77c8d75">OmniSketch::Sketch::CHCMSketch&lt; key_len, no_layer, T, hash_t &gt;</a>, <a class="el" href="class_omni_sketch_1_1_sketch_1_1_hash_pipe.html#a91131e9a0b12a9fc2c60964fce4c4f98">OmniSketch::Sketch::HashPipe&lt; key_len, T, hash_t &gt;</a>, <a class="el" href="class_omni_sketch_1_1_sketch_1_1_c_u_sketch.html#a7d95cf3627a0e48aee82af391e024a5a">OmniSketch::Sketch::CUSketch&lt; key_len, T, hash_t &gt;</a>, <a class="el" href="class_omni_sketch_1_1_sketch_1_1_c_m_sketch.html#aba59660c3aff0138a040a8885b21bf5b">OmniSketch::Sketch::CMSketch&lt; key_len, T, hash_t &gt;</a>, and <a class="el" href="class_omni_sketch_1_1_sketch_1_1_count_sketch.html#a18f04691dfc213996cdabec28777a54d">OmniSketch::Sketch::CountSketch&lt; key_len, T, hash_t &gt;</a>.</p>
+<p>Reimplemented in <a class="el" href="class_my_sketch.html#ac4dc7bd6a0411e83f91d7d8148b195fd">MySketch&lt; key_len, T &gt;</a>, <a class="el" href="class_omni_sketch_1_1_sketch_1_1_flow_radar.html#aa1f82de1e8e2f8fda555574f1e353694">OmniSketch::Sketch::FlowRadar&lt; key_len, T, hash_t &gt;</a>, <a class="el" href="class_omni_sketch_1_1_sketch_1_1_c_h_c_m_sketch.html#abf7e123ffe20f6ff84c457d4e77c8d75">OmniSketch::Sketch::CHCMSketch&lt; key_len, no_layer, T, hash_t &gt;</a>, <a class="el" href="class_omni_sketch_1_1_sketch_1_1_hash_pipe.html#a91131e9a0b12a9fc2c60964fce4c4f98">OmniSketch::Sketch::HashPipe&lt; key_len, T, hash_t &gt;</a>, <a class="el" href="class_omni_sketch_1_1_sketch_1_1_c_u_sketch.html#a7d95cf3627a0e48aee82af391e024a5a">OmniSketch::Sketch::CUSketch&lt; key_len, T, hash_t &gt;</a>, <a class="el" href="class_omni_sketch_1_1_sketch_1_1_c_m_sketch.html#aba59660c3aff0138a040a8885b21bf5b">OmniSketch::Sketch::CMSketch&lt; key_len, T, hash_t &gt;</a>, and <a class="el" href="class_omni_sketch_1_1_sketch_1_1_count_sketch.html#a18f04691dfc213996cdabec28777a54d">OmniSketch::Sketch::CountSketch&lt; key_len, T, hash_t &gt;</a>.</p>
 
 </div>
 </div>
