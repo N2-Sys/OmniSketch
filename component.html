@@ -350,26 +350,28 @@ Override runTest()</h2>
 <li>Allocate one or several sketch instances with the parsed configurations as the constructing arguments and downcast the pointer(s) to <code>SketchBase&lt;key_len&gt; *</code>. It is even more robust if you create a <code>unique_ptr&lt;SketchBase&lt;key_len&gt;&gt;</code> object.</li>
 <li>Use the data format parsed and path to input data to read in streaming data via <a class="el" href="component.html#streamdata">Stream Data</a>.</li>
 <li>Data should be used at your discretion. On the one hand, they are fed into the sketch via overriden method. On the other hand, <a class="el" href="component.html#gndtruth">Ground Truth</a> scans through the data to help you get the ground truth value.</li>
-<li>Note that we do not have to call the overriden methods in sketch directly. All the methods <code>testXXX()</code> in <code>TestBase</code> call them de facto. With a method name called <code>testXXX()</code>, we supply a key named <code>XXX</code> in the config file to indicate which metrics to collect. The following table shows which metrics can be collected in the corresponding testing methods. <table class="markdownTable">
-<tr class="markdownTableHead">
-<th class="markdownTableHeadLeft">Test method </th><th class="markdownTableHeadLeft">Required overriden function </th><th class="markdownTableHeadLeft">Available Metrics (Test::Metric)  </th></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyLeft"><a class="el" href="class_omni_sketch_1_1_test_1_1_test_base.html#a7c8d4ec8b257ee76670d6e5274f656c0">testSize()</a> </td><td class="markdownTableBodyLeft"><a class="el" href="class_omni_sketch_1_1_sketch_1_1_sketch_base.html#acc68d26a5ba8a7619a1858dcb2e80235">size()</a> </td><td class="markdownTableBodyLeft">SIZE  </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyLeft"><a class="el" href="class_omni_sketch_1_1_test_1_1_test_base.html#aacfc4bbae570f916c5c87c16b06a96da">testInsert()</a> </td><td class="markdownTableBodyLeft"><a class="el" href="class_omni_sketch_1_1_sketch_1_1_sketch_base.html#a0db74aa70b663fae2de994f433e8b4b3">insert()</a> </td><td class="markdownTableBodyLeft">RATE  </td></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyLeft"><a class="el" href="class_omni_sketch_1_1_test_1_1_test_base.html#a98d8e9d0a0f0aca9fe14c5ee6ac668c0">testUpdate()</a> </td><td class="markdownTableBodyLeft"><a class="el" href="class_omni_sketch_1_1_sketch_1_1_sketch_base.html#aa6163885014e4210ecba2621e906211f">update()</a> </td><td class="markdownTableBodyLeft">RATE  </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyLeft"><a class="el" href="class_omni_sketch_1_1_test_1_1_test_base.html#a5e3c9d462ab3d771353f043e47634319">testQuery()</a> </td><td class="markdownTableBodyLeft"><a class="el" href="class_omni_sketch_1_1_sketch_1_1_sketch_base.html#acde318df3b2ce9ad5115754df15beb21">query()</a> </td><td class="markdownTableBodyLeft">RATE, ARE, AAE, ACC, PODF, DIST  </td></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyLeft"><a class="el" href="class_omni_sketch_1_1_test_1_1_test_base.html#aec1628a80bf98f95c8463a58dab82415">testLookup()</a> </td><td class="markdownTableBodyLeft"><a class="el" href="class_omni_sketch_1_1_sketch_1_1_sketch_base.html#aa64070e79e56557a7fe0b48df0268d7e">lookup()</a> </td><td class="markdownTableBodyLeft">RATE, TP, FP, PRC  </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyLeft"><a class="el" href="class_omni_sketch_1_1_test_1_1_test_base.html#a28810d78eddb56cc366bb440e5206585">testHeavyHitter()</a> </td><td class="markdownTableBodyLeft"><a class="el" href="class_omni_sketch_1_1_sketch_1_1_sketch_base.html#ab8dec0e0d4382016225dbd75788f3ff9">getHeavyHitter()</a> </td><td class="markdownTableBodyLeft">TIME,ARE,PRC,RCL,F1  </td></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyLeft"><a class="el" href="class_omni_sketch_1_1_test_1_1_test_base.html#a0d55de36f2a93b52069f8475bbe23804">testHeavyChanger()</a> </td><td class="markdownTableBodyLeft"><a class="el" href="class_omni_sketch_1_1_sketch_1_1_sketch_base.html#aadc2b3b7792938931e86a80c6c7b5fe6">getHeavyChanger()</a> </td><td class="markdownTableBodyLeft">TIME,ARE,PRC,RCL,F1  </td></tr>
-</table>
-</li>
+<li>Note that we do not have to call the overriden methods in sketch directly. All the methods <code>testXXX()</code> in <code>TestBase</code> call them de facto. With a method name called <code>testXXX()</code>, we supply a key named <code>XXX</code> in the config file to indicate which metrics to collect. The following table shows which metrics can be collected in the corresponding testing methods.</li>
 </ol>
+<table class="doxtable">
+<tr>
+<td><b>Test Routine</b> </td><td><b>Required Overriden Function</b> </td><td><b>Available Metrics (In Test::Metric)</b> </td><td><b>Name of the Testing Routine in TOML</b>  </td></tr>
+<tr>
+<td>testSize() </td><td>size() </td><td>SIZE </td><td><em>None</em> (Once calling testSize(), the metric is collected)   </td></tr>
+<tr>
+<td>testInsert() </td><td>insert() </td><td>RATE </td><td><code>insert</code>  </td></tr>
+<tr>
+<td>testUpdate() </td><td>update() </td><td>RATE </td><td><code>update</code>  </td></tr>
+<tr>
+<td>testQuery() </td><td>query() </td><td>RATE, ARE, AAE, ACC, PODF, DIST </td><td><code>query</code>  </td></tr>
+<tr>
+<td>testLookup() </td><td>lookup() </td><td>RATE, TP, FP, PRC </td><td><code>lookup</code>  </td></tr>
+<tr>
+<td>testHeavyHitter() </td><td>getHeavyHitter() </td><td>TIME, ARE, PRC, RCL, F1 </td><td><code>heavyhitter</code>  </td></tr>
+<tr>
+<td>testHeavyChanger() </td><td>getHeavyChanger()  </td><td>TIME, ARE, PRC, RCL, F1 </td><td><code>heavychanger</code>  </td></tr>
+<tr>
+<td>testDecode() </td><td>decode() </td><td>TIME, RATIO, ARE, AAE, ACC, PODF, DIST </td><td><code>decode</code>  </td></tr>
+</table>
 <blockquote class="doxtable">
 <p>The rule of thumb is that if you are not sure what to do next, feel free to refer to existing sketch tests! </p>
 </blockquote>
