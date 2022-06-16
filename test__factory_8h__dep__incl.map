@@ -1,0 +1,12 @@
+<map id="test/test_factory.h" name="test/test_factory.h">
+<area shape="rect" id="node1" title="Test framework." alt="" coords="709,5,848,32"/>
+<area shape="rect" id="node2" href="$test__config_8cpp.html" title="Test config parser." alt="" coords="5,80,155,107"/>
+<area shape="rect" id="node3" href="$test__data_8cpp.html" title="Test data&#45;processing tools." alt="" coords="179,80,317,107"/>
+<area shape="rect" id="node4" href="$test__endian_8cpp.html" title="Test endianness." alt="" coords="341,80,496,107"/>
+<area shape="rect" id="node5" href="$test__factory_8cpp.html" title="Main routine of the test factory." alt="" coords="520,80,675,107"/>
+<area shape="rect" id="node6" href="$test__flowkey_8cpp.html" title="Test FlowKey." alt="" coords="699,80,858,107"/>
+<area shape="rect" id="node7" href="$test__hierarchy_8cpp.html" title="Test Counter Hierarchy." alt="" coords="882,80,1051,107"/>
+<area shape="rect" id="node8" href="$test__metric_8cpp.html" title="Test MetricVec." alt="" coords="1076,80,1228,107"/>
+<area shape="rect" id="node9" href="$test__prime_8cpp.html" title="Test routines in utils.hpp." alt="" coords="1253,80,1401,107"/>
+<area shape="rect" id="node10" href="$test__sketch_8cpp.html" title="Test base sketch." alt="" coords="1425,80,1577,107"/>
+</map>

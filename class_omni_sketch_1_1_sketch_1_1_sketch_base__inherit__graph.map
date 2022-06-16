@@ -1,0 +1,10 @@
+<map id="OmniSketch::Sketch::SketchBase&lt; key_len, T &gt;" name="OmniSketch::Sketch::SketchBase&lt; key_len, T &gt;">
+<area shape="rect" id="node1" title="Base sketch." alt="" coords="5,187,207,229"/>
+<area shape="rect" id="node2" href="$class_my_sketch.html" title=" " alt="" coords="269,5,450,32"/>
+<area shape="rect" id="node3" href="$class_omni_sketch_1_1_sketch_1_1_c_h_c_m_sketch.html" title="Count Min Sketch with CH." alt="" coords="255,57,464,98"/>
+<area shape="rect" id="node4" href="$class_omni_sketch_1_1_sketch_1_1_c_m_sketch.html" title="Count Min Sketch." alt="" coords="264,122,455,163"/>
+<area shape="rect" id="node5" href="$class_omni_sketch_1_1_sketch_1_1_count_sketch.html" title="Count Sketch." alt="" coords="256,187,463,229"/>
+<area shape="rect" id="node6" href="$class_omni_sketch_1_1_sketch_1_1_c_u_sketch.html" title="CU Sketch." alt="" coords="265,253,453,294"/>
+<area shape="rect" id="node7" href="$class_omni_sketch_1_1_sketch_1_1_flow_radar.html" title="Flow Radar." alt="" coords="262,318,457,359"/>
+<area shape="rect" id="node8" href="$class_omni_sketch_1_1_sketch_1_1_hash_pipe.html" title="Hash Pipe." alt="" coords="266,383,453,425"/>
+</map>
