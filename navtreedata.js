@@ -100,7 +100,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "_bloom_filter_8h.html",
-"component.html#reminderpcapparser"
+"component.html#openconfig"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

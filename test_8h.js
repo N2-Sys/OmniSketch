@@ -21,6 +21,7 @@ var test_8h =
       [ "RCL", "test_8h.html#a160b52aa582997dee1396a606414c223a33d54af0e748ff8d7e3faffd8089ca40", null ],
       [ "F1", "test_8h.html#a160b52aa582997dee1396a606414c223aa2f7a49852ec995c74a16b33260059a9", null ],
       [ "DIST", "test_8h.html#a160b52aa582997dee1396a606414c223aa20105efca75aa3778ae91d43bb0ef56", null ],
-      [ "PODF", "test_8h.html#a160b52aa582997dee1396a606414c223a568ad44acd547d7ab4bdf4670ede0920", null ]
+      [ "PODF", "test_8h.html#a160b52aa582997dee1396a606414c223a568ad44acd547d7ab4bdf4670ede0920", null ],
+      [ "RATIO", "test_8h.html#a160b52aa582997dee1396a606414c223aa25dbfc91c74388d26fd63877ceed5c7", null ]
     ] ]
 ];

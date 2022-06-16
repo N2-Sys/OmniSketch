@@ -1,5 +1,6 @@
 var class_omni_sketch_1_1_sketch_1_1_sketch_base =
 [
+    [ "decode", "class_omni_sketch_1_1_sketch_1_1_sketch_base.html#a00d45bbb6e1d12a2fe3c7d0a18bcbddc", null ],
     [ "getHeavyChanger", "class_omni_sketch_1_1_sketch_1_1_sketch_base.html#aadc2b3b7792938931e86a80c6c7b5fe6", null ],
     [ "getHeavyHitter", "class_omni_sketch_1_1_sketch_1_1_sketch_base.html#ab8dec0e0d4382016225dbd75788f3ff9", null ],
     [ "insert", "class_omni_sketch_1_1_sketch_1_1_sketch_base.html#a0db74aa70b663fae2de994f433e8b4b3", null ],

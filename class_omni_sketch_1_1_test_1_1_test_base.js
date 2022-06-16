@@ -3,6 +3,7 @@ var class_omni_sketch_1_1_test_1_1_test_base =
     [ "TestBase", "class_omni_sketch_1_1_test_1_1_test_base.html#a1c2677f12942453b549ff0d572896bf9", null ],
     [ "runTest", "class_omni_sketch_1_1_test_1_1_test_base.html#a8f69ecdc1770170421fafb5b4c418d3d", null ],
     [ "show", "class_omni_sketch_1_1_test_1_1_test_base.html#a287ebe64a56c28a64cd913b2ef30602d", null ],
+    [ "testDecode", "class_omni_sketch_1_1_test_1_1_test_base.html#ac65ba0fd5fb8a1f9350140807ac5becc", null ],
     [ "testHeavyChanger", "class_omni_sketch_1_1_test_1_1_test_base.html#a0d55de36f2a93b52069f8475bbe23804", null ],
     [ "testHeavyHitter", "class_omni_sketch_1_1_test_1_1_test_base.html#a28810d78eddb56cc366bb440e5206585", null ],
     [ "testInsert", "class_omni_sketch_1_1_test_1_1_test_base.html#aacfc4bbae570f916c5c87c16b06a96da", null ],

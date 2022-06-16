@@ -136,8 +136,43 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a8f67262079a33b96ecdb8c311e116d79"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_omni_sketch_1_1_data_1_1_estimation.html">OmniSketch::Data::Estimation</a>&lt; key_len, T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_my_sketch.html#a8f67262079a33b96ecdb8c311e116d79">getHeavyChanger</a> (std::unique_ptr&lt; <a class="el" href="class_omni_sketch_1_1_sketch_1_1_sketch_base.html">OmniSketch::Sketch::SketchBase</a>&lt; key_len, T &gt;&gt; &amp;ptr_sketch, double threshold) const override</td></tr>
 <tr class="memdesc:a8f67262079a33b96ecdb8c311e116d79"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get all the heavy changers.  <a href="class_my_sketch.html#a8f67262079a33b96ecdb8c311e116d79">More...</a><br /></td></tr>
 <tr class="separator:a8f67262079a33b96ecdb8c311e116d79"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a41f1f76e869be374d99700a517ecbb44"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_omni_sketch_1_1_data_1_1_estimation.html">OmniSketch::Data::Estimation</a>&lt; key_len, T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_my_sketch.html#a41f1f76e869be374d99700a517ecbb44">decode</a> () override</td></tr>
+<tr class="memdesc:a41f1f76e869be374d99700a517ecbb44"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decode all flowkeys along with their values.  <a href="class_my_sketch.html#a41f1f76e869be374d99700a517ecbb44">More...</a><br /></td></tr>
+<tr class="separator:a41f1f76e869be374d99700a517ecbb44"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a41f1f76e869be374d99700a517ecbb44"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a41f1f76e869be374d99700a517ecbb44">&#9670;&nbsp;</a></span>decode()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;int32_t key_len, typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_omni_sketch_1_1_data_1_1_estimation.html">OmniSketch::Data::Estimation</a>&lt;key_len, T&gt; <a class="el" href="class_my_sketch.html">MySketch</a>&lt; key_len, T &gt;::decode </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Decode all flowkeys along with their values. </p>
+<dl class="section return"><dt>Returns</dt><dd>An Estimation that contains all decoded flowkeys with estimated value. Particularly useful for reversible sketches. </dd></dl>
+
+<p>Reimplemented from <a class="el" href="class_omni_sketch_1_1_sketch_1_1_sketch_base.html#a00d45bbb6e1d12a2fe3c7d0a18bcbddc">OmniSketch::Sketch::SketchBase&lt; key_len, T &gt;</a>.</p>
+
+</div>
+</div>
 <a id="a8f67262079a33b96ecdb8c311e116d79"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a8f67262079a33b96ecdb8c311e116d79">&#9670;&nbsp;</a></span>getHeavyChanger()</h2>
 

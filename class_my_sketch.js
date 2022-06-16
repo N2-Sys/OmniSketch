@@ -1,5 +1,6 @@
 var class_my_sketch =
 [
+    [ "decode", "class_my_sketch.html#a41f1f76e869be374d99700a517ecbb44", null ],
     [ "getHeavyChanger", "class_my_sketch.html#a8f67262079a33b96ecdb8c311e116d79", null ],
     [ "getHeavyHitter", "class_my_sketch.html#a3e909bf106ae5bcd44b41d68417dee1c", null ],
     [ "insert", "class_my_sketch.html#a93ade9b2226ec323a91f20b595053acd", null ],

@@ -151,6 +151,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a0d55de36f2a93b52069f8475bbe23804"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_omni_sketch_1_1_test_1_1_test_base.html#a0d55de36f2a93b52069f8475bbe23804">testHeavyChanger</a> (std::unique_ptr&lt; <a class="el" href="class_omni_sketch_1_1_sketch_1_1_sketch_base.html">Sketch::SketchBase</a>&lt; key_len, T &gt;&gt; &amp;ptr_sketch_1, std::unique_ptr&lt; <a class="el" href="class_omni_sketch_1_1_sketch_1_1_sketch_base.html">Sketch::SketchBase</a>&lt; key_len, T &gt;&gt; &amp;ptr_sketch_2, double threshold, <a class="el" href="class_omni_sketch_1_1_data_1_1_gnd_truth.html">Data::GndTruth</a>&lt; key_len, T &gt; gnd_truth_heavy_changers) final</td></tr>
 <tr class="memdesc:a0d55de36f2a93b52069f8475bbe23804"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="namespace_omni_sketch_1_1_test.html" title="Testing classes and metrics.">Test</a> heavy changers.  <a href="class_omni_sketch_1_1_test_1_1_test_base.html#a0d55de36f2a93b52069f8475bbe23804">More...</a><br /></td></tr>
 <tr class="separator:a0d55de36f2a93b52069f8475bbe23804"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac65ba0fd5fb8a1f9350140807ac5becc"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_omni_sketch_1_1_test_1_1_test_base.html#ac65ba0fd5fb8a1f9350140807ac5becc">testDecode</a> (std::unique_ptr&lt; <a class="el" href="class_omni_sketch_1_1_sketch_1_1_sketch_base.html">Sketch::SketchBase</a>&lt; key_len, T &gt;&gt; &amp;ptr_sketch, <a class="el" href="class_omni_sketch_1_1_data_1_1_gnd_truth.html">Data::GndTruth</a>&lt; key_len, T &gt; gnd_truth) final</td></tr>
+<tr class="memdesc:ac65ba0fd5fb8a1f9350140807ac5becc"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="namespace_omni_sketch_1_1_test.html" title="Testing classes and metrics.">Test</a> decode.  <a href="class_omni_sketch_1_1_test_1_1_test_base.html#ac65ba0fd5fb8a1f9350140807ac5becc">More...</a><br /></td></tr>
+<tr class="separator:ac65ba0fd5fb8a1f9350140807ac5becc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
@@ -174,23 +177,25 @@ class OmniSketch::Test::TestBase&lt; key_len, T &gt;</h3>
   </table>
   </dd>
 </dl>
-<table class="markdownTable">
-<tr class="markdownTableHead">
-<th class="markdownTableHeadLeft"><a class="el" href="namespace_omni_sketch_1_1_test.html" title="Testing classes and metrics.">Test</a> method </th><th class="markdownTableHeadLeft">Required overriden function </th><th class="markdownTableHeadLeft">Available Metrics (<a class="el" href="namespace_omni_sketch_1_1_test.html#a160b52aa582997dee1396a606414c223" title="Metrics.">Test::Metric</a>)  </th></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyLeft"><a class="el" href="class_omni_sketch_1_1_test_1_1_test_base.html#a7c8d4ec8b257ee76670d6e5274f656c0" title="Get the size of the sketch.">testSize()</a> </td><td class="markdownTableBodyLeft"><a class="el" href="class_omni_sketch_1_1_sketch_1_1_sketch_base.html#acc68d26a5ba8a7619a1858dcb2e80235" title="Return the size of the sketch.">Sketch::SketchBase::size()</a> </td><td class="markdownTableBodyLeft">SIZE  </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyLeft"><a class="el" href="class_omni_sketch_1_1_test_1_1_test_base.html#aacfc4bbae570f916c5c87c16b06a96da" title="Insert a row of records.">testInsert()</a> </td><td class="markdownTableBodyLeft"><a class="el" href="class_omni_sketch_1_1_sketch_1_1_sketch_base.html#a0db74aa70b663fae2de994f433e8b4b3" title="Insert a flowkey without value.">Sketch::SketchBase::insert()</a> </td><td class="markdownTableBodyLeft">RATE  </td></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyLeft"><a class="el" href="class_omni_sketch_1_1_test_1_1_test_base.html#a98d8e9d0a0f0aca9fe14c5ee6ac668c0" title="Update a row of records (with values to the sketch)">testUpdate()</a> </td><td class="markdownTableBodyLeft"><a class="el" href="class_omni_sketch_1_1_sketch_1_1_sketch_base.html#aa6163885014e4210ecba2621e906211f" title="Update a flowkey with certain value.">Sketch::SketchBase::update()</a> </td><td class="markdownTableBodyLeft">RATE  </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyLeft"><a class="el" href="class_omni_sketch_1_1_test_1_1_test_base.html#a5e3c9d462ab3d771353f043e47634319" title="Query for each flow in ground truth.">testQuery()</a> </td><td class="markdownTableBodyLeft"><a class="el" href="class_omni_sketch_1_1_sketch_1_1_sketch_base.html#acde318df3b2ce9ad5115754df15beb21" title="Query the sketch for the estimated size of a flowkey.">Sketch::SketchBase::query()</a> </td><td class="markdownTableBodyLeft">RATE, ARE, AAE, ACC, PODF, DIST  </td></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyLeft"><a class="el" href="class_omni_sketch_1_1_test_1_1_test_base.html#aec1628a80bf98f95c8463a58dab82415" title="Lookup each flow in ground truth.">testLookup()</a> </td><td class="markdownTableBodyLeft"><a class="el" href="class_omni_sketch_1_1_sketch_1_1_sketch_base.html#aa64070e79e56557a7fe0b48df0268d7e" title="Look up a flowkey in the sketch.">Sketch::SketchBase::lookup()</a> </td><td class="markdownTableBodyLeft">RATE, TP, FP, PRC  </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyLeft"><a class="el" href="class_omni_sketch_1_1_test_1_1_test_base.html#a28810d78eddb56cc366bb440e5206585" title="Test heavy hitters.">testHeavyHitter()</a> </td><td class="markdownTableBodyLeft"><a class="el" href="class_omni_sketch_1_1_sketch_1_1_sketch_base.html#ab8dec0e0d4382016225dbd75788f3ff9" title="Get all the heavy hitters.">Sketch::SketchBase::getHeavyHitter()</a> </td><td class="markdownTableBodyLeft">TIME,ARE,PRC,RCL,F1  </td></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyLeft"><a class="el" href="class_omni_sketch_1_1_test_1_1_test_base.html#a0d55de36f2a93b52069f8475bbe23804" title="Test heavy changers.">testHeavyChanger()</a> </td><td class="markdownTableBodyLeft"><a class="el" href="class_omni_sketch_1_1_sketch_1_1_sketch_base.html#aadc2b3b7792938931e86a80c6c7b5fe6" title="Get all the heavy changers.">Sketch::SketchBase::getHeavyChanger()</a> </td><td class="markdownTableBodyLeft">TIME,ARE,PRC,RCL,F1  </td></tr>
+<table class="doxtable">
+<tr>
+<td>**Test Routine** </td><td>**Required Overriden Function** </td><td>**Available Metrics (In <a class="el" href="namespace_omni_sketch_1_1_test.html#a160b52aa582997dee1396a606414c223" title="Metrics.">Test::Metric</a>)** </td><td>**Name of the Testing Routine in TOML**  </td></tr>
+<tr>
+<td><a class="el" href="class_omni_sketch_1_1_test_1_1_test_base.html#a7c8d4ec8b257ee76670d6e5274f656c0" title="Get the size of the sketch.">testSize()</a> </td><td><a class="el" href="class_omni_sketch_1_1_sketch_1_1_sketch_base.html#acc68d26a5ba8a7619a1858dcb2e80235">size()</a> </td><td>SIZE </td><td>*None* (Once calling <a class="el" href="class_omni_sketch_1_1_test_1_1_test_base.html#a7c8d4ec8b257ee76670d6e5274f656c0" title="Get the size of the sketch.">testSize()</a>, the metric is collected)  </td></tr>
+<tr>
+<td><a class="el" href="class_omni_sketch_1_1_test_1_1_test_base.html#aacfc4bbae570f916c5c87c16b06a96da" title="Insert a row of records.">testInsert()</a> </td><td><a class="el" href="class_omni_sketch_1_1_sketch_1_1_sketch_base.html#a0db74aa70b663fae2de994f433e8b4b3">insert()</a> </td><td>RATE </td><td><code>insert</code>  </td></tr>
+<tr>
+<td><a class="el" href="class_omni_sketch_1_1_test_1_1_test_base.html#a98d8e9d0a0f0aca9fe14c5ee6ac668c0" title="Update a row of records (with values to the sketch)">testUpdate()</a> </td><td><a class="el" href="class_omni_sketch_1_1_sketch_1_1_sketch_base.html#aa6163885014e4210ecba2621e906211f">update()</a> </td><td>RATE </td><td><code>update</code>  </td></tr>
+<tr>
+<td><a class="el" href="class_omni_sketch_1_1_test_1_1_test_base.html#a5e3c9d462ab3d771353f043e47634319" title="Query for each flow in ground truth.">testQuery()</a> </td><td><a class="el" href="class_omni_sketch_1_1_sketch_1_1_sketch_base.html#acde318df3b2ce9ad5115754df15beb21">query()</a> </td><td>RATE, ARE, AAE, ACC, PODF, DIST </td><td><code>query</code>  </td></tr>
+<tr>
+<td><a class="el" href="class_omni_sketch_1_1_test_1_1_test_base.html#aec1628a80bf98f95c8463a58dab82415" title="Lookup each flow in ground truth.">testLookup()</a> </td><td><a class="el" href="class_omni_sketch_1_1_sketch_1_1_sketch_base.html#aa64070e79e56557a7fe0b48df0268d7e">lookup()</a> </td><td>RATE, TP, FP, PRC </td><td><code>lookup</code>  </td></tr>
+<tr>
+<td><a class="el" href="class_omni_sketch_1_1_test_1_1_test_base.html#a28810d78eddb56cc366bb440e5206585" title="Test heavy hitters.">testHeavyHitter()</a> </td><td><a class="el" href="class_omni_sketch_1_1_sketch_1_1_sketch_base.html#ab8dec0e0d4382016225dbd75788f3ff9">getHeavyHitter()</a> </td><td>TIME, ARE, PRC, RCL, F1 </td><td><code>heavyhitter</code>  </td></tr>
+<tr>
+<td><a class="el" href="class_omni_sketch_1_1_test_1_1_test_base.html#a0d55de36f2a93b52069f8475bbe23804" title="Test heavy changers.">testHeavyChanger()</a> </td><td><a class="el" href="class_omni_sketch_1_1_sketch_1_1_sketch_base.html#aadc2b3b7792938931e86a80c6c7b5fe6">getHeavyChanger()</a>  </td><td>TIME, ARE, PRC, RCL, F1 </td><td><code>heavychanger</code>  </td></tr>
+<tr>
+<td><a class="el" href="class_omni_sketch_1_1_test_1_1_test_base.html#ac65ba0fd5fb8a1f9350140807ac5becc" title="Test decode.">testDecode()</a> </td><td><a class="el" href="class_omni_sketch_1_1_sketch_1_1_sketch_base.html#a00d45bbb6e1d12a2fe3c7d0a18bcbddc">decode()</a> </td><td>TIME, RATIO, ARE, AAE, ACC, PODF, DIST </td><td><code>decode</code>  </td></tr>
 </table>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a1c2677f12942453b549ff0d572896bf9"></a>
@@ -323,6 +328,54 @@ template&lt;int32_t key_len, typename T &gt; </div>
 <p>Display metrics in a human-readable manner. </p>
 <dl class="todo"><dt><b><a class="el" href="todo.html#_todo000002">Todo:</a></b></dt><dd>DIST </dd></dl>
 <dl class="todo"><dt><b><a class="el" href="todo.html#_todo000003">Todo:</a></b></dt><dd>DIST </dd></dl>
+
+</div>
+</div>
+<a id="ac65ba0fd5fb8a1f9350140807ac5becc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac65ba0fd5fb8a1f9350140807ac5becc">&#9670;&nbsp;</a></span>testDecode()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;int32_t key_len, typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_omni_sketch_1_1_test_1_1_test_base.html">OmniSketch::Test::TestBase</a>&lt; key_len, T &gt;::testDecode </td>
+          <td>(</td>
+          <td class="paramtype">std::unique_ptr&lt; <a class="el" href="class_omni_sketch_1_1_sketch_1_1_sketch_base.html">Sketch::SketchBase</a>&lt; key_len, T &gt;&gt; &amp;&#160;</td>
+          <td class="paramname"><em>ptr_sketch</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_omni_sketch_1_1_data_1_1_gnd_truth.html">Data::GndTruth</a>&lt; key_len, T &gt;&#160;</td>
+          <td class="paramname"><em>gnd_truth</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">final</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p><a class="el" href="namespace_omni_sketch_1_1_test.html" title="Testing classes and metrics.">Test</a> decode. </p>
+<p>You should override the <a class="el" href="class_omni_sketch_1_1_sketch_1_1_sketch_base.html#a00d45bbb6e1d12a2fe3c7d0a18bcbddc" title="Decode all flowkeys along with their values.">Sketch::SketchBase::decode()</a> method.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ptr_sketch</td><td>pointer to the sketch </td></tr>
+    <tr><td class="paramname">gnd_truth</td><td>ground truth </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -766,7 +819,7 @@ template&lt;int32_t key_len, typename T  = int64_t&gt; </div>
 </div>
 </div><!-- contents -->
 </div><!-- doc-content -->
-<div class="ttc" id="aclass_omni_sketch_1_1_test_1_1_test_base_html_a1c2677f12942453b549ff0d572896bf9"><div class="ttname"><a href="class_omni_sketch_1_1_test_1_1_test_base.html#a1c2677f12942453b549ff0d572896bf9">OmniSketch::Test::TestBase::TestBase</a></div><div class="ttdeci">TestBase(const std::string_view show_name, const std::string_view config_file, const std::string_view test_path)</div><div class="ttdoc">Construct by specifying all necessary tables in config file.</div><div class="ttdef"><b>Definition:</b> test.h:187</div></div>
+<div class="ttc" id="aclass_omni_sketch_1_1_test_1_1_test_base_html_a1c2677f12942453b549ff0d572896bf9"><div class="ttname"><a href="class_omni_sketch_1_1_test_1_1_test_base.html#a1c2677f12942453b549ff0d572896bf9">OmniSketch::Test::TestBase::TestBase</a></div><div class="ttdeci">TestBase(const std::string_view show_name, const std::string_view config_file, const std::string_view test_path)</div><div class="ttdoc">Construct by specifying all necessary tables in config file.</div><div class="ttdef"><b>Definition:</b> test.h:241</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>

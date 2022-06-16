@@ -17,7 +17,9 @@ digraph "test/test_factory.h"
   Node1 -> Node7 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node7 [label="test/test_hierarchy.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$test__hierarchy_8cpp.html",tooltip="Test Counter Hierarchy."];
   Node1 -> Node8 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node8 [label="test/test_prime.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$test__prime_8cpp.html",tooltip="Test routines in utils.hpp."];
+  Node8 [label="test/test_metric.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$test__metric_8cpp.html",tooltip="Test MetricVec."];
   Node1 -> Node9 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node9 [label="test/test_sketch.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$test__sketch_8cpp.html",tooltip="Test base sketch."];
+  Node9 [label="test/test_prime.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$test__prime_8cpp.html",tooltip="Test routines in utils.hpp."];
+  Node1 -> Node10 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node10 [label="test/test_sketch.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$test__sketch_8cpp.html",tooltip="Test base sketch."];
 }

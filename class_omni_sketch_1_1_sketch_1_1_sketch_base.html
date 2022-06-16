@@ -141,6 +141,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aadc2b3b7792938931e86a80c6c7b5fe6"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="class_omni_sketch_1_1_data_1_1_estimation.html">Data::Estimation</a>&lt; key_len, T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_omni_sketch_1_1_sketch_1_1_sketch_base.html#aadc2b3b7792938931e86a80c6c7b5fe6">getHeavyChanger</a> (std::unique_ptr&lt; <a class="el" href="class_omni_sketch_1_1_sketch_1_1_sketch_base.html">SketchBase</a>&lt; key_len, T &gt;&gt; &amp;ptr_sketch, double threshold) const</td></tr>
 <tr class="memdesc:aadc2b3b7792938931e86a80c6c7b5fe6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get all the heavy changers.  <a href="class_omni_sketch_1_1_sketch_1_1_sketch_base.html#aadc2b3b7792938931e86a80c6c7b5fe6">More...</a><br /></td></tr>
 <tr class="separator:aadc2b3b7792938931e86a80c6c7b5fe6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00d45bbb6e1d12a2fe3c7d0a18bcbddc"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="class_omni_sketch_1_1_data_1_1_estimation.html">Data::Estimation</a>&lt; key_len, T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_omni_sketch_1_1_sketch_1_1_sketch_base.html#a00d45bbb6e1d12a2fe3c7d0a18bcbddc">decode</a> ()</td></tr>
+<tr class="memdesc:a00d45bbb6e1d12a2fe3c7d0a18bcbddc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decode all flowkeys along with their values.  <a href="class_omni_sketch_1_1_sketch_1_1_sketch_base.html#a00d45bbb6e1d12a2fe3c7d0a18bcbddc">More...</a><br /></td></tr>
+<tr class="separator:a00d45bbb6e1d12a2fe3c7d0a18bcbddc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><h3>template&lt;int32_t key_len, typename T = int64_t&gt;<br />
@@ -155,24 +158,58 @@ class OmniSketch::Sketch::SketchBase&lt; key_len, T &gt;</h3>
   </table>
   </dd>
 </dl>
-<dl class="section attention"><dt>Attention</dt><dd>Write your method in subclass with the same signature if it is functionally equivalent to one of the following: <table class="markdownTable">
-<tr class="markdownTableHead">
-<th class="markdownTableHeadLeft">Functional Description </th><th class="markdownTableHeadLeft">Partial Signature (Click links to see more)  </th></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyLeft">query sketch size </td><td class="markdownTableBodyLeft"><a class="el" href="class_omni_sketch_1_1_sketch_1_1_sketch_base.html#acc68d26a5ba8a7619a1858dcb2e80235" title="Return the size of the sketch.">size() const</a>  </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyLeft">insert flowkey without value </td><td class="markdownTableBodyLeft"><a class="el" href="class_omni_sketch_1_1_sketch_1_1_sketch_base.html#a0db74aa70b663fae2de994f433e8b4b3" title="Insert a flowkey without value.">insert(const FlowKey&lt;key_len&gt; &amp;)</a>  </td></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyLeft">insert flowkey with value </td><td class="markdownTableBodyLeft"><a class="el" href="class_omni_sketch_1_1_sketch_1_1_sketch_base.html#aa6163885014e4210ecba2621e906211f" title="Update a flowkey with certain value.">update(const FlowKey&lt;key_len&gt; &amp;, T)</a>  </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyLeft">look up a flowkey (<em>if exists</em>) </td><td class="markdownTableBodyLeft"><a class="el" href="class_omni_sketch_1_1_sketch_1_1_sketch_base.html#aa64070e79e56557a7fe0b48df0268d7e" title="Look up a flowkey in the sketch.">lookup(const FlowKey&lt;key_len&gt; &amp;) const</a>  </td></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyLeft">heavy hitter </td><td class="markdownTableBodyLeft"><a class="el" href="class_omni_sketch_1_1_sketch_1_1_sketch_base.html#ab8dec0e0d4382016225dbd75788f3ff9" title="Get all the heavy hitters.">getHeavyHitter(double) const</a>  </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyLeft">heavy changer </td><td class="markdownTableBodyLeft">getHeavyChanger(double) const  </td></tr>
+<dl class="section attention"><dt>Attention</dt><dd>Write your method in subclass with the same signature if it is functionally equivalent to one of the following: <table class="doxtable">
+<tr>
+<td>**Functional Description** </td><td>**Partial Signature (Click the links to see more)**  </td></tr>
+<tr>
+<td>query sketch size </td><td><a class="el" href="class_omni_sketch_1_1_sketch_1_1_sketch_base.html#acc68d26a5ba8a7619a1858dcb2e80235" title="Return the size of the sketch.">size() const</a>  </td></tr>
+<tr>
+<td>insert flowkey without value </td><td><a class="el" href="class_omni_sketch_1_1_sketch_1_1_sketch_base.html#a0db74aa70b663fae2de994f433e8b4b3" title="Insert a flowkey without value.">insert(const FlowKey&lt;key_len&gt; &amp;)</a>  </td></tr>
+<tr>
+<td>insert flowkey with value </td><td><a class="el" href="class_omni_sketch_1_1_sketch_1_1_sketch_base.html#aa6163885014e4210ecba2621e906211f" title="Update a flowkey with certain value.">update(const FlowKey&lt;key_len&gt; &amp;, T)</a>  </td></tr>
+<tr>
+<td>look up a flowkey (<em>if exists</em>) </td><td><a class="el" href="class_omni_sketch_1_1_sketch_1_1_sketch_base.html#aa64070e79e56557a7fe0b48df0268d7e" title="Look up a flowkey in the sketch.">lookup(const FlowKey&lt;key_len&gt; &amp;) const</a>  </td></tr>
+<tr>
+<td>heavy hitter </td><td><a class="el" href="class_omni_sketch_1_1_sketch_1_1_sketch_base.html#ab8dec0e0d4382016225dbd75788f3ff9" title="Get all the heavy hitters.">getHeavyHitter(double) const</a>  </td></tr>
+<tr>
+<td>heavy changer </td><td><a class="el" href="class_omni_sketch_1_1_sketch_1_1_sketch_base.html#aadc2b3b7792938931e86a80c6c7b5fe6" title="Get all the heavy changers.">getHeavyChanger(std::unique_ptr&lt;SketchBase&lt;key_len,T&gt;&gt; &amp;, double) const</a>   </td></tr>
+<tr>
+<td>decode flowkeys with values </td><td><a class="el" href="class_omni_sketch_1_1_sketch_1_1_sketch_base.html#a00d45bbb6e1d12a2fe3c7d0a18bcbddc" title="Decode all flowkeys along with their values.">decode()</a>  </td></tr>
 </table>
 </dd></dl>
 </div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a00d45bbb6e1d12a2fe3c7d0a18bcbddc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a00d45bbb6e1d12a2fe3c7d0a18bcbddc">&#9670;&nbsp;</a></span>decode()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;int32_t key_len, typename T  = int64_t&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="el" href="class_omni_sketch_1_1_data_1_1_estimation.html">Data::Estimation</a>&lt;key_len, T&gt; <a class="el" href="class_omni_sketch_1_1_sketch_1_1_sketch_base.html">OmniSketch::Sketch::SketchBase</a>&lt; key_len, T &gt;::decode </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Decode all flowkeys along with their values. </p>
+<dl class="section return"><dt>Returns</dt><dd>An Estimation that contains all decoded flowkeys with estimated value. Particularly useful for reversible sketches. </dd></dl>
+
+<p>Reimplemented in <a class="el" href="class_my_sketch.html#a41f1f76e869be374d99700a517ecbb44">MySketch&lt; key_len, T &gt;</a>.</p>
+
+</div>
+</div>
 <a id="aadc2b3b7792938931e86a80c6c7b5fe6"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aadc2b3b7792938931e86a80c6c7b5fe6">&#9670;&nbsp;</a></span>getHeavyChanger()</h2>
 

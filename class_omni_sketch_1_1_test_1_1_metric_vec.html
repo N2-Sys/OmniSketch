@@ -175,18 +175,19 @@ Public Attributes</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">file_path</td><td>Path to the config file </td></tr>
-    <tr><td class="paramname">test_path</td><td>Path to the node containing testing term in the file (concatenated with '.', see example below) </td></tr>
-    <tr><td class="paramname">term_name</td><td>Name of the testing term</td></tr>
+    <tr><td class="paramname">test_path</td><td>Path to the node containing testing routines in the file (concatenated with '.', see example below) </td></tr>
+    <tr><td class="paramname">term_name</td><td>Name of the testing routine in TOML file</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>Once Metric::PODF is declared in the current testing term, say <div class="fragment"><div class="line">XXX = [..., <span class="stringliteral">&quot;PODF&quot;</span>, ...]</div>
+<dl class="section note"><dt>Note</dt><dd>Once Metric::PODF is declared in the current testing routine, say <div class="fragment"><div class="line">XXX = [..., <span class="stringliteral">&quot;PODF&quot;</span>, ...]</div>
 </div><!-- fragment --></dd></dl>
 <p>you have to add to the same node a line </p><div class="fragment"><div class="line">XXX_podf = [a threshold]</div>
-</div><!-- fragment --><p>for <a class="el" href="class_omni_sketch_1_1_test_1_1_metric_vec.html" title="Metric vector.">MetricVec</a> to read. Likewise, with Metric::DIST you have to add to the node a line </p><div class="fragment"><div class="line">XXX_dist = [a vector of double]</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md13"></a>
+</div><!-- fragment --><p>to specify the error threshold in order for <a class="el" href="class_omni_sketch_1_1_test_1_1_metric_vec.html" title="Metric vector.">MetricVec</a> to read. Likewise, with Metric::DIST you have to add a line </p><div class="fragment"><div class="line">XXX_dist = [a vector of double]</div>
+</div><!-- fragment --><p>to specify the ticks.</p>
+<h3><a class="anchor" id="autotoc_md13"></a>
 Example</h3>
-<p>If the toml file is like this, </p><div class="fragment"><div class="line"># toml.toml</div>
+<p>Suppose we have the following toml file: </p><div class="fragment"><div class="line"># toml.toml</div>
 <div class="line">[MySketch.test]</div>
 <div class="line">insert = [&quot;RATE&quot;]</div>
 </div><!-- fragment --><p>The proper way of creating an <a class="el" href="class_omni_sketch_1_1_test_1_1_metric_vec.html" title="Metric vector.">MetricVec</a> is <code>("toml.toml", "MySketch.test", "insert")</code>. </p>

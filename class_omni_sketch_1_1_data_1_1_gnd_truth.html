@@ -144,6 +144,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a35f6c9a6875fbf490fe71c7ed4d7899c"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_omni_sketch_1_1_data_1_1_gnd_truth.html#a35f6c9a6875fbf490fe71c7ed4d7899c">count</a> (const <a class="el" href="class_omni_sketch_1_1_flow_key.html">FlowKey</a>&lt; key_len &gt; &amp;flowkey) const</td></tr>
 <tr class="memdesc:a35f6c9a6875fbf490fe71c7ed4d7899c"><td class="mdescLeft">&#160;</td><td class="mdescRight">return whether a flowkey is in the streaming data or not  <a href="class_omni_sketch_1_1_data_1_1_gnd_truth.html#a35f6c9a6875fbf490fe71c7ed4d7899c">More...</a><br /></td></tr>
 <tr class="separator:a35f6c9a6875fbf490fe71c7ed4d7899c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5e95cf17361ebcf87edc3f0e0f1b06f3"><td class="memItemLeft" align="right" valign="top">T&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_omni_sketch_1_1_data_1_1_gnd_truth.html#a5e95cf17361ebcf87edc3f0e0f1b06f3">at</a> (const <a class="el" href="class_omni_sketch_1_1_flow_key.html">FlowKey</a>&lt; key_len &gt; &amp;flowkey) const</td></tr>
+<tr class="memdesc:a5e95cf17361ebcf87edc3f0e0f1b06f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the value of a certain key.  <a href="class_omni_sketch_1_1_data_1_1_gnd_truth.html#a5e95cf17361ebcf87edc3f0e0f1b06f3">More...</a><br /></td></tr>
+<tr class="separator:a5e95cf17361ebcf87edc3f0e0f1b06f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3a5fdd1bb12a5a2affd8284081f76a1e"><td class="memItemLeft" align="right" valign="top">std::pair&lt; <a class="el" href="class_omni_sketch_1_1_data_1_1_gnd_truth.html#a27f60e3353ce3766bd44bad26195b412">RightConstIterator</a>, <a class="el" href="class_omni_sketch_1_1_data_1_1_gnd_truth.html#a27f60e3353ce3766bd44bad26195b412">RightConstIterator</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_omni_sketch_1_1_data_1_1_gnd_truth.html#a3a5fdd1bb12a5a2affd8284081f76a1e">equalRange</a> (T value)</td></tr>
 <tr class="memdesc:a3a5fdd1bb12a5a2affd8284081f76a1e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return all flowkeys that share a single value.  <a href="class_omni_sketch_1_1_data_1_1_gnd_truth.html#a3a5fdd1bb12a5a2affd8284081f76a1e">More...</a><br /></td></tr>
 <tr class="separator:a3a5fdd1bb12a5a2affd8284081f76a1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -354,6 +357,29 @@ template&lt;int32_t key_len, typename T  = int64_t&gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a5e95cf17361ebcf87edc3f0e0f1b06f3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5e95cf17361ebcf87edc3f0e0f1b06f3">&#9670;&nbsp;</a></span>at()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;int32_t key_len, typename T &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">T <a class="el" href="class_omni_sketch_1_1_data_1_1_gnd_truth.html">OmniSketch::Data::GndTruth</a>&lt; key_len, T &gt;::at </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_omni_sketch_1_1_flow_key.html">FlowKey</a>&lt; key_len &gt; &amp;&#160;</td>
+          <td class="paramname"><em>flowkey</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the value of a certain key. </p>
+<p>If the key does not exist, an out-of-range exception would be thrown. </p>
+
+</div>
+</div>
 <a id="a31971c17d8f07836a34c177df18e04a7"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a31971c17d8f07836a34c177df18e04a7">&#9670;&nbsp;</a></span>begin()</h2>
 
@@ -1135,7 +1161,7 @@ template&lt;int32_t key_len, typename T  = int64_t&gt; </div>
 <div class="ttc" id="anamespace_omni_sketch_1_1_data_html"><div class="ttname"><a href="namespace_omni_sketch_1_1_data.html">OmniSketch::Data</a></div><div class="ttdoc">Miscellaneous tools for processing data.</div><div class="ttdef"><b>Definition:</b> data.h:24</div></div>
 <div class="ttc" id="aclass_omni_sketch_1_1_data_1_1_gnd_truth_html"><div class="ttname"><a href="class_omni_sketch_1_1_data_1_1_gnd_truth.html">OmniSketch::Data::GndTruth</a></div><div class="ttdoc">Ground truth of the streaming data.</div><div class="ttdef"><b>Definition:</b> data.h:315</div></div>
 <div class="ttc" id="anamespace_omni_sketch_1_1_data_html_ad0e84d4f1d65e2cf284f5ad3a41cbcc4a0a589db8258b77da9c35f35656041164"><div class="ttname"><a href="namespace_omni_sketch_1_1_data.html#ad0e84d4f1d65e2cf284f5ad3a41cbcc4a0a589db8258b77da9c35f35656041164">OmniSketch::Data::InLength</a></div><div class="ttdeci">@ InLength</div><div class="ttdoc">Count for (header + payload) in bytes.</div><div class="ttdef"><b>Definition:</b> data.h:30</div></div>
-<div class="ttc" id="aclass_omni_sketch_1_1_data_1_1_gnd_truth_html_a48b037ef17a33f373f17911423b512e3"><div class="ttname"><a href="class_omni_sketch_1_1_data_1_1_gnd_truth.html#a48b037ef17a33f373f17911423b512e3">OmniSketch::Data::GndTruth::getHeavyHitter</a></div><div class="ttdeci">void getHeavyHitter(const GndTruth &amp;flow_summary, double threshold, HXMethod hh_method)</div><div class="ttdoc">Get heavy hitters of the given stream (from flow summary)</div><div class="ttdef"><b>Definition:</b> data.h:926</div></div>
+<div class="ttc" id="aclass_omni_sketch_1_1_data_1_1_gnd_truth_html_a48b037ef17a33f373f17911423b512e3"><div class="ttname"><a href="class_omni_sketch_1_1_data_1_1_gnd_truth.html#a48b037ef17a33f373f17911423b512e3">OmniSketch::Data::GndTruth::getHeavyHitter</a></div><div class="ttdeci">void getHeavyHitter(const GndTruth &amp;flow_summary, double threshold, HXMethod hh_method)</div><div class="ttdoc">Get heavy hitters of the given stream (from flow summary)</div><div class="ttdef"><b>Definition:</b> data.h:945</div></div>
 <div class="ttc" id="aclass_omni_sketch_1_1_data_1_1_stream_data_html"><div class="ttname"><a href="class_omni_sketch_1_1_data_1_1_stream_data.html">OmniSketch::Data::StreamData</a></div><div class="ttdoc">Store the formatted streaming data.</div><div class="ttdef"><b>Definition:</b> data.h:152</div></div>
 <div class="ttc" id="anamespace_omni_sketch_1_1_data_html_a31806ea44d4f1cddd59e81149b705cb0a010ead3aa566952e344173407fcf066e"><div class="ttname"><a href="namespace_omni_sketch_1_1_data.html#a31806ea44d4f1cddd59e81149b705cb0a010ead3aa566952e344173407fcf066e">OmniSketch::Data::TopK</a></div><div class="ttdeci">@ TopK</div><div class="ttdoc">Top K flow(s)</div><div class="ttdef"><b>Definition:</b> data.h:38</div></div>
 <!-- start footer part -->

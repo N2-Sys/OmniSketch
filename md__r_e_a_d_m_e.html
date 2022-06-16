@@ -127,7 +127,7 @@ Download &amp; Build</h1>
 </div><!-- fragment --><p>In the simplest case, if PcapParser is not requested, the <code>PcapPlusPlus</code> and <code>pcap</code> libraries are never needed, so you can just build with </p><div class="fragment"><div class="line">cmake ..</div>
 </div><!-- fragment --><p>Gee, it saves you a lot of work!</p>
 <p>To verify that you indeed build a runnable copy of <a class="el" href="namespace_omni_sketch.html">OmniSketch</a>, in the same directory (<code>build/</code>) run </p><div class="fragment"><div class="line">ctest</div>
-</div><!-- fragment --><p>If you see the line </p><div class="fragment"><div class="line">100% tests passed, 0 tests failed out of 7</div>
+</div><!-- fragment --><p>If you see the line </p><div class="fragment"><div class="line">100% tests passed, 0 tests failed out of 8</div>
 </div><!-- fragment --><p>you can proceed to poke around <a class="el" href="namespace_omni_sketch.html">OmniSketch</a> and design your new sketches.</p>
 <h1><a class="anchor" id="autotoc_md3"></a>
 Design New Sketches</h1>
@@ -170,70 +170,72 @@ API Docs</h1>
 <p>Please follow <a href="https://n2-sys.github.io/OmniSketch/annotated.html">this link</a>.</p>
 <h1><a class="anchor" id="autotoc_md5"></a>
 Tables of Sketches</h1>
-<p>These are the sketches already implemented and tested.</p>
+<p>Here are a list of all the sketches implemented and tested. The last column indicates the name of generated executable drivers, which can be modified in lines starting with <code>add_user_sketch</code> in <code>CMakeLists.txt</code>. For example, suppose there is a line saying <code>add_user_sketch(CM CMSketch)</code>. It means that one may run driver compiled from <code><a class="el" href="_c_m_sketch_8h.html" title="Implementation of Count Min Sketch.">src/sketch/CMSketch.h</a></code> and <code>src/test/CMSketchTest.h</code> by <code>./CM</code> in the building directory after making it.</p>
 <p>Status: **h**ave, **c**hecked, checked but with **d**oubt, **t**ested. <a class="anchor" id="table"></a> </p><table class="markdownTable">
 <tr class="markdownTableHead">
-<th class="markdownTableHeadNone"></th><th class="markdownTableHeadNone">Status  </th></tr>
+<th class="markdownTableHeadNone"></th><th class="markdownTableHeadNone">Status </th><th class="markdownTableHeadNone">Name of the Executable  </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">cm sketch </td><td class="markdownTableBodyNone">t  </td></tr>
+<td class="markdownTableBodyNone">CM Sketch </td><td class="markdownTableBodyNone">t </td><td class="markdownTableBodyNone">CM  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">count sketch </td><td class="markdownTableBodyNone">t  </td></tr>
+<td class="markdownTableBodyNone">CH-optimized CM Sketch </td><td class="markdownTableBodyNone">t </td><td class="markdownTableBodyNone">CHCM  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">cu sketch </td><td class="markdownTableBodyNone">t  </td></tr>
+<td class="markdownTableBodyNone">Count Sketch </td><td class="markdownTableBodyNone">t </td><td class="markdownTableBodyNone">CS  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">bloom filter </td><td class="markdownTableBodyNone">t  </td></tr>
+<td class="markdownTableBodyNone">CU Sketch </td><td class="markdownTableBodyNone">t </td><td class="markdownTableBodyNone">CU  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">counting bloom filter </td><td class="markdownTableBodyNone">t  </td></tr>
+<td class="markdownTableBodyNone">Bloom Filter </td><td class="markdownTableBodyNone">t </td><td class="markdownTableBodyNone">BF  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">LD-sketch </td><td class="markdownTableBodyNone">t  </td></tr>
+<td class="markdownTableBodyNone">counting bloom filter </td><td class="markdownTableBodyNone">t </td><td class="markdownTableBodyNone"></td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">MV-sketch </td><td class="markdownTableBodyNone">t  </td></tr>
+<td class="markdownTableBodyNone">LD-sketch </td><td class="markdownTableBodyNone">t </td><td class="markdownTableBodyNone"></td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">hashpipe </td><td class="markdownTableBodyNone">t  </td></tr>
+<td class="markdownTableBodyNone">MV-sketch </td><td class="markdownTableBodyNone">t </td><td class="markdownTableBodyNone"></td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">FM-sketch(PCSA) </td><td class="markdownTableBodyNone">t  </td></tr>
+<td class="markdownTableBodyNone">HashPipe </td><td class="markdownTableBodyNone">t </td><td class="markdownTableBodyNone">HP  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">Linear Counting </td><td class="markdownTableBodyNone"></td></tr>
+<td class="markdownTableBodyNone">FM-sketch(PCSA) </td><td class="markdownTableBodyNone">t </td><td class="markdownTableBodyNone"></td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">Kmin(KMV) </td><td class="markdownTableBodyNone"></td></tr>
+<td class="markdownTableBodyNone">Linear Counting </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">Deltoid </td><td class="markdownTableBodyNone">t  </td></tr>
+<td class="markdownTableBodyNone">Kmin(KMV) </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">flow radar </td><td class="markdownTableBodyNone">t  </td></tr>
+<td class="markdownTableBodyNone">Deltoid </td><td class="markdownTableBodyNone">t </td><td class="markdownTableBodyNone"></td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">sketch learn </td><td class="markdownTableBodyNone"></td></tr>
+<td class="markdownTableBodyNone">flow radar </td><td class="markdownTableBodyNone">t </td><td class="markdownTableBodyNone"></td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">elastic sketch </td><td class="markdownTableBodyNone">t  </td></tr>
+<td class="markdownTableBodyNone">sketch learn </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">univmon </td><td class="markdownTableBodyNone"></td></tr>
+<td class="markdownTableBodyNone">elastic sketch </td><td class="markdownTableBodyNone">t </td><td class="markdownTableBodyNone"></td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">nitro sketch </td><td class="markdownTableBodyNone">t  </td></tr>
+<td class="markdownTableBodyNone">univmon </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">reversible sketch </td><td class="markdownTableBodyNone"></td></tr>
+<td class="markdownTableBodyNone">nitro sketch </td><td class="markdownTableBodyNone">t </td><td class="markdownTableBodyNone"></td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">Mrac </td><td class="markdownTableBodyNone">t  </td></tr>
+<td class="markdownTableBodyNone">reversible sketch </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">k-ary sketch </td><td class="markdownTableBodyNone">t  </td></tr>
+<td class="markdownTableBodyNone">Mrac </td><td class="markdownTableBodyNone">t </td><td class="markdownTableBodyNone"></td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">seqHash </td><td class="markdownTableBodyNone"></td></tr>
+<td class="markdownTableBodyNone">k-ary sketch </td><td class="markdownTableBodyNone">t </td><td class="markdownTableBodyNone"></td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">TwoLevel </td><td class="markdownTableBodyNone">t  </td></tr>
+<td class="markdownTableBodyNone">seqHash </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">multi-resolution bitmap </td><td class="markdownTableBodyNone"></td></tr>
+<td class="markdownTableBodyNone">TwoLevel </td><td class="markdownTableBodyNone">t </td><td class="markdownTableBodyNone"></td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">lossy count </td><td class="markdownTableBodyNone">t  </td></tr>
+<td class="markdownTableBodyNone">multi-resolution bitmap </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">space saving </td><td class="markdownTableBodyNone">t  </td></tr>
+<td class="markdownTableBodyNone">lossy count </td><td class="markdownTableBodyNone">t </td><td class="markdownTableBodyNone"></td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">HyperLogLog </td><td class="markdownTableBodyNone">t  </td></tr>
+<td class="markdownTableBodyNone">space saving </td><td class="markdownTableBodyNone">t </td><td class="markdownTableBodyNone"></td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">Misra-Gries </td><td class="markdownTableBodyNone">t  </td></tr>
+<td class="markdownTableBodyNone">HyperLogLog </td><td class="markdownTableBodyNone">t </td><td class="markdownTableBodyNone"></td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">Fast Sketch </td><td class="markdownTableBodyNone">t  </td></tr>
+<td class="markdownTableBodyNone">Misra-Gries </td><td class="markdownTableBodyNone">t </td><td class="markdownTableBodyNone"></td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">CounterBraids </td><td class="markdownTableBodyNone">t  </td></tr>
+<td class="markdownTableBodyNone">Fast Sketch </td><td class="markdownTableBodyNone">t </td><td class="markdownTableBodyNone"></td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">HeavyKeeper </td><td class="markdownTableBodyNone">d  </td></tr>
+<td class="markdownTableBodyNone">CounterBraids </td><td class="markdownTableBodyNone">t </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">HeavyKeeper </td><td class="markdownTableBodyNone">d </td><td class="markdownTableBodyNone"></td></tr>
 </table>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->

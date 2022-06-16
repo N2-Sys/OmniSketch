@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['time_465',['TIME',['../namespace_omni_sketch_1_1_test.html#a160b52aa582997dee1396a606414c223a168900d574f20e8f1bcd9a4ffc232691',1,'OmniSketch::Test']]],
-  ['tn_466',['TN',['../namespace_omni_sketch_1_1_test.html#a160b52aa582997dee1396a606414c223ae472877ec0ef1a80cd7052a702bf8fc3',1,'OmniSketch::Test']]],
-  ['topk_467',['TopK',['../namespace_omni_sketch_1_1_data.html#a31806ea44d4f1cddd59e81149b705cb0a010ead3aa566952e344173407fcf066e',1,'OmniSketch::Data']]],
-  ['tp_468',['TP',['../namespace_omni_sketch_1_1_test.html#a160b52aa582997dee1396a606414c223a0778cbd6971bb8c249a14ac5e04e7506',1,'OmniSketch::Test']]]
+  ['time_473',['TIME',['../namespace_omni_sketch_1_1_test.html#a160b52aa582997dee1396a606414c223a168900d574f20e8f1bcd9a4ffc232691',1,'OmniSketch::Test']]],
+  ['tn_474',['TN',['../namespace_omni_sketch_1_1_test.html#a160b52aa582997dee1396a606414c223ae472877ec0ef1a80cd7052a702bf8fc3',1,'OmniSketch::Test']]],
+  ['topk_475',['TopK',['../namespace_omni_sketch_1_1_data.html#a31806ea44d4f1cddd59e81149b705cb0a010ead3aa566952e344173407fcf066e',1,'OmniSketch::Data']]],
+  ['tp_476',['TP',['../namespace_omni_sketch_1_1_test.html#a160b52aa582997dee1396a606414c223a0778cbd6971bb8c249a14ac5e04e7506',1,'OmniSketch::Test']]]
 ];
