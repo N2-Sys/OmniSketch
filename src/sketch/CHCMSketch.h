@@ -105,7 +105,7 @@ CHCMSketch<key_len, no_layer, T, hash_t>::CHCMSketch(
                             std::to_string(cnt_no_ratio) + " instead.");
   }
   // prepare no_cnt
-  no_cnt.push_back(this->depth * this->width);
+  no_cnt.push_back(static_cast<size_t>(this->depth) * this->width);
   for (int32_t i = 1; i < no_layer; ++i) {
     size_t last_layer = no_cnt.back();
     no_cnt.push_back(Util::NextPrime(std::ceil(last_layer * cnt_no_ratio)));

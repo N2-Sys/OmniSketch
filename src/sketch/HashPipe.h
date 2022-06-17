@@ -186,8 +186,8 @@ HashPipe<key_len, T, hash_t>::getHeavyHitter(double threshold) const {
 template <int32_t key_len, typename T, typename hash_t>
 size_t HashPipe<key_len, T, hash_t>::size() const {
   return sizeof(*this)                    // instance
-         + depth * sizeof(hash_t)         // hashing class
-         + depth * width * sizeof(Entry); // slots
+         + sizeof(hash_t) * depth         // hashing class
+         + sizeof(Entry) * depth * width; // slots
 }
 
 template <int32_t key_len, typename T, typename hash_t>

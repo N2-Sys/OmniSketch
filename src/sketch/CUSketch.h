@@ -121,8 +121,8 @@ T CUSketch<key_len, T, hash_t>::query(const FlowKey<key_len> &flowkey) const {
 template <int32_t key_len, typename T, typename hash_t>
 size_t CUSketch<key_len, T, hash_t>::size() const {
   return sizeof(*this)                // instance
-         + depth * sizeof(hash_t)     // hashing class
-         + depth * width * sizeof(T); // counter
+         + sizeof(hash_t) * depth     // hashing class
+         + sizeof(T) * depth * width; // counter
 }
 
 template <int32_t key_len, typename T, typename hash_t>

@@ -125,8 +125,8 @@ T CountSketch<key_len, T, hash_t>::query(
 template <int32_t key_len, typename T, typename hash_t>
 size_t CountSketch<key_len, T, hash_t>::size() const {
   return sizeof(*this)                // instance
-         + depth * 2 * sizeof(hash_t) // hashing class
-         + depth * width * sizeof(T); // counter
+         + sizeof(hash_t) * depth * 2 // hashing class
+         + sizeof(T) * depth * width; // counter
 }
 
 template <int32_t key_len, typename T, typename hash_t>
