@@ -7,6 +7,9 @@ var dir_ef43dc1024c8c688fd3275ab544df33f =
     [ "CMSketch.h", "_c_m_sketch_8h.html", [
       [ "CMSketch", "class_omni_sketch_1_1_sketch_1_1_c_m_sketch.html", "class_omni_sketch_1_1_sketch_1_1_c_m_sketch" ]
     ] ],
+    [ "CountingBloomFilter.h", "_counting_bloom_filter_8h.html", [
+      [ "CountingBloomFilter", "class_omni_sketch_1_1_sketch_1_1_counting_bloom_filter.html", "class_omni_sketch_1_1_sketch_1_1_counting_bloom_filter" ]
+    ] ],
     [ "CountSketch.h", "_count_sketch_8h.html", [
       [ "CountSketch", "class_omni_sketch_1_1_sketch_1_1_count_sketch.html", "class_omni_sketch_1_1_sketch_1_1_count_sketch" ]
     ] ],

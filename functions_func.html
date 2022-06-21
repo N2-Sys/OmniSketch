@@ -143,6 +143,7 @@ $(document).ready(function(){initNavTree('functions_func.html',''); initResizabl
 , <a class="el" href="class_omni_sketch_1_1_sketch_1_1_c_h_c_m_sketch.html#a9eb0884144abca9cb0fbe894af4b3a5c">OmniSketch::Sketch::CHCMSketch&lt; key_len, no_layer, T, hash_t &gt;</a>
 , <a class="el" href="class_omni_sketch_1_1_sketch_1_1_c_m_sketch.html#ad77cbcca57d9c31bec4fb29a36bc4356">OmniSketch::Sketch::CMSketch&lt; key_len, T, hash_t &gt;</a>
 , <a class="el" href="class_omni_sketch_1_1_sketch_1_1_counter_hierarchy.html#a9114562d10e99c8edeaf128f6bbf1f93">OmniSketch::Sketch::CounterHierarchy&lt; no_layer, T, hash_t &gt;</a>
+, <a class="el" href="class_omni_sketch_1_1_sketch_1_1_counting_bloom_filter.html#a749d9717a1b71cf928f4dde4a94e937a">OmniSketch::Sketch::CountingBloomFilter&lt; key_len, hash_t &gt;</a>
 , <a class="el" href="class_omni_sketch_1_1_sketch_1_1_count_sketch.html#af289e98d21659ee23298d13575ec6c69">OmniSketch::Sketch::CountSketch&lt; key_len, T, hash_t &gt;</a>
 , <a class="el" href="class_omni_sketch_1_1_sketch_1_1_c_u_sketch.html#a0dea384d8b69ad1bbe34f8052d009b44">OmniSketch::Sketch::CUSketch&lt; key_len, T, hash_t &gt;</a>
 , <a class="el" href="class_omni_sketch_1_1_sketch_1_1_flow_radar.html#aed2a8005590e7321cea156c701ec3349">OmniSketch::Sketch::FlowRadar&lt; key_len, T, hash_t &gt;</a>
@@ -166,6 +167,12 @@ $(document).ready(function(){initNavTree('functions_func.html',''); initResizabl
 </li>
 <li>CounterHierarchy()
 : <a class="el" href="class_omni_sketch_1_1_sketch_1_1_counter_hierarchy.html#ac6222d91f80d48153c4599c4c9202564">OmniSketch::Sketch::CounterHierarchy&lt; no_layer, T, hash_t &gt;</a>
+</li>
+<li>CountingBloomFilter()
+: <a class="el" href="class_omni_sketch_1_1_sketch_1_1_counting_bloom_filter.html#aac69021cf76138ac62295071197f9f08">OmniSketch::Sketch::CountingBloomFilter&lt; key_len, hash_t &gt;</a>
+</li>
+<li>CountingBloomFilterTest()
+: <a class="el" href="class_omni_sketch_1_1_test_1_1_counting_bloom_filter_test.html#a9112ab8caafd7b72f7d0957ab6e973e7">OmniSketch::Test::CountingBloomFilterTest&lt; key_len, hash_t &gt;</a>
 </li>
 <li>CountSketch()
 : <a class="el" href="class_omni_sketch_1_1_sketch_1_1_count_sketch.html#aae4577272f50aa5ac1f5fb167542ec61">OmniSketch::Sketch::CountSketch&lt; key_len, T, hash_t &gt;</a>
@@ -313,6 +320,7 @@ $(document).ready(function(){initNavTree('functions_func.html',''); initResizabl
 : <a class="el" href="class_my_sketch.html#a93ade9b2226ec323a91f20b595053acd">MySketch&lt; key_len, T &gt;</a>
 , <a class="el" href="class_omni_sketch_1_1_data_1_1_estimation.html#a1343109bfc60b70cd811fa44cd5125ff">OmniSketch::Data::Estimation&lt; key_len, T &gt;</a>
 , <a class="el" href="class_omni_sketch_1_1_sketch_1_1_bloom_filter.html#a0cf46284c7ef35b54a51300612bf3ce7">OmniSketch::Sketch::BloomFilter&lt; key_len, hash_t &gt;</a>
+, <a class="el" href="class_omni_sketch_1_1_sketch_1_1_counting_bloom_filter.html#ad6ab35fff550d12548ac4a015a65ef8f">OmniSketch::Sketch::CountingBloomFilter&lt; key_len, hash_t &gt;</a>
 , <a class="el" href="class_omni_sketch_1_1_sketch_1_1_sketch_base.html#a0db74aa70b663fae2de994f433e8b4b3">OmniSketch::Sketch::SketchBase&lt; key_len, T &gt;</a>
 </li>
 </ul>
@@ -322,6 +330,7 @@ $(document).ready(function(){initNavTree('functions_func.html',''); initResizabl
 <li>lookup()
 : <a class="el" href="class_my_sketch.html#a71b4721ed9c5cf2a7cdc72b8da29b975">MySketch&lt; key_len, T &gt;</a>
 , <a class="el" href="class_omni_sketch_1_1_sketch_1_1_bloom_filter.html#a10c1fd6b847419a0c656299f50f05f61">OmniSketch::Sketch::BloomFilter&lt; key_len, hash_t &gt;</a>
+, <a class="el" href="class_omni_sketch_1_1_sketch_1_1_counting_bloom_filter.html#ab34ecd399551464f4da18e6a89d22d9d">OmniSketch::Sketch::CountingBloomFilter&lt; key_len, hash_t &gt;</a>
 , <a class="el" href="class_omni_sketch_1_1_sketch_1_1_sketch_base.html#aa64070e79e56557a7fe0b48df0268d7e">OmniSketch::Sketch::SketchBase&lt; key_len, T &gt;</a>
 </li>
 </ul>
@@ -397,10 +406,14 @@ $(document).ready(function(){initNavTree('functions_func.html',''); initResizabl
 <li>readAsFormat()
 : <a class="el" href="class_omni_sketch_1_1_data_1_1_data_format.html#a0f7c6e5fcf8c313868f91dac97853832">OmniSketch::Data::DataFormat</a>
 </li>
+<li>remove()
+: <a class="el" href="class_omni_sketch_1_1_sketch_1_1_counting_bloom_filter.html#aa93afb216384a92c0a7720b4770fb5e1">OmniSketch::Sketch::CountingBloomFilter&lt; key_len, hash_t &gt;</a>
+</li>
 <li>runTest()
 : <a class="el" href="class_omni_sketch_1_1_test_1_1_bloom_filter_test.html#aac7ab528414523e7c7f7587ccc5032d8">OmniSketch::Test::BloomFilterTest&lt; key_len, hash_t &gt;</a>
 , <a class="el" href="class_omni_sketch_1_1_test_1_1_c_h_c_m_sketch_test.html#a2671c93746106cc6056bf8dc90e33547">OmniSketch::Test::CHCMSketchTest&lt; key_len, no_layer, T, hash_t &gt;</a>
 , <a class="el" href="class_omni_sketch_1_1_test_1_1_c_m_sketch_test.html#a672c66fd680e07bc5dcb6daeed19b2bc">OmniSketch::Test::CMSketchTest&lt; key_len, T, hash_t &gt;</a>
+, <a class="el" href="class_omni_sketch_1_1_test_1_1_counting_bloom_filter_test.html#a4bb4afb36e2137822e427a04f0da7aaf">OmniSketch::Test::CountingBloomFilterTest&lt; key_len, hash_t &gt;</a>
 , <a class="el" href="class_omni_sketch_1_1_test_1_1_count_sketch_test.html#af6303a033b2113583e28a6c7f796894f">OmniSketch::Test::CountSketchTest&lt; key_len, T, hash_t &gt;</a>
 , <a class="el" href="class_omni_sketch_1_1_test_1_1_c_u_sketch_test.html#a3ee724e7ad30415d77f38cf57177e2af">OmniSketch::Test::CUSketchTest&lt; key_len, T, hash_t &gt;</a>
 , <a class="el" href="class_omni_sketch_1_1_test_1_1_flow_radar_test.html#a8091e259761907d9d533e418bc3d22b0">OmniSketch::Test::FlowRadarTest&lt; key_len, T, hash_t &gt;</a>
@@ -429,6 +442,7 @@ $(document).ready(function(){initNavTree('functions_func.html',''); initResizabl
 , <a class="el" href="class_omni_sketch_1_1_sketch_1_1_c_h_c_m_sketch.html#ae266fd5441f5166718e4239ec70f1dc6">OmniSketch::Sketch::CHCMSketch&lt; key_len, no_layer, T, hash_t &gt;</a>
 , <a class="el" href="class_omni_sketch_1_1_sketch_1_1_c_m_sketch.html#a9522868b84540899a9f8fa07e0595001">OmniSketch::Sketch::CMSketch&lt; key_len, T, hash_t &gt;</a>
 , <a class="el" href="class_omni_sketch_1_1_sketch_1_1_counter_hierarchy.html#a262a1b2ebf93a88a9c17e8560c064989">OmniSketch::Sketch::CounterHierarchy&lt; no_layer, T, hash_t &gt;</a>
+, <a class="el" href="class_omni_sketch_1_1_sketch_1_1_counting_bloom_filter.html#a4dda4696c39b6b0927d390c053f8f8ac">OmniSketch::Sketch::CountingBloomFilter&lt; key_len, hash_t &gt;</a>
 , <a class="el" href="class_omni_sketch_1_1_sketch_1_1_count_sketch.html#a148c744a34e64b77f96874f0868cdc62">OmniSketch::Sketch::CountSketch&lt; key_len, T, hash_t &gt;</a>
 , <a class="el" href="class_omni_sketch_1_1_sketch_1_1_c_u_sketch.html#abdc7c4f5f9b75ef13dd9c005d95db4c8">OmniSketch::Sketch::CUSketch&lt; key_len, T, hash_t &gt;</a>
 , <a class="el" href="class_omni_sketch_1_1_sketch_1_1_flow_radar.html#ae23f022bd2bbc7bf8184f3ab85b23fa5">OmniSketch::Sketch::FlowRadar&lt; key_len, T, hash_t &gt;</a>
@@ -521,6 +535,9 @@ $(document).ready(function(){initNavTree('functions_func.html',''); initResizabl
 </li>
 <li>~CounterHierarchy()
 : <a class="el" href="class_omni_sketch_1_1_sketch_1_1_counter_hierarchy.html#a047b2f1b75dd2dd4adf4169a016f919b">OmniSketch::Sketch::CounterHierarchy&lt; no_layer, T, hash_t &gt;</a>
+</li>
+<li>~CountingBloomFilter()
+: <a class="el" href="class_omni_sketch_1_1_sketch_1_1_counting_bloom_filter.html#a7c978fe95890b6c51227d8aabd708cdb">OmniSketch::Sketch::CountingBloomFilter&lt; key_len, hash_t &gt;</a>
 </li>
 <li>~CountSketch()
 : <a class="el" href="class_omni_sketch_1_1_sketch_1_1_count_sketch.html#a7239e32d8cd1b35948193609e81d83b3">OmniSketch::Sketch::CountSketch&lt; key_len, T, hash_t &gt;</a>

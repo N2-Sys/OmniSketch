@@ -35,7 +35,8 @@ var hierarchy =
     ] ],
     [ "OmniSketch::Sketch::SketchBase< key_len >", "class_omni_sketch_1_1_sketch_1_1_sketch_base.html", [
       [ "OmniSketch::Sketch::BloomFilter< key_len, Hash::AwareHash >", "class_omni_sketch_1_1_sketch_1_1_bloom_filter.html", null ],
-      [ "OmniSketch::Sketch::BloomFilter< key_len, hash_t >", "class_omni_sketch_1_1_sketch_1_1_bloom_filter.html", null ]
+      [ "OmniSketch::Sketch::BloomFilter< key_len, hash_t >", "class_omni_sketch_1_1_sketch_1_1_bloom_filter.html", null ],
+      [ "OmniSketch::Sketch::CountingBloomFilter< key_len, hash_t >", "class_omni_sketch_1_1_sketch_1_1_counting_bloom_filter.html", null ]
     ] ],
     [ "OmniSketch::Data::StreamData< key_len >", "class_omni_sketch_1_1_data_1_1_stream_data.html", null ],
     [ "OmniSketch::Test::TestBase< key_len, T >", "class_omni_sketch_1_1_test_1_1_test_base.html", [
@@ -47,6 +48,7 @@ var hierarchy =
       [ "OmniSketch::Test::HashPipeTest< key_len, T, hash_t >", "class_omni_sketch_1_1_test_1_1_hash_pipe_test.html", null ]
     ] ],
     [ "OmniSketch::Test::TestBase< key_len >", "class_omni_sketch_1_1_test_1_1_test_base.html", [
-      [ "OmniSketch::Test::BloomFilterTest< key_len, hash_t >", "class_omni_sketch_1_1_test_1_1_bloom_filter_test.html", null ]
+      [ "OmniSketch::Test::BloomFilterTest< key_len, hash_t >", "class_omni_sketch_1_1_test_1_1_bloom_filter_test.html", null ],
+      [ "OmniSketch::Test::CountingBloomFilterTest< key_len, hash_t >", "class_omni_sketch_1_1_test_1_1_counting_bloom_filter_test.html", null ]
     ] ]
 ];
