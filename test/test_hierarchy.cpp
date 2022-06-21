@@ -173,13 +173,20 @@ void TestHierarchy() {
   // normal case
   try {
     constexpr int32_t a[7] = {3309568, 356352001, 163842, 10243, 1028, 5, 6};
+    for (size_t i = 0; i < 7; ++i) {
+      ch.updateCnt(i, a[i] % 10);
+    }
+    for (size_t i = 0; i < 7; ++i) {
+      VERIFY(ch.getCnt(i) == a[i] % 10);
+    }
     for (size_t j = 0; j < 10; ++j) {
       for (size_t i = 0; i < 7; ++i) {
         ch.updateCnt(i, a[i] / 10);
       }
-    }
-    for (size_t i = 0; i < 7; ++i) {
-      ch.updateCnt(i, a[i] % 10);
+      for (size_t i = 0; i < 7; ++i) {
+        VERIFY(ch.getCnt(i) == a[i] % 10 + a[i] / 10 * (j + 1));
+        VERIFY(ch.getOriginalCnt(i) == a[i] % 10 + a[i] / 10 * (j + 1));
+      }
     }
     for (size_t i = 0; i < 7; ++i) {
       VERIFY(ch.getCnt(i) == a[i]);

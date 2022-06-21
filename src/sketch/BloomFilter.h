@@ -20,7 +20,6 @@ namespace OmniSketch::Sketch {
  *
  * @tparam key_len  length of flowkey
  * @tparam hash_t   hashing class
- * @tparam T        type of the counter
  */
 template <int32_t key_len, typename hash_t = Hash::AwareHash>
 class BloomFilter : public SketchBase<key_len> {

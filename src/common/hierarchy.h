@@ -97,6 +97,12 @@ private:
    *
    */
   CarryOver lazy_update;
+  /**
+   * @brief A time-saving optimization
+   * @details If no upper layer counter is set, there is no need to decode.
+   *
+   */
+  bool need_to_decode;
 
 private:
   /**
@@ -215,8 +221,12 @@ template <int32_t no_layer, typename T, typename hash_t>
 typename CounterHierarchy<no_layer, T, hash_t>::CarryOver
 CounterHierarchy<no_layer, T, hash_t>::updateLayer(const int32_t layer,
                                                    CarryOver &&updates) {
-  CarryOver ret; // aggregate all updates on the current layer
+  // A time-saving optimization
+  if (layer > 0 && !updates.empty()) {
+    need_to_decode = true;
+  }
 
+  CarryOver ret; // aggregate all updates on the current layer
   for (const auto &kv : updates) {
     T overflow = cnt_array[layer][kv.first] + kv.second;
     if (overflow) {
@@ -289,7 +299,8 @@ template <int32_t no_layer, typename T, typename hash_t>
 CounterHierarchy<no_layer, T, hash_t>::CounterHierarchy(
     const std::vector<size_t> &no_cnt, const std::vector<size_t> &width_cnt,
     const std::vector<size_t> &no_hash)
-    : no_cnt(no_cnt), width_cnt(width_cnt), no_hash(no_hash) {
+    : no_cnt(no_cnt), width_cnt(width_cnt), no_hash(no_hash),
+      need_to_decode(false) {
   // validity check
   if (no_layer < 1) {
     throw std::invalid_argument(
@@ -398,15 +409,25 @@ T CounterHierarchy<no_layer, T, hash_t>::getCnt(size_t index) {
       lazy_update = updateLayer(i, std::move(lazy_update)); // throw exception
     }
     lazy_update.clear();
-    // decode
-    decoded_cnt = std::vector<double>(no_cnt.back());
-    for (size_t i = 0; i < no_cnt.back(); ++i) {
-      decoded_cnt[i] = static_cast<double>(cnt_array[no_layer - 1][i].getVal());
+    // A time-saving optimization
+    if (!need_to_decode) {
+      return cnt_array[0][index].getVal();
+    } else { // decode
+      decoded_cnt = std::vector<double>(no_cnt.back());
+      for (size_t i = 0; i < no_cnt.back(); ++i) {
+        decoded_cnt[i] =
+            static_cast<double>(cnt_array[no_layer - 1][i].getVal());
+      }
+      for (int32_t i = no_layer - 2; i >= 0; i--) {
+        decoded_cnt = decodeLayer(i, std::move(decoded_cnt));
+      }
+      return static_cast<T>(decoded_cnt[index]);
     }
-    for (int32_t i = no_layer - 2; i >= 0; i--) {
-      decoded_cnt = decodeLayer(i, std::move(decoded_cnt));
-    }
+    // always return
   }
+  // no lazy update
+  if (!need_to_decode)
+    return cnt_array[0][index].getVal();
   return static_cast<T>(decoded_cnt[index]);
 }
 
@@ -452,6 +473,8 @@ void CounterHierarchy<no_layer, T, hash_t>::clear() {
   // decoded_cnt = std::vector<double>(no_cnt[0]);
   // reset lazy_update
   lazy_update.clear();
+  // reset tag
+  need_to_decode = false;
 }
 
 } // namespace OmniSketch::Sketch
