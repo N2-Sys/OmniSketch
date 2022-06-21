@@ -79,3 +79,19 @@
     decode = ["TIME", "ARE", "AAE", "RATIO", "ACC", "PODF"]
     decode_podf = 0.01
 
+
+[CBF] # Counting Bloom Filter
+
+  [CBF.para]
+    num_cnt = 200000
+    num_hash = 3
+    cnt_length = 4
+
+  [CBF.data]
+    data = "../data/records.bin"
+    format = [["flowkey", "padding", "timestamp", "length", "padding"], [13, 3, 8, 2, 6]]
+
+  [CBF.test]
+    sample = 0.3
+    insert = ["RATE"]
+    lookup = ["RATE", "PRC"]

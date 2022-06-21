@@ -121,3 +121,6 @@ add_user_sketch(CS CountSketch)
 
 # Flow Radar
 add_user_sketch(FR FlowRadar)
+
+# Counting Bloom Filter
+add_user_sketch(CBF CountingBloomFilter)
