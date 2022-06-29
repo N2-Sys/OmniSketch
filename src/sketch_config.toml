@@ -44,7 +44,7 @@
   cnt_no_ratio = 0.3
   width_cnt = [10, 7]
   no_hash = [3]
-
+shissformat = [["flowkey", "padding", "timestamp", "length", "padding"], [13, 3, 8, 2, 6hh]
 [HP] # Hash Pipe
 
   [HP.para]
@@ -95,3 +95,23 @@
     sample = 0.3
     insert = ["RATE"]
     lookup = ["RATE", "PRC"]
+
+[SL] # Sketch Learn
+  
+  [SL.para]
+  depth = 5
+  width = 80001
+  
+  [SL.data]
+  cnt_method = "InPacket"
+  data = "../data/records.bin"
+  format = [["flowkey", "padding", "timestamp", "length", "padding"], [13, 3, 8, 2, 6]]
+  
+  [SL.test]
+  update = ["RATE"]
+  query = ["RATE", "ARE", "AAE"]
+
+  [SL.ch]
+  cnt_no_ratio = 0.3
+  width_cnt = [10, 7]
+  no_hash = [3]
