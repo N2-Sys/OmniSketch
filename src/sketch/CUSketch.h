@@ -1,9 +1,10 @@
 /**
- * @file CMSketch.h
+ * @file CUSketch.h
  * @author dromniscience (you@domain.com)
- * @brief Implementation of Count Min Sketch
+ * @brief
+ * @version 0.1
+ * @date 2022-06-10
  *
- * @copyright Copyright (c) 2022
  *
  */
 #pragma once
@@ -13,34 +14,34 @@
 
 namespace OmniSketch::Sketch {
 /**
- * @brief Count Min Sketch
+ * @brief CU Sketch
  *
  * @tparam key_len  length of flowkey
  * @tparam T        type of the counter
  * @tparam hash_t   hashing class
  */
 template <int32_t key_len, typename T, typename hash_t = Hash::AwareHash>
-class CMSketch : public SketchBase<key_len, T> {
+class CUSketch : public SketchBase<key_len, T> {
 private:
   int32_t depth;
   int32_t width;
   hash_t *hash_fns;
   T **counter;
 
-  CMSketch(const CMSketch &) = delete;
-  CMSketch(CMSketch &&) = delete;
+  CUSketch(const CUSketch &) = delete;
+  CUSketch(CUSketch &&) = delete;
 
 public:
   /**
    * @brief Construct by specifying depth and width
    *
    */
-  CMSketch(int32_t depth_, int32_t width_);
+  CUSketch(int32_t depth_, int32_t width_);
   /**
    * @brief Release the pointer
    *
    */
-  ~CMSketch();
+  ~CUSketch();
   /**
    * @brief Update a flowkey with certain value
    *
@@ -72,11 +73,9 @@ public:
 //-----------------------------------------------------------------------------
 
 namespace OmniSketch::Sketch {
-
 template <int32_t key_len, typename T, typename hash_t>
-CMSketch<key_len, T, hash_t>::CMSketch(int32_t depth_, int32_t width_)
+CUSketch<key_len, T, hash_t>::CUSketch(int32_t depth_, int32_t width_)
     : depth(depth_), width(Util::NextPrime(width_)) {
-
   hash_fns = new hash_t[depth];
   // Allocate continuous memory
   counter = new T *[depth];
@@ -87,23 +86,30 @@ CMSketch<key_len, T, hash_t>::CMSketch(int32_t depth_, int32_t width_)
 }
 
 template <int32_t key_len, typename T, typename hash_t>
-CMSketch<key_len, T, hash_t>::~CMSketch() {
+CUSketch<key_len, T, hash_t>::~CUSketch() {
   delete[] hash_fns;
   delete[] counter[0];
   delete[] counter;
 }
 
 template <int32_t key_len, typename T, typename hash_t>
-void CMSketch<key_len, T, hash_t>::update(const FlowKey<key_len> &flowkey,
+void CUSketch<key_len, T, hash_t>::update(const FlowKey<key_len> &flowkey,
                                           T val) {
+  int32_t indices[depth];
+  T min_val = std::numeric_limits<T>::max();
   for (int32_t i = 0; i < depth; ++i) {
-    int32_t index = hash_fns[i](flowkey) % width;
-    counter[i][index] += val;
+    int32_t idx = hash_fns[i](flowkey) % width;
+    indices[i] = idx;
+    min_val = std::min(min_val, counter[i][idx]);
+  }
+  min_val += val;
+  for (int32_t i = 0; i < depth; ++i) {
+    counter[i][indices[i]] = std::max(min_val, counter[i][indices[i]]);
   }
 }
 
 template <int32_t key_len, typename T, typename hash_t>
-T CMSketch<key_len, T, hash_t>::query(const FlowKey<key_len> &flowkey) const {
+T CUSketch<key_len, T, hash_t>::query(const FlowKey<key_len> &flowkey) const {
   T min_val = std::numeric_limits<T>::max();
   for (int32_t i = 0; i < depth; ++i) {
     int32_t index = hash_fns[i](flowkey) % width;
@@ -113,14 +119,14 @@ T CMSketch<key_len, T, hash_t>::query(const FlowKey<key_len> &flowkey) const {
 }
 
 template <int32_t key_len, typename T, typename hash_t>
-size_t CMSketch<key_len, T, hash_t>::size() const {
+size_t CUSketch<key_len, T, hash_t>::size() const {
   return sizeof(*this)                // instance
          + sizeof(hash_t) * depth     // hashing class
          + sizeof(T) * depth * width; // counter
 }
 
 template <int32_t key_len, typename T, typename hash_t>
-void CMSketch<key_len, T, hash_t>::clear() {
+void CUSketch<key_len, T, hash_t>::clear() {
   std::fill(counter[0], counter[0] + depth * width, 0);
 }
 

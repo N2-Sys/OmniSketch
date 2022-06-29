@@ -10,6 +10,9 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v1
+      - name: Setup Graphviz
+        uses: ts-graphviz/setup-graphviz@v1
       - uses: DenverCoder1/doxygen-github-pages-action@v1.1.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}

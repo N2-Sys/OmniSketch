@@ -292,15 +292,67 @@ Now let us expand our mastery of testing. What should we do in [runTest()](@ref 
 3. Use the data format parsed and path to input data to read in streaming data via @ref streamdata.
 4. Data should be used at your discretion. On the one hand, they are fed into the sketch via overriden method. On the other hand, @ref gndtruth scans through the data to help you get the ground truth value.
 5. Note that we do not have to call the overriden methods in sketch directly. All the methods `testXXX()` in `TestBase` call them de facto. With a method name called `testXXX()`, we supply a key named `XXX` in the config file to indicate which metrics to collect. The following table shows which metrics can be collected in the corresponding testing methods.
-|Test method |Required overriden function|Available Metrics (Test::Metric)|
-|:-----------|:--------------------------|:-------------------------------|
-|[testSize()](@ref OmniSketch::Test::TestBase::testSize())  |[size()](@ref OmniSketch::Sketch::SketchBase::size()) | SIZE                           |
-|[testInsert()](@ref OmniSketch::Test::TestBase::testInsert())|[insert()](@ref OmniSketch::Sketch::SketchBase::insert())|RATE                           |
-|[testUpdate()](@ref OmniSketch::Test::TestBase::testUpdate())|[update()](@ref OmniSketch::Sketch::SketchBase::update())|RATE                           |
-|[testQuery()](@ref OmniSketch::Test::TestBase::testQuery()) |[query()](@ref OmniSketch::Sketch::SketchBase::query())|RATE, ARE, AAE, ACC, PODF, DIST |
-|[testLookup()](@ref OmniSketch::Test::TestBase::testLookup())|[lookup()](@ref OmniSketch::Sketch::SketchBase::lookup())|RATE, TP, FP, PRC              |
-|[testHeavyHitter()](@ref OmniSketch::Test::TestBase::testHeavyHitter())|[getHeavyHitter()](@ref OmniSketch::Sketch::SketchBase::getHeavyHitter())|TIME,ARE,PRC,RCL,F1|
-|[testHeavyChanger()](@ref OmniSketch::Test::TestBase::testHeavyChanger())|[getHeavyChanger()](@ref OmniSketch::Sketch::SketchBase::getHeavyChanger())|TIME,ARE,PRC,RCL,F1|
+
+<table>
+  <tr>
+       <td><b>Test Routine</b></td>
+       <td><b>Required Overriden Function</b></td>
+       <td><b>Available Metrics (In Test::Metric)</b></td>
+       <td><b>Name of the Testing Routine in TOML</b></td>
+  </tr>
+  <tr>
+       <td>testSize()</td>
+       <td>[size()](@ref Sketch::SketchBase::size())</td>
+       <td>SIZE</td>
+       <td>
+<i>None</i> (Once calling testSize(), the metric is collected)
+       </td>
+  </tr>
+  <tr>
+       <td>testInsert()</td>
+       <td>[insert()](@ref Sketch::SketchBase::insert())</td>
+       <td>RATE</td>
+       <td>`insert`</td>
+  </tr>
+  <tr>
+       <td>testUpdate()</td>
+       <td>[update()](@ref Sketch::SketchBase::update())</td>
+       <td>RATE</td>
+       <td>`update`</td>
+  </tr>
+  <tr>
+       <td>testQuery()</td>
+       <td>[query()](@ref Sketch::SketchBase::query())</td>
+       <td>RATE, ARE, AAE, ACC, PODF, DIST</td>
+       <td>`query`</td>
+  </tr>
+  <tr>
+       <td>testLookup()</td>
+       <td>[lookup()](@ref Sketch::SketchBase::lookup())</td>
+       <td>RATE, TP, FP, PRC</td>
+       <td>`lookup`</td>
+  </tr>
+  <tr>
+       <td>testHeavyHitter()</td>
+       <td>[getHeavyHitter()](@ref Sketch::SketchBase::getHeavyHitter())</td>
+       <td>TIME, ARE, PRC, RCL, F1</td>
+       <td>`heavyhitter`</td>
+  </tr>
+  <tr>
+       <td>testHeavyChanger()</td>
+       <td>
+[getHeavyChanger()](@ref Sketch::SketchBase::getHeavyChanger())
+       </td>
+       <td>TIME, ARE, PRC, RCL, F1</td>
+       <td>`heavychanger`</td>
+  </tr>
+  <tr>
+       <td>testDecode()</td>
+       <td>[decode()](@ref Sketch::SketchBase::decode())</td>
+       <td>TIME, RATIO, ARE, AAE, ACC, PODF, DIST</td>
+       <td>`decode`</td>
+  </tr>
+</table>
 
 > The rule of thumb is that if you are not sure what to do next, feel free to refer to existing sketch tests!
 

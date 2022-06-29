@@ -17,6 +17,27 @@
 void TestConsturctFlowKey() {
   using namespace OmniSketch;
 
+  try {
+    FlowKey<13> a;
+    VERIFY(a.getSrcIp() == 0);
+    VERIFY(a.getDstIp() == 0);
+    VERIFY(a.getProtocol() == 0);
+    VERIFY(a.getSrcPort() == 0);
+    VERIFY(a.getDstPort() == 0);
+    for (int32_t i = 0; i < 13; ++i) {
+      VERIFY(a.getBit(i) == 0);
+    }
+
+    FlowKey<8> b;
+    for (int32_t i = 0; i < 8; ++i) {
+      VERIFY(b.getBit(i) == 0);
+    }
+    VERIFY(b.getSrcIp() == 0);
+    VERIFY(b.getDstIp() == 0);
+  } catch (const std::exception &exp) {
+    VERIFY_NO_EXCEPTION(exp);
+  }
+
   // 1-tuple
   try {
     FlowKey<4> a(4);
@@ -224,6 +245,14 @@ void TestCompareFlowKey() {
   FlowKey<8> e(a);
   VERIFY(!(e == d));
   VERIFY(e < d);
+
+  b ^= c;
+  VERIFY(b == FlowKey<8>());
+  b ^= c;
+  VERIFY(b == c);
+  b ^= d;
+  int8_t tmp[8] = {0x0, 0x0, 0x0, 0x1, 0x0, 0x0, 0x0, 0x0};
+  VERIFY(b == FlowKey<8>(tmp));
 }
 
 void TestCopyFlowKey() {
@@ -348,12 +377,67 @@ void TestHashFlowKey() {
   }
 }
 
+void TestSwapFlowKey() {
+  using namespace OmniSketch;
+  const int8_t a[13] = {0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+                        0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d};
+  const int8_t b[13] = {0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17,
+                        0x18, 0x19, 0x1a, 0x1b, 0x1c, 0x1d};
+  // swap two flowkeys
+  try {
+    FlowKey<13> c(a);
+    FlowKey<13> d(b);
+    d.swap(c);
+    VERIFY(d.getSrcIp() == *reinterpret_cast<const int32_t *>(a));
+    VERIFY(d.getDstIp() == *reinterpret_cast<const int32_t *>(a + 4));
+    VERIFY(d.getSrcPort() == *reinterpret_cast<const int16_t *>(a + 8));
+    VERIFY(d.getDstPort() == *reinterpret_cast<const int16_t *>(a + 10));
+    VERIFY(d.getProtocol() == *reinterpret_cast<const int8_t *>(a + 12));
+
+    VERIFY(c.getSrcIp() == *reinterpret_cast<const int32_t *>(b));
+    VERIFY(c.getDstIp() == *reinterpret_cast<const int32_t *>(b + 4));
+    VERIFY(c.getSrcPort() == *reinterpret_cast<const int16_t *>(b + 8));
+    VERIFY(c.getDstPort() == *reinterpret_cast<const int16_t *>(b + 10));
+    VERIFY(c.getProtocol() == *reinterpret_cast<const int8_t *>(b + 12));
+
+    c.swap(d);
+    VERIFY(c.getSrcIp() == *reinterpret_cast<const int32_t *>(a));
+    VERIFY(c.getDstIp() == *reinterpret_cast<const int32_t *>(a + 4));
+    VERIFY(c.getSrcPort() == *reinterpret_cast<const int16_t *>(a + 8));
+    VERIFY(c.getDstPort() == *reinterpret_cast<const int16_t *>(a + 10));
+    VERIFY(c.getProtocol() == *reinterpret_cast<const int8_t *>(a + 12));
+
+    VERIFY(d.getSrcIp() == *reinterpret_cast<const int32_t *>(b));
+    VERIFY(d.getDstIp() == *reinterpret_cast<const int32_t *>(b + 4));
+    VERIFY(d.getSrcPort() == *reinterpret_cast<const int16_t *>(b + 8));
+    VERIFY(d.getDstPort() == *reinterpret_cast<const int16_t *>(b + 10));
+    VERIFY(d.getProtocol() == *reinterpret_cast<const int8_t *>(b + 12));
+
+  } catch (const std::exception &exp) {
+    VERIFY_NO_EXCEPTION(exp);
+  }
+
+  // swap with itself
+  try {
+    FlowKey<13> c(a);
+    c.swap(c);
+    VERIFY(c.getSrcIp() == *reinterpret_cast<const int32_t *>(a));
+    VERIFY(c.getDstIp() == *reinterpret_cast<const int32_t *>(a + 4));
+    VERIFY(c.getSrcPort() == *reinterpret_cast<const int16_t *>(a + 8));
+    VERIFY(c.getDstPort() == *reinterpret_cast<const int16_t *>(a + 10));
+    VERIFY(c.getProtocol() == *reinterpret_cast<const int8_t *>(a + 12));
+  } catch (const std::exception &exp) {
+    VERIFY_NO_EXCEPTION(exp);
+  }
+}
+
 OMNISKETCH_DECLARE_TEST(flowkey) {
   for (int i = 0; i < g_repeat; ++i) {
     TestConsturctFlowKey();
     TestCompareFlowKey();
     TestCopyFlowKey();
     TestHashFlowKey();
+    TestSwapFlowKey();
   }
 }
 /** @endcond */

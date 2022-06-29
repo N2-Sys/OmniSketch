@@ -44,18 +44,69 @@
   cnt_no_ratio = 0.3
   width_cnt = [10, 7]
   no_hash = [3]
+shissformat = [["flowkey", "padding", "timestamp", "length", "padding"], [13, 3, 8, 2, 6hh]
+[HP] # Hash Pipe
 
-[SL] * Sketch Learn
-
-  [SL.para]
+  [HP.para]
   depth = 5
-  width = 80001
+  width = 1001
 
-  [SL.data]
+  [HP.data]
+  hx_method = "TopK"
+  threshold_heavy_hitter = 300
   cnt_method = "InPacket"
   data = "../data/records.bin"
   format = [["flowkey", "padding", "timestamp", "length", "padding"], [13, 3, 8, 2, 6]]
 
+  [HP.test]
+  update = ["RATE"]
+  heavyhitter = ["TIME", "ARE", "PRC", "RCL"]
+
+[FlowRadar] # Flow Radar
+
+  [FlowRadar.para]
+    flow_filter_bit = 1000000
+    flow_filter_hash = 50
+    count_table_num = 500000
+    count_table_hash = 5
+  
+  [FlowRadar.data]
+    data = "../data/records.bin"
+    format = [["flowkey", "padding", "timestamp", "length", "padding"], [13, 3, 8, 2, 6]]
+  
+  [FlowRadar.test]
+    update = ["RATE"]
+    decode = ["TIME", "ARE", "AAE", "RATIO", "ACC", "PODF"]
+    decode_podf = 0.01
+
+
+[CBF] # Counting Bloom Filter
+
+  [CBF.para]
+    num_cnt = 200000
+    num_hash = 3
+    cnt_length = 4
+
+  [CBF.data]
+    data = "../data/records.bin"
+    format = [["flowkey", "padding", "timestamp", "length", "padding"], [13, 3, 8, 2, 6]]
+
+  [CBF.test]
+    sample = 0.3
+    insert = ["RATE"]
+    lookup = ["RATE", "PRC"]
+
+[SL] # Sketch Learn
+  
+  [SL.para]
+  depth = 5
+  width = 80001
+  
+  [SL.data]
+  cnt_method = "InPacket"
+  data = "../data/records.bin"
+  format = [["flowkey", "padding", "timestamp", "length", "padding"], [13, 3, 8, 2, 6]]
+  
   [SL.test]
   update = ["RATE"]
   query = ["RATE", "ARE", "AAE"]

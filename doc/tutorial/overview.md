@@ -49,6 +49,7 @@ Here is a complete list of all available metrics in OmniSketch. Again, if you fi
 |`F1`    | harmonic mean of precision & recall (F-one, not F-ell) |
 |`DIST`  | distribution of the error |
 |`PODF`  | portion of the desired flow (i.e., whose error is below a threshold)|
+|`RATIO` | decoded ratio (in percentile), i.e., the ratio of #(decoded flows) in ground truth to #flows|
 
 @section workflow Workflow: A General Picture
 Glad you have finished reading main body of the overview! Now it is the time that we summarize a bit and look into the workflow.

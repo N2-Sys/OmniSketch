@@ -313,6 +313,7 @@ public:
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  */
 template <int32_t key_len, typename T = int64_t> class GndTruth {
+protected:
   using BidirMap =
       boost::bimaps::bimap<boost::bimaps::unordered_set_of<
                                FlowKey<key_len>, std::hash<FlowKey<key_len>>,
@@ -321,8 +322,6 @@ template <int32_t key_len, typename T = int64_t> class GndTruth {
   using RightVal = typename BidirMap::right_value_type;
   using LeftVal = typename BidirMap::left_value_type;
   using RightConstIterator = typename BidirMap::right_const_iterator;
-
-protected:
   /**
    * @brief The internal bidirectional map
    *
@@ -349,7 +348,30 @@ private:
 
 public:
   /**
-   * @brief swap content, note that calling histories are swapped as well
+   * @brief Return whether the instance is empty
+   *
+   */
+  bool empty() const { return my_map.empty(); }
+  /**
+   * @brief Return the minimum value
+   * @details Calling this function on an empty instance causes undefined
+   * behavior.
+   *
+   */
+  T min() const { return my_map.right.back().get_right(); }
+  /**
+   * @brief Return the maximum value
+   * @details Calling this function on an empty instance causes undefined
+   * behavior.
+   */
+  T max() const { return my_map.right.front().get_right(); }
+  /**
+   * @brief Return the sum of values of all flowkeys
+   *
+   */
+  int64_t totalValue() const { return tot_value; }
+  /**
+   * @brief Swap content, note that calling histories are swapped as well
    *
    * @param other the other GndTruth instance to be swapped with
    *
@@ -357,7 +379,7 @@ public:
    */
   void swap(GndTruth &other);
   /**
-   * @brief return a random access iterator
+   * @brief Return a random access iterator pointed to the first element
    *
    * @details The next two examples show how to traverse the ground truth and
    * fetch length for flowkey:
@@ -392,7 +414,7 @@ public:
     return my_map.right.begin();
   }
   /**
-   * @brief return a random access const iterator pointed to the very end
+   * @brief Return a random access const iterator pointed to the very end
    *
    * @see begin()
    */
@@ -409,6 +431,13 @@ public:
   size_t count(const FlowKey<key_len> &flowkey) const {
     return my_map.left.count(flowkey);
   }
+  /**
+   * @brief Get the value of a certain key
+   *
+   * @details If the key does not exist, an out-of-range exception would be
+   * thrown.
+   */
+  T at(const FlowKey<key_len> &flowkey) const;
   /**
    * @brief Return all flowkeys that share a single value
    *
@@ -575,6 +604,23 @@ class Estimation : private GndTruth<key_len, T> {
   using GndTruth<key_len, T>::my_map;
 
 public:
+  /**
+   * @brief Return a random access iterator pointed to the first element
+   * @see GndTruth::begin()
+   *
+   */
+  [[nodiscard]] typename GndTruth<key_len, T>::RightConstIterator
+  begin() const {
+    return GndTruth<key_len, T>::begin();
+  }
+  /**
+   * @brief Return a random access iterator pointed to the very end
+   * @see GndTruth::end()
+   */
+  [[nodiscard]] typename GndTruth<key_len, T>::RightConstIterator end() const {
+    return GndTruth<key_len, T>::end();
+  }
+
   /**
    * @brief Insert a flowkey
    * @details Calling this function implies that values are uninterested. If the
@@ -833,6 +879,18 @@ GndTruth<key_len, T> &GndTruth<key_len, T>::operator-=(const GndTruth &other) {
   // sorted in descending order
   my_map.right.sort(std::greater<T>());
   return *this;
+}
+
+template <int32_t key_len, typename T>
+T GndTruth<key_len, T>::at(const FlowKey<key_len> &flowkey) const {
+  if (my_map.left.count(flowkey)) {
+    return my_map.left.at(flowkey);
+  } else {
+    throw std::out_of_range(fmt::format("Flowkey Out Of Range: Not found in "
+                                        "OmniSketch::Data::GndTruth<{:d}, {}>!",
+                                        key_len, typeid(T).name()));
+  }
+  // return my_map.right.begin()->get_right(); // always return a value
 }
 
 template <int32_t key_len, typename T>
@@ -1113,7 +1171,7 @@ const T &Estimation<key_len, T>::at(const FlowKey<key_len> &flowkey) const {
                     "OmniSketch::Data::Estimation<{:d}, {}>!",
                     key_len, typeid(T).name()));
   }
-  return my_map.right.begin()->get_right();
+  // return my_map.right.begin()->get_right(); // always return a value
 }
 
 template <int32_t key_len, typename T>

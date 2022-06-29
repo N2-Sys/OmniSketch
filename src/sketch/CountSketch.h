@@ -1,7 +1,7 @@
 /**
- * @file CMSketch.h
+ * @file CountSketch.h
  * @author dromniscience (you@domain.com)
- * @brief Implementation of Count Min Sketch
+ * @brief Implementation of Count Sketch
  *
  * @copyright Copyright (c) 2022
  *
@@ -13,34 +13,34 @@
 
 namespace OmniSketch::Sketch {
 /**
- * @brief Count Min Sketch
+ * @brief Count Sketch
  *
  * @tparam key_len  length of flowkey
  * @tparam T        type of the counter
  * @tparam hash_t   hashing class
  */
 template <int32_t key_len, typename T, typename hash_t = Hash::AwareHash>
-class CMSketch : public SketchBase<key_len, T> {
+class CountSketch : public SketchBase<key_len, T> {
 private:
   int32_t depth;
   int32_t width;
   hash_t *hash_fns;
   T **counter;
 
-  CMSketch(const CMSketch &) = delete;
-  CMSketch(CMSketch &&) = delete;
+  CountSketch(const CountSketch &) = delete;
+  CountSketch(CountSketch &&) = delete;
 
 public:
   /**
    * @brief Construct by specifying depth and width
    *
    */
-  CMSketch(int32_t depth_, int32_t width_);
+  CountSketch(int32_t depth_, int32_t width_);
   /**
    * @brief Release the pointer
    *
    */
-  ~CMSketch();
+  ~CountSketch();
   /**
    * @brief Update a flowkey with certain value
    *
@@ -74,10 +74,12 @@ public:
 namespace OmniSketch::Sketch {
 
 template <int32_t key_len, typename T, typename hash_t>
-CMSketch<key_len, T, hash_t>::CMSketch(int32_t depth_, int32_t width_)
+CountSketch<key_len, T, hash_t>::CountSketch(int32_t depth_, int32_t width_)
     : depth(depth_), width(Util::NextPrime(width_)) {
 
-  hash_fns = new hash_t[depth];
+  // The first depth hash functions: CM
+  // The last depth hash function: signed bit
+  hash_fns = new hash_t[depth * 2];
   // Allocate continuous memory
   counter = new T *[depth];
   counter[0] = new T[depth * width](); // Init with zero
@@ -87,40 +89,48 @@ CMSketch<key_len, T, hash_t>::CMSketch(int32_t depth_, int32_t width_)
 }
 
 template <int32_t key_len, typename T, typename hash_t>
-CMSketch<key_len, T, hash_t>::~CMSketch() {
+CountSketch<key_len, T, hash_t>::~CountSketch() {
   delete[] hash_fns;
   delete[] counter[0];
   delete[] counter;
 }
 
 template <int32_t key_len, typename T, typename hash_t>
-void CMSketch<key_len, T, hash_t>::update(const FlowKey<key_len> &flowkey,
-                                          T val) {
-  for (int32_t i = 0; i < depth; ++i) {
-    int32_t index = hash_fns[i](flowkey) % width;
-    counter[i][index] += val;
+void CountSketch<key_len, T, hash_t>::update(const FlowKey<key_len> &flowkey,
+                                             T val) {
+  for (int i = 0; i < depth; ++i) {
+    int idx = hash_fns[i](flowkey) % width;
+    counter[i][idx] +=
+        val * (static_cast<int>(hash_fns[depth + i](flowkey) & 1) * 2 - 1);
   }
 }
 
 template <int32_t key_len, typename T, typename hash_t>
-T CMSketch<key_len, T, hash_t>::query(const FlowKey<key_len> &flowkey) const {
-  T min_val = std::numeric_limits<T>::max();
-  for (int32_t i = 0; i < depth; ++i) {
-    int32_t index = hash_fns[i](flowkey) % width;
-    min_val = std::min(min_val, counter[i][index]);
+T CountSketch<key_len, T, hash_t>::query(
+    const FlowKey<key_len> &flowkey) const {
+  T values[depth];
+  for (int i = 0; i < depth; ++i) {
+    int idx = hash_fns[i](flowkey) % width;
+    values[i] = counter[i][idx] *
+                (static_cast<int>(hash_fns[depth + i](flowkey) & 1) * 2 - 1);
   }
-  return min_val;
+  std::sort(values, values + depth);
+  if (!(depth & 1)) { // even
+    return std::abs((values[depth / 2 - 1] + values[depth / 2]) / 2);
+  } else { // odd
+    return std::abs(values[depth / 2]);
+  }
 }
 
 template <int32_t key_len, typename T, typename hash_t>
-size_t CMSketch<key_len, T, hash_t>::size() const {
+size_t CountSketch<key_len, T, hash_t>::size() const {
   return sizeof(*this)                // instance
-         + sizeof(hash_t) * depth     // hashing class
+         + sizeof(hash_t) * depth * 2 // hashing class
          + sizeof(T) * depth * width; // counter
 }
 
 template <int32_t key_len, typename T, typename hash_t>
-void CMSketch<key_len, T, hash_t>::clear() {
+void CountSketch<key_len, T, hash_t>::clear() {
   std::fill(counter[0], counter[0] + depth * width, 0);
 }
 

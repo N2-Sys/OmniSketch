@@ -42,7 +42,7 @@ ctest
 ```
 If you see the line 
 ```
-100% tests passed, 0 tests failed out of 7
+100% tests passed, 0 tests failed out of 8
 ```
  you can proceed to poke around OmniSketch and design your new sketches.
 
@@ -87,39 +87,40 @@ Please follow [this link](https://n2-sys.github.io/OmniSketch/annotated.html).
 
 
 ## Tables of Sketches
-These are the sketches already implemented and tested.
+Here are a list of all the sketches implemented and tested. The last column indicates the name of generated executable drivers, which can be modified in lines starting with `add_user_sketch` in `CMakeLists.txt`. For example, suppose there is a line saying `add_user_sketch(CM CMSketch)`. It means that one may run driver compiled from `src/sketch/CMSketch.h` and `src/test/CMSketchTest.h` by `./CM` in the building directory after making it.
 
 Status: **h**ave, **c**hecked, checked but with **d**oubt, **t**ested.
 <a id="table"></a>
-|                         |Status|
-| ----------------------- | ---- |
-| cm sketch               | t    |
-| count sketch            | t    |
-| cu sketch               | t    |
-| bloom filter            | t    |
-| counting bloom filter   | t    |
-| LD-sketch               | t    |
-| MV-sketch               | t    |
-| hashpipe                | t    |
-| FM-sketch(PCSA)         | t    |
-| Linear Counting         |      |
-| Kmin(KMV)               |      |
-| Deltoid                 | t    |
-| flow radar              | t    |
-| sketch learn            |      |
-| elastic sketch          | t    |
-| univmon                 |      |
-| nitro sketch            | t    |
-| reversible sketch       |      |
-| Mrac                    | t    |
-| k-ary sketch            | t    |
-| seqHash                 |      |
-| TwoLevel                | t    |
-| multi-resolution bitmap |      |
-| lossy count             | t    |
-| space saving            | t    |
-| HyperLogLog             | t    |
-| Misra-Gries             | t    |
-| Fast Sketch             | t    |
-| CounterBraids           | t    |
-| HeavyKeeper             | d    |
+|                         |Status|Name of the Executable|
+| ----------------------- | ---- | -------------------- |
+| CM Sketch               | t    | CM                   |
+| CH-optimized CM Sketch  | t    | CHCM                 |
+| Count Sketch            | t    | CS                   |
+| CU Sketch               | t    | CU                   |
+| Bloom Filter            | t    | BF                   |
+| counting bloom filter   | t    |                      |
+| LD-sketch               | t    |                      |
+| MV-sketch               | t    |                      |
+| HashPipe                | t    | HP                   |
+| FM-sketch(PCSA)         | t    |                      |
+| Linear Counting         |      |                      |
+| Kmin(KMV)               |      |                      |
+| Deltoid                 | t    |                      |
+| Flow Radar              | t    | FR                   |
+| sketch learn            |      |                      |
+| elastic sketch          | t    |                      |
+| univmon                 |      |                      |
+| nitro sketch            | t    |                      |
+| reversible sketch       |      |                      |
+| Mrac                    | t    |                      |
+| k-ary sketch            | t    |                      |
+| seqHash                 |      |                      |
+| TwoLevel                | t    |                      |
+| multi-resolution bitmap |      |                      |
+| lossy count             | t    |                      |
+| space saving            | t    |                      |
+| HyperLogLog             | t    |                      |
+| Misra-Gries             | t    |                      |
+| Fast Sketch             | t    |                      |
+| CounterBraids           | t    |                      |
+| HeavyKeeper             | d    |                      |

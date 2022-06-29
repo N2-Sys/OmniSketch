@@ -66,8 +66,9 @@ private:
 public:
   /**
    * @brief Void constructor
+   * @details Initialized to an all-zero flowkey
    */
-  FlowKey() = default;
+  FlowKey();
   /**
    * @brief Construct by copying from a pointer
    *
@@ -122,6 +123,11 @@ public:
    */
   bool operator<(const FlowKey &otherkey) const;
   /**
+   * @brief XOR two flowkeys in place
+   *
+   */
+  FlowKey<key_len> &operator^=(const FlowKey &otherkey);
+  /**
    * @brief Copy from another flowkey (probably of different
    * length)
    *
@@ -145,6 +151,12 @@ public:
    * @return the copied flowkey itself
    */
   FlowKey<key_len> &copy(int32_t pos, const int8_t *key, int32_t len);
+  /**
+   * @brief Swap the content of two flowkey
+   * @details No effect if one flowkey swaps with itself
+   *
+   */
+  FlowKey<key_len> &swap(FlowKey<key_len> &the_other_key);
   /**
    * @brief Get a single bit in flowkey
    *
@@ -258,6 +270,10 @@ public:
 
 namespace OmniSketch {
 
+template <int32_t key_len> FlowKey<key_len>::FlowKey() {
+  std::fill(key_, key_ + key_len, 0);
+}
+
 template <int32_t key_len> FlowKey<key_len>::FlowKey(const int8_t *key) {
   std::copy(key, key + key_len, key_);
 }
@@ -314,6 +330,14 @@ bool FlowKey<key_len>::operator<(const FlowKey &otherkey) const {
 }
 
 template <int32_t key_len>
+FlowKey<key_len> &FlowKey<key_len>::operator^=(const FlowKey &otherkey) {
+  for (int32_t i = 0; i < key_len; ++i) {
+    key_[i] ^= otherkey.key_[i];
+  }
+  return *this;
+}
+
+template <int32_t key_len>
 template <int32_t other_len>
 FlowKey<key_len> &FlowKey<key_len>::copy(int32_t pos,
                                          const FlowKey<other_len> &other_key,
@@ -336,6 +360,12 @@ FlowKey<key_len> &FlowKey<key_len>::copy(int32_t pos, const int8_t *key,
     throw FlowKeyOutOfRange(pos, len, key_len);
   }
   std::copy(key, key + len, key_ + pos);
+  return *this;
+}
+
+template <int32_t key_len>
+FlowKey<key_len> &FlowKey<key_len>::swap(FlowKey<key_len> &the_other_key) {
+  std::swap(key_, the_other_key.key_);
   return *this;
 }
 
