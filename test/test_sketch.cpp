@@ -7,7 +7,10 @@
  *
  */
 #include "test_factory.h"
+#include <chrono>
+#include <cmath>
 #include <common/test.h>
+#include <limits>
 
 template <int32_t key_len, typename T>
 class MySketch : public OmniSketch::Sketch::SketchBase<key_len, T> {
@@ -129,7 +132,30 @@ void TestTest() {
   test.show();
 }
 
+void TestBenchmarkTiming() {
+  using namespace std::chrono_literals;
+  using OmniSketch::Test::detail::elapsedMicroseconds;
+  using OmniSketch::Test::detail::operationsPerSecond;
+  using Seconds = std::chrono::duration<double>;
+
+  VERIFY(elapsedMicroseconds(0ns) == 0.0);
+  VERIFY(std::abs(elapsedMicroseconds(250ns) - 0.25) < 1e-12);
+  VERIFY(std::abs(elapsedMicroseconds(1500ns) - 1.5) < 1e-12);
+  VERIFY(operationsPerSecond(100, 2s) == 50.0);
+  VERIFY(std::abs(operationsPerSecond(4, 500ns) - 8e6) < 1e-6);
+  VERIFY(operationsPerSecond(0, 1ns) == 0.0);
+  VERIFY(operationsPerSecond(1, 0ns) == 0.0);
+  VERIFY(operationsPerSecond(1, -1ns) == 0.0);
+  VERIFY(operationsPerSecond(
+             1, Seconds(std::numeric_limits<double>::infinity())) == 0.0);
+  VERIFY(operationsPerSecond(
+             1, Seconds(std::numeric_limits<double>::quiet_NaN())) == 0.0);
+  VERIFY(operationsPerSecond(10, Seconds(std::numeric_limits<double>::min())) ==
+         0.0);
+}
+
 OMNISKETCH_DECLARE_TEST(sketch) {
+  TestBenchmarkTiming();
   for (int i = 0; i < g_repeat; ++i) {
     TestTest();
   }

@@ -10,7 +10,10 @@
 
 // A bunch of files to include!
 #include "sketch.h"
+#include <algorithm>
 #include <boost/any.hpp>
+#include <chrono>
+#include <cmath>
 #include <ctime>
 #include <map>
 #include <memory>
@@ -360,15 +363,23 @@ public:
 
 namespace OmniSketch::Test {
 
-#define DEFINE_TIMERS                                                          \
-  auto timer = std::chrono::microseconds::zero();                              \
-  auto tick = std::chrono::steady_clock::now();                                \
-  auto tock = std::chrono::steady_clock::now();
-#define START_TIMER tick = std::chrono::steady_clock::now();
-#define STOP_TIMER                                                             \
-  tock = std::chrono::steady_clock::now();                                     \
-  timer += std::chrono::duration_cast<std::chrono::microseconds>(tock - tick);
-#define TIMER_RESULT static_cast<int64_t>(timer.count())
+namespace detail {
+
+inline double elapsedMicroseconds(std::chrono::duration<double> elapsed) {
+  return std::chrono::duration<double, std::micro>(elapsed).count();
+}
+
+inline double operationsPerSecond(size_t count,
+                                  std::chrono::duration<double> elapsed) {
+  const double seconds = elapsed.count();
+  if (seconds <= 0.0 || !std::isfinite(seconds)) {
+    return 0.0;
+  }
+  const double rate = static_cast<double>(count) / seconds;
+  return std::isfinite(rate) ? rate : 0.0;
+}
+
+} // namespace detail
 
 template <int32_t key_len, typename T> void TestBase<key_len, T>::runTest() {
   LOG(ERROR, "You should override TestBase::runTest() in subclass.");
@@ -390,10 +401,10 @@ template <int32_t key_len, typename T> void TestBase<key_len, T>::show() const {
       }
     }
     if (vec.count(TIME)) {
-      assert(vec.at(TIME).type() == typeid(int64_t));
-      int64_t time = boost::any_cast<int64_t>(vec.at(TIME));
+      assert(vec.at(TIME).type() == typeid(double));
+      double time = boost::any_cast<double>(vec.at(TIME));
       if (time < 1e3) {
-        fmt::print("{:>15}: {:d} us\n", fmt::format("{} Time", prefix), time);
+        fmt::print("{:>15}: {:g} us\n", fmt::format("{} Time", prefix), time);
       } else if (time < 1e6) {
         fmt::print("{:>15}: {:g} ms\n", fmt::format("{} Time", prefix),
                    time / 1e3);
@@ -520,14 +531,13 @@ void TestBase<key_len, T>::testInsert(
   // config
   MetricVec metric_vec(config_file, test_path, "insert");
 
-  DEFINE_TIMERS;
+  const auto start = std::chrono::steady_clock::now();
   for (auto ptr = begin; ptr != end; ptr++) {
-    START_TIMER;
     ptr_sketch->insert(ptr->flowkey);
-    STOP_TIMER;
   }
+  const auto elapsed = std::chrono::steady_clock::now() - start;
   if (metric_vec.in(Metric::RATE)) {
-    insert[Metric::RATE] = 1.0 * (end - begin) / TIMER_RESULT * 1e6;
+    insert[Metric::RATE] = detail::operationsPerSecond(end - begin, elapsed);
   }
 }
 
@@ -540,15 +550,14 @@ void TestBase<key_len, T>::testUpdate(
   // config
   MetricVec metric_vec(config_file, test_path, "update");
 
-  DEFINE_TIMERS;
+  const auto start = std::chrono::steady_clock::now();
   for (auto ptr = begin; ptr != end; ptr++) {
-    START_TIMER;
     ptr_sketch->update(ptr->flowkey,
                        cnt_method == Data::InLength ? ptr->length : 1);
-    STOP_TIMER;
   }
+  const auto elapsed = std::chrono::steady_clock::now() - start;
   if (metric_vec.in(Metric::RATE))
-    update[Metric::RATE] = 1.0 * (end - begin) / TIMER_RESULT * 1e6;
+    update[Metric::RATE] = detail::operationsPerSecond(end - begin, elapsed);
 }
 
 template <int32_t key_len, typename T>
@@ -558,19 +567,27 @@ void TestBase<key_len, T>::testQuery(
   // config
   MetricVec metric_vec(config_file, test_path, "query");
 
-  DEFINE_TIMERS;
+  const size_t count = gnd_truth.size();
+  std::vector<T> estimates(count);
+  auto estimate = estimates.begin();
+  const auto start = std::chrono::steady_clock::now();
+  for (const auto &kv : gnd_truth) {
+    *estimate++ = ptr_sketch->query(kv.get_left());
+  }
+  const auto elapsed = std::chrono::steady_clock::now() - start;
+
   double ARE = 0.0, AAE = 0.0, corr = 0, podf_cnt = 0;
+  const bool measure_podf = metric_vec.in(Metric::PODF);
   const bool measure_dist = metric_vec.in(Metric::DIST);
   std::vector<double> dist(metric_vec.quantiles.size()); // zero initialized
 
+  estimate = estimates.begin();
   for (const auto &kv : gnd_truth) {
-    START_TIMER;
-    T estimated_size = ptr_sketch->query(kv.get_left());
-    STOP_TIMER;
+    const T estimated_size = *estimate++;
     // update RE, AE, Correct Rate, PODF
     double RE = static_cast<double>(std::abs(kv.get_right() - estimated_size)) /
                 kv.get_right();
-    if (RE <= metric_vec.podf)
+    if (measure_podf && RE <= metric_vec.podf)
       podf_cnt += 1.0;
     ARE += RE;
     AAE += std::abs(kv.get_right() - estimated_size);
@@ -583,25 +600,26 @@ void TestBase<key_len, T>::testQuery(
     }
   }
   // add statistics
+  const double denominator = std::max<size_t>(count, 1);
   if (metric_vec.in(Metric::RATE)) {
-    query[Metric::RATE] = 1.0 * gnd_truth.size() / TIMER_RESULT * 1e6;
+    query[Metric::RATE] = detail::operationsPerSecond(count, elapsed);
   }
   if (metric_vec.in(Metric::ARE)) {
-    query[Metric::ARE] = ARE / gnd_truth.size();
+    query[Metric::ARE] = ARE / denominator;
   }
   if (metric_vec.in(Metric::AAE)) {
-    query[Metric::AAE] = AAE / gnd_truth.size();
+    query[Metric::AAE] = AAE / denominator;
   }
   if (metric_vec.in(Metric::ACC)) {
-    query[Metric::ACC] = corr / gnd_truth.size();
+    query[Metric::ACC] = corr / denominator;
   }
-  if (metric_vec.in(PODF)) {
+  if (measure_podf) {
     query[Metric::PODF] =
-        std::make_pair(metric_vec.podf, podf_cnt / gnd_truth.size());
+        std::make_pair(metric_vec.podf, podf_cnt / denominator);
   }
   if (measure_dist) {
     for (auto &v : dist)
-      v /= gnd_truth.size();
+      v /= denominator;
     query[Metric::DIST] = std::make_pair(metric_vec.quantiles, dist);
   }
 }
@@ -614,14 +632,19 @@ void TestBase<key_len, T>::testLookup(
   // config
   MetricVec metric_vec(config_file, test_path, "lookup");
 
-  DEFINE_TIMERS;
-  double TP = 0.0, FP = 0.0;
+  const size_t count = gnd_truth.size();
+  std::vector<uint8_t> matches(count);
+  auto match = matches.begin();
+  const auto start = std::chrono::steady_clock::now();
   for (const auto &kv : gnd_truth) {
-    START_TIMER;
-    bool existed = ptr_sketch->lookup(kv.get_left());
-    STOP_TIMER;
-    // update TP, FP
-    if (existed) {
+    *match++ = ptr_sketch->lookup(kv.get_left());
+  }
+  const auto elapsed = std::chrono::steady_clock::now() - start;
+
+  double TP = 0.0, FP = 0.0;
+  match = matches.begin();
+  for (const auto &kv : gnd_truth) {
+    if (*match++) {
       if (sample.count(kv.get_left()))
         TP += 1.0;
       else
@@ -629,17 +652,18 @@ void TestBase<key_len, T>::testLookup(
     }
   }
   // add statistics
+  const double denominator = std::max<size_t>(count, 1);
   if (metric_vec.in(Metric::RATE)) {
-    lookup[Metric::RATE] = 1.0 * gnd_truth.size() / TIMER_RESULT * 1e6;
+    lookup[Metric::RATE] = detail::operationsPerSecond(count, elapsed);
   }
   if (metric_vec.in(Metric::TP)) {
-    lookup[Metric::TP] = TP / gnd_truth.size();
+    lookup[Metric::TP] = TP / denominator;
   }
   if (metric_vec.in(Metric::FP)) {
-    lookup[Metric::FP] = FP / gnd_truth.size();
+    lookup[Metric::FP] = FP / denominator;
   }
   if (metric_vec.in(PRC)) {
-    lookup[Metric::PRC] = TP / (TP + FP);
+    lookup[Metric::PRC] = TP / std::max(1.0, TP + FP);
   }
 }
 
@@ -652,10 +676,9 @@ void TestBase<key_len, T>::testHeavyHitter(
 
   double TP = 0.0, FP = 0.0, FN = 0.0, ARE = 0.0;
 
-  DEFINE_TIMERS;
-  START_TIMER;
+  const auto start = std::chrono::steady_clock::now();
   Data::Estimation<key_len, T> detected = ptr_sketch->getHeavyHitter(threshold);
-  STOP_TIMER;
+  const auto elapsed = std::chrono::steady_clock::now() - start;
 
   for (const auto &kv : gnd_truth_heavy_hitters) {
     if (detected.count(kv.get_left())) {
@@ -673,7 +696,7 @@ void TestBase<key_len, T>::testHeavyHitter(
   double recall = TP / (TP + FN);
 
   if (metric_vec.in(Metric::TIME)) {
-    heavy_hitter[Metric::TIME] = TIMER_RESULT;
+    heavy_hitter[Metric::TIME] = detail::elapsedMicroseconds(elapsed);
   }
   if (metric_vec.in(Metric::ARE)) {
     heavy_hitter[Metric::ARE] = ARE / TP;
@@ -699,11 +722,10 @@ void TestBase<key_len, T>::testHeavyChanger(
 
   double TP = 0.0, FP = 0.0, FN = 0.0, ARE = 0.0;
 
-  DEFINE_TIMERS;
-  START_TIMER;
+  const auto start = std::chrono::steady_clock::now();
   Data::Estimation<key_len, T> detected =
       ptr_sketch_1->getHeavyChanger(ptr_sketch_2, threshold);
-  STOP_TIMER;
+  const auto elapsed = std::chrono::steady_clock::now() - start;
 
   for (const auto &kv : gnd_truth_heavy_changers) {
     if (detected.count(kv.get_left())) {
@@ -721,7 +743,7 @@ void TestBase<key_len, T>::testHeavyChanger(
   double recall = TP / (TP + FN);
 
   if (metric_vec.in(Metric::TIME)) {
-    heavy_changer[Metric::TIME] = TIMER_RESULT;
+    heavy_changer[Metric::TIME] = detail::elapsedMicroseconds(elapsed);
   }
   if (metric_vec.in(Metric::ARE)) {
     heavy_changer[Metric::ARE] = ARE / TP;
@@ -744,15 +766,14 @@ void TestBase<key_len, T>::testDecode(
   // config
   MetricVec metric_vec(config_file, test_path, "decode");
 
-  DEFINE_TIMERS;
   double ARE = 0.0, AAE = 0.0, corr = 0, podf_cnt = 0;
   double decoded_flows = 0;
   const bool measure_dist = metric_vec.in(Metric::DIST);
   std::vector<double> dist(metric_vec.quantiles.size()); // zero initialized
 
-  START_TIMER;
+  const auto start = std::chrono::steady_clock::now();
   Data::Estimation<key_len, T> decoded = ptr_sketch->decode();
-  STOP_TIMER;
+  const auto elapsed = std::chrono::steady_clock::now() - start;
 
   for (const auto &kv : decoded) {
     if (gnd_truth.count(kv.get_left())) {
@@ -775,7 +796,7 @@ void TestBase<key_len, T>::testDecode(
   }
 
   if (metric_vec.in(Metric::TIME)) {
-    decode[Metric::TIME] = TIMER_RESULT;
+    decode[Metric::TIME] = detail::elapsedMicroseconds(elapsed);
   }
   if (metric_vec.in(Metric::RATIO)) {
     decode[Metric::RATIO] = decoded_flows / gnd_truth.size();
@@ -802,10 +823,5 @@ void TestBase<key_len, T>::testDecode(
     }
   }
 }
-
-#undef DEFINE_TIMERS
-#undef START_TIMER
-#undef STOP_TIMER
-#undef TIMER_RESULT
 
 } // namespace OmniSketch::Test
