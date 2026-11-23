@@ -11,9 +11,11 @@
 #include "flowkey.h"
 #include "logger.h"
 #include "utils.h"
+#include <algorithm>
 #include <boost/bimap.hpp>
 #include <boost/bimap/unordered_set_of.hpp>
 #include <boost/bimap/vector_of.hpp>
+#include <cmath>
 #include <filesystem>
 #include <fmt/core.h>
 
@@ -35,7 +37,7 @@ enum CntMethod {
  *
  */
 enum HXMethod {
-  TopK /** Top K flow(s) */,
+  TopK /** Rank-based selection */,
   Percentile /** Flows that exceed a certain fraction of all counters */
 };
 
@@ -345,6 +347,7 @@ private:
    * `tot_value` is updated accordingly.
    */
   GndTruth &operator-=(const GndTruth &other);
+  size_t topKHeavyHitterCount(double threshold) const;
 
 public:
   /**
@@ -496,19 +499,19 @@ public:
   /**
    * @brief Get heavy hitters of the given stream (from flow summary)
    *
-   * @details If `hh_method` equals `TopK`, the heaviest `threshold` flows are
-   * to be counted as heavy hitters. Otherwise, all the flows who
-   * contribute a fraction *strictly* greater than `threshold` are to be
-   * counted.
+   * @details For `TopK`, round `threshold` down to a rank and include all
+   * flows whose value is at least the value at that rank. If the rank is at
+   * or beyond the number of flows, include all flows. For `Percentile`,
+   * include flows that contribute a fraction *strictly* greater than
+   * `threshold`.
    *
    * @param flow_summary  summary of flow, typically the one returned by
    * getGroundTruth()
    * @param threshold     threshold value
    * @param hh_method     definition of heavy hitter
    *
-   * @note `threshold` should be in [1, infty) when `hh_method` equals `TopK`,
-   * and should be in [0, 1] when `hh_method` equals `Percentile`. Otherwise, an
-   * exception would be thrown.
+   * @note `threshold` must be finite and at least 1 for `TopK`, or in [0, 1]
+   * for `Percentile`. Invalid thresholds throw std::invalid_argument.
    */
   void getHeavyHitter(const GndTruth &flow_summary, double threshold,
                       HXMethod hh_method);
@@ -942,26 +945,39 @@ void GndTruth<key_len, T>::getGroundTruth(
 }
 
 template <int32_t key_len, typename T>
+size_t GndTruth<key_len, T>::topKHeavyHitterCount(double threshold) const {
+  if (!std::isfinite(threshold) || threshold < 1.0) {
+    throw std::invalid_argument(
+        "Invalid Argument: Top-K threshold must be finite and at least 1, "
+        "but got " + std::to_string(threshold) + " instead.");
+  }
+  if (threshold >= static_cast<double>(size())) {
+    return size();
+  }
+
+  const auto rank_end = begin() + static_cast<size_t>(threshold);
+  const T cutoff = (rank_end - 1)->get_right();
+  const auto tied_end =
+      std::upper_bound(rank_end, end(), cutoff,
+                       [](const T &value, const RightVal &entry) {
+                         return value > entry.get_right();
+                       });
+  return tied_end - begin();
+}
+
+template <int32_t key_len, typename T>
 void GndTruth<key_len, T>::getHeavyHitter(const GndTruth &flow_summary,
                                           double threshold,
                                           HXMethod hh_method) {
   CHECK_CALLED_ONCE;
 
   if (hh_method == TopK) {
-    if (threshold < 1.0) {
-      throw std::invalid_argument(
-          "Invalid Argument: Threshold should >= 1.0 (Top-K), but got " +
-          std::to_string(threshold) + " intsead.");
-    }
-    auto size = flow_summary.my_map.size();
-    size_t no = std::min(size, static_cast<size_t>(threshold));
-    auto ptr = flow_summary.my_map.right.begin();
-    for (int i = 0; i < no; ++i, ptr++) {
+    const auto end =
+        flow_summary.begin() + flow_summary.topKHeavyHitterCount(threshold);
+    for (auto ptr = flow_summary.begin(); ptr != end; ++ptr) {
       my_map.right.push_back(*ptr);
       tot_value += ptr->get_right();
     }
-    // automatically sorted
-    // my_map.right.sort(std::greater<T>());
   } else {
     if (!(threshold >= 0.0 && threshold <= 1.0)) {
       throw std::invalid_argument("Invalid Argument: Threshold should be in "
@@ -998,9 +1014,11 @@ void GndTruth<key_len, T>::getHeavyHitter(GndTruth &&flow_summary,
   flow_summary.tot_value = 0;
 
   if (hh_method == TopK) {
-    ASSERT_AND_TRUNCATE_MYSELF_TO_THE_FIRST_K_ELEMENTS;
-    // automatically sorted
-    // my_map.right.sort(std::greater<T>());
+    auto &right = my_map.right;
+    right.erase(right.begin() + topKHeavyHitterCount(threshold), right.end());
+    for (const auto &entry : right) {
+      tot_value += entry.get_right();
+    }
   } else {
     ASSERT_AND_TRUNCATE_MYSELF_TO_ELEMENTS_WITH_GIVEN_VALUE;
     // automatically sorted
