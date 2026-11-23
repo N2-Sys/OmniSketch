@@ -82,6 +82,20 @@ DataSet: 1090120 records with 99999 keys (../data/records.bin)
 7. From now on, every time your sketch is about to run on different data and formats, or to collect some new statistics, all you have to do is simply modifying the config file. If the template header should be changed, you have to `make` a new driver.
 
 
+### Benchmark timing
+
+Insert and Update time a single pass over the records with a steady wall clock.
+Query and Lookup time one pass over the flow keys, including writing each result
+to a preallocated buffer. Accuracy calculations use the buffered results after
+timing. `RATE` is measured in operations per second, with the existing
+`pac/s`, `Kpac/s`, and `Mpac/s` display units. Empty workloads and unusable
+elapsed times yield a rate of zero.
+
+`TIME` records single-call durations for Heavy Hitter, Heavy Changer, and Decode
+in fractional microseconds. The display scales to milliseconds or seconds for
+longer calls. Historical rates based on integer microseconds per call have
+different timing boundaries and can be inflated by truncation.
+
 ## API Docs
 Please follow [this link](https://n2-sys.github.io/OmniSketch/annotated.html).
 
