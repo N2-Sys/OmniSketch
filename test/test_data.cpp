@@ -7,6 +7,7 @@
  *
  */
 #include "test_factory.h"
+#include <algorithm>
 #include <common/data.h>
 #include <unordered_map>
 
@@ -574,6 +575,54 @@ void TestHeavyHitter() {
   }
 }
 
+void TestTopKHeavyHitter() {
+  using OmniSketch::FlowKey;
+  using namespace OmniSketch::Data;
+
+  const auto check = [](const std::vector<int32_t> &frequencies, double k,
+                        size_t expected_size) {
+    std::vector<Record<4>> records;
+    std::unordered_map<FlowKey<4>, int32_t> expected;
+    int64_t expected_total = 0;
+    for (size_t i = 0; i < frequencies.size(); ++i) {
+      const FlowKey<4> key(static_cast<int32_t>(i + 1));
+      records.push_back({key, 0, frequencies[i]});
+      if (i < expected_size) {
+        expected.emplace(key, frequencies[i]);
+        expected_total += frequencies[i];
+      }
+    }
+
+    GndTruth<4, int32_t> summary, from_copy, from_move, from_stream;
+    summary.getGroundTruth(records.begin(), records.end(), InLength);
+    auto moved_summary = summary;
+    from_copy.getHeavyHitter(summary, k, TopK);
+    from_move.getHeavyHitter(std::move(moved_summary), k, TopK);
+    from_stream.getHeavyHitter(records.begin(), records.end(), InLength, k,
+                              TopK);
+
+    for (const auto *result : {&from_copy, &from_move, &from_stream}) {
+      VERIFY(result->size() == expected_size);
+      VERIFY(result->totalValue() == expected_total);
+      VERIFY(std::is_sorted(result->begin(), result->end(),
+                            [](const auto &a, const auto &b) {
+                              return a.get_right() > b.get_right();
+                            }));
+      for (const auto &entry : *result) {
+        const auto it = expected.find(entry.get_left());
+        VERIFY(it != expected.end() && it->second == entry.get_right());
+      }
+    }
+  };
+
+  check({100, 80, 60, 10}, 2, 2);
+  check({100, 80, 80, 80, 10}, 2, 4);
+  check({100, 100, 80, 10}, 1, 2);
+  check({100, 80, 80, 80, 10}, 6, 5);
+  check({80, 80, 80}, 2, 3);
+  check({}, 1, 0);
+}
+
 void TestHeavyChanger() {
   using std::string_view_literals::operator""sv;
   using namespace OmniSketch::Data;
@@ -671,6 +720,11 @@ void TestHeavyChanger() {
     VERIFY(gnd_truth_4.totalValue() == 16);
     VERIFY(gnd_truth_5.totalValue() == 16);
     VERIFY(gnd_truth_6.totalValue() == 14);
+
+    GndTruth<4, int32_t> tied_changers;
+    tied_changers.getHeavyChanger(gnd_truth_4, gnd_truth_5, 4, TopK);
+    VERIFY(tied_changers.size() == 4);
+    VERIFY(tied_changers.totalValue() == 11);
 
   } catch (const std::exception &exp) {
     VERIFY_NO_EXCEPTION(exp);
@@ -844,6 +898,7 @@ OMNISKETCH_DECLARE_TEST(data) {
     TestGndTruth();
     TestEqualRange();
     TestHeavyHitter();
+    TestTopKHeavyHitter();
     TestHeavyChanger();
     TestEstimation();
     TestMovable();
